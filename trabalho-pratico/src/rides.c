@@ -41,6 +41,7 @@ char* rides_catalog(char* id) {
         switch (i) {
         case 0:
           r -> id = strdup(token);
+          
           break;
         case 1:
           r -> date = strdup(token);
