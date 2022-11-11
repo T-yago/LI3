@@ -16,9 +16,12 @@ struct users {
   char * account_creation;
   char * pay_method;
   char * account_status;
+  int total_gasto;
 };
+//campo gasto -> incrementar
 
-void catalog(char * id) {
+
+char* users_catalog(char* id) {
   char * line = NULL;
   ssize_t read;
   size_t len;
@@ -27,8 +30,6 @@ void catalog(char * id) {
   if (file == NULL) {
     printf("Error opening file.\n");
   }
-  //struct users* *users = malloc (100100 * sizeof (struct users));
-  int read_h = 0;
   int records = 0;
   int i = 0;
   do {
@@ -65,15 +66,15 @@ void catalog(char * id) {
       //char *line_copy = strdup(line);
       g_hash_table_insert(hash, u -> username, u);
     }
-    if (read_h == 7) records++;
-    if (read_h != 7 && !feof(file)) {
+    if (read == 7) printf("%d",i);
+    if (read != 7 && !feof(file)) {
       printf("File format incorrect.\n");
     }
     i++;
   } while (!feof(file));
   printf("%d", g_hash_table_size(hash));
-  struct users * u = g_hash_table_lookup(hash, id);
-  printf("%s", u -> birth_date);
+  struct users * user_pretendido = g_hash_table_lookup(hash, id);
+  printf("%s", user_pretendido->birth_date);
 
   fclose(file);
   g_hash_table_destroy(hash);
@@ -86,18 +87,21 @@ void catalog(char * id) {
     "%s;"
     "%s;"
     "%s"
-    "%s", u -> username, u -> name, u -> gender, u -> birth_date, u -> account_creation, u -> pay_method, u -> account_status);
+    "%s", user_pretendido-> username, user_pretendido-> name, user_pretendido-> gender, user_pretendido-> birth_date, user_pretendido-> account_creation, user_pretendido-> pay_method, user_pretendido-> account_status);
 
-  //free (u);
+char* v = user_pretendido->birth_date;
+  free  (user_pretendido);
+return v;
 }
 
 /*
 void get_age (char * v) {
-
+printf ("%s",*v);
+age ()
 }
 
-void calcular_idade (int ano, int mes, int dia) {
-  int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+void age(int present_date, int present_month, int present_year, int birth_date, int birth_month, int birth_year) {//09/10/2022
+int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
    if (birth_date > present_date) {
       present_date = present_date + month[birth_month - 1];
       present_month = present_month - 1;
@@ -109,13 +113,12 @@ void calcular_idade (int ano, int mes, int dia) {
    int final_date = present_date - birth_date;
    int final_month = present_month - birth_month;
    int final_year = present_year - birth_year;
+   printf("Present Age Years: %d Months: %d Days: %d", final_year, final_month, final_date);
 }
 */
-void get_data(struct users ** username, char * id) {}
 
 int main() {
-  catalog("MiTeixeira");
-  printf("Endereço:%p\n", catalog);
+  users_catalog("PeBaptista3");
 
   //struct users** p = catalog;
   //printf("%p",p);
