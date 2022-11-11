@@ -108,7 +108,7 @@ return v;
 
 int main() {
   rides_catalog("1000000");
-
+    printf( "ola");
   //struct drivers** p = catalog;
   //printf("%p",p);
   return 0;
