@@ -7,8 +7,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "queries.h"
 #include <glib.h>
+#include "users.h"
+
+//como dar include a haeders fora do folder dos .c
+
 //#include "parser.c"
 //#include "queries.h"
 
@@ -25,8 +28,7 @@ typedef struct
     char account_creation[9];
     char account_status[7];
 }   Drivers;
-*/
-/*
+
 typedef struct
 {
     int  id[999998];
@@ -197,8 +199,7 @@ char* get_id (char * line) {
 
     return token;
 }
-*/
-/*
+
 int main(){
   FILE *fp;
     char row[1024];
@@ -228,7 +229,7 @@ int main(){
     return 0;
 
 }
-*/
+
 
 char* extract_id(char *line,char* limit) {
     char *token = strtok(line, limit);
@@ -289,7 +290,7 @@ int get_line(FILE* file, char* id) { //lê a tabela e procura o valor
 
     return 0;
 }
-/*
+
 int main(int argc, char** argv) {
     char* filename = argv[1];
     FILE* users_file = fopen(filename, "r");
@@ -298,8 +299,7 @@ int main(int argc, char** argv) {
 }
     return 1;
 }
-*/
-/*
+
 int query_1 (char* id) {
     int flag = 0;
     FILE* input = fopen("input.txt","r");
@@ -326,14 +326,13 @@ int query_1 (char* id) {
                 }
 }
 //i++;
-*/
-/*
+
 while (pch != NULL) {
     printf( "%s;", pch );
     pch = strtok (NULL, " ");
     //printf ("%s\n",pch);
     //printf ("%s;",v[i][20]);
-       }*/
+       }
 
 
 
@@ -349,9 +348,4 @@ void query_1 (char * string) {
             }   
     }
 }
-
-
-int main () {
-    FILE *fp = fopen ("drivers.csv","r");
-    get_line (fp,"1");
-}
+*/
