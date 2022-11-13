@@ -18,28 +18,31 @@ struct drivers {
   char * city;
   char * account_creation;
   char * account_status;
+  double total_auferido;
+  short int avaliacao_total_driver;
+  short int numero_viagens_driver;
 };
 
 //campo rides
 
 
-char* drivers_catalog(char* id) {
+GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal);
   FILE * file = fopen("drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
-  int records = 0;
+  //int records = 0;
   int i = 0;
   do {
     while ((read = getline( & line, & len, file)) != -1) {
       struct drivers * d = malloc(sizeof(struct drivers));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ",\n"))) {
+      while ((token = strsep( & line, ";\n"))) {
         switch (i) {
         case 0:
           d -> id = strdup(token);
@@ -66,26 +69,22 @@ char* drivers_catalog(char* id) {
           d -> account_creation = strdup(token);
           break;
         case 8:
-          d -> account_creation = strdup(token);
+          d -> account_status = strdup(token);
         }
         i++;
       }
       //char *line_copy = strdup(line);
-      g_hash_table_insert(hash, d -> id, d);
-    }
-    if (read == 7) printf("%d",i);
-    if (read != 7 && !feof(file)) {
-      printf("File format incorrect.\n");
+      g_hash_table_insert(hash_drivers, d -> id, d);
     }
     i++;
   } while (!feof(file));
-  printf("Tamanho da hash table: %d\n", g_hash_table_size(hash));
-  struct drivers * user_pretendido = g_hash_table_lookup(hash, id);
-  printf("%s", user_pretendido->license_plate);
+  //printf("Tamanho da hash table: %d\n", g_hash_table_size(hash_drivers));
+  //struct drivers * user_pretendido = g_hash_table_lookup(hash_drivers, id);
+  //printf("%s", user_pretendido->license_plate);
 
   fclose(file);
-  g_hash_table_destroy(hash);
-
+//  g_hash_table_destroy(hash);
+/*
   printf("\n%d records read.\n\n", records);
   FILE * output = fopen("output.txt", "w+");
   fprintf(output, "%s;"
@@ -97,17 +96,16 @@ char* drivers_catalog(char* id) {
     "%s;"
     "%s;"
     "%s", user_pretendido-> id, user_pretendido-> name, user_pretendido-> birth_day, user_pretendido-> gender, user_pretendido-> car_class, user_pretendido-> license_plate, user_pretendido-> city, user_pretendido-> account_creation, user_pretendido->account_status);
-
-char* v = user_pretendido->birth_day;
-  free  (user_pretendido);
+*/
+GHashTable * v = hash_drivers;
 return v;
 }
 
-int main() {
-  drivers_catalog("9246");
+//int main() {
+ // drivers_catalog("9246");
 
   //struct drivers** p = catalog;
   //printf("%p",p);
-  return 0;
-}
+ // return 0;
+//}
 
