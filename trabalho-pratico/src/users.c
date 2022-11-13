@@ -16,28 +16,30 @@ struct users {
   char * account_creation;
   char * pay_method;
   char * account_status;
-  int total_gasto;
+  double total_gasto;
+  short int numero_viagens_user;
+  short int avaliacao_total_user;
 };
 //campo gasto -> incrementar
 
 
-char* users_catalog(char* id) {
+GHashTable * users_catalog() {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
   FILE * file = fopen("users.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
-  int records = 0;
+ // int records = 0;
   int i = 0;
   do {
     while ((read = getline( & line, & len, file)) != -1) {
       struct users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ",\n"))) {
+      while ((token = strsep( & line, ";\n"))) {
         switch (i) {
         case 0:
           u -> username = strdup(token);
@@ -64,22 +66,18 @@ char* users_catalog(char* id) {
         i++;
       }
       //char *line_copy = strdup(line);
-      g_hash_table_insert(hash, u -> username, u);
-    }
-    if (read == 7) printf("%d",i);
-    if (read != 7 && !feof(file)) {
-      printf("File format incorrect.\n");
+      g_hash_table_insert(hash_users, u -> username, u);
     }
     i++;
   } while (!feof(file));
-  printf("%d", g_hash_table_size(hash));
-  struct users * user_pretendido = g_hash_table_lookup(hash, id);
-  printf("%s", user_pretendido->birth_date);
+  //printf("%d", g_hash_table_size(hash_users));
+  //struct users * user_pretendido = g_hash_table_lookup(hash_users, id);
+  //printf("%s", user_pretendido->name);
 
   fclose(file);
-  g_hash_table_destroy(hash);
+ // g_hash_table_destroy(hash);
 
-  printf("\n%d records read.\n\n", records);
+  /*printf("\n%d records read.\n\n", records);
   FILE * output = fopen("output.txt", "w+");
   fprintf(output, "%s;"
     "%s;"
@@ -88,9 +86,8 @@ char* users_catalog(char* id) {
     "%s;"
     "%s"
     "%s", user_pretendido-> username, user_pretendido-> name, user_pretendido-> gender, user_pretendido-> birth_date, user_pretendido-> account_creation, user_pretendido-> pay_method, user_pretendido-> account_status);
-
-char* v = user_pretendido->birth_date;
-  free  (user_pretendido);
+*/
+GHashTable * v =  hash_users;
 return v;
 }
 
@@ -117,10 +114,10 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 }
 */
 
-int main() {
-  users_catalog("PeBaptista3");
+//int main() {
+  //users_catalog("PeBaptista3");
 
   //struct users** p = catalog;
   //printf("%p",p);
-  return 0;
-}
+  //return 0;
+//}
