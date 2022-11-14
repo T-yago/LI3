@@ -11,7 +11,7 @@
 struct users {
   char * username;
   char * name;
-  char * gender;
+  char gender;
   char * birth_date;
   char * account_creation;
   char * pay_method;
@@ -19,6 +19,7 @@ struct users {
   double total_gasto;
   short int numero_viagens_user;
   short int avaliacao_total_user;
+  double avaliacao_media_user;
 };
 //campo gasto -> incrementar
 
@@ -48,7 +49,7 @@ GHashTable * users_catalog() {
           u -> name = strdup(token);
           break;
         case 2:
-          u -> gender = strdup(token);
+          u -> gender = *(token);
           break;
         case 3:
           u -> birth_date = strdup(token);

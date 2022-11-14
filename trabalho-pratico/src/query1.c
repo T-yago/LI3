@@ -13,7 +13,7 @@ double calcula_total_gasto (char* car_class, short int distance, double tip ) {
     }
     return total;
 }
-
+/*
 double calcula_avaliacao_media (GHashTable * hash, char* id) {
     int avaliacao_media;
     struct users * u = malloc(sizeof(struct users));
@@ -22,6 +22,7 @@ double calcula_avaliacao_media (GHashTable * hash, char* id) {
     free(u);
     return avaliacao_media;
 }
+*/
 
 short int calcula_idade (char* birthdate) {
   short int aux[4];
@@ -72,11 +73,11 @@ void query1_driver (char*id, GHashTable * hash_drivers) {
                     fclose (output);
         }
         else {
-        float avaliacao_media = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
+        d-> avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
         short int age = calcula_idade (d->birth_day);
         
         FILE * output = fopen("output.txt", "w");
-        fprintf (output,"%s;" "%s;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, avaliacao_media,d->numero_viagens_driver, d->total_auferido); 
+        fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
         fclose (output); 
         }
 }
@@ -92,11 +93,11 @@ void query1_user (char*id, GHashTable * hash_users) {
                     fclose (output);
         }
         else {
-    float avaliacao_media = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
+    u-> avaliacao_media_user = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
     short int age = calcula_idade (u->birth_date);
 
     FILE * output = fopen("output.txt", "w");
-    fprintf (output,"%s;" "%s;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, avaliacao_media,u->numero_viagens_user, u->total_gasto); 
+    fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
     fclose (output);
     } 
 }

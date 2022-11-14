@@ -12,7 +12,7 @@ struct drivers {
   char * id;
   char * name;
   char * birth_day;
-  char * gender;
+  char gender;
   char * car_class;
   char * license_plate;
   char * city;
@@ -21,6 +21,7 @@ struct drivers {
   double total_auferido;
   short int avaliacao_total_driver;
   short int numero_viagens_driver;
+  double avaliacao_media_driver;
 };
 
 //campo rides
@@ -54,7 +55,7 @@ GHashTable * drivers_catalog () {
           d -> birth_day = strdup(token);
           break;
         case 3:
-          d -> gender = strdup(token);
+          d -> gender = *(token);
           break;
         case 4:
           d -> car_class = strdup(token);
