@@ -9,6 +9,7 @@
 #include <glib.h>
 
 #include "query1.c"
+#include "query2.c"
 
 struct rides {
   char * id;
@@ -164,10 +165,12 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
 
       }      //escrever aqui o que colocar a cada iteracao de user
       if (j== 0) {;} else {
+
+      // estou a fazer malloc de algo que já tinha sido previamente alocado na mem
          struct users * u = malloc(sizeof(struct users));
          struct drivers * d = malloc(sizeof(struct drivers));
-        u = g_hash_table_lookup (users_hash,ride->user);
-        d = g_hash_table_lookup (drivers_hash,ride->driver);
+         u = g_hash_table_lookup (users_hash,ride->user);
+         d = g_hash_table_lookup (drivers_hash,ride->driver);
         
         u->total_gasto += calcula_total_gasto(d->car_class,ride->distance,ride->tip);
         u->avaliacao_total_user += ride->score_user;
