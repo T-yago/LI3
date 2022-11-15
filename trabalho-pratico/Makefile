@@ -1,13 +1,14 @@
 OBJECT_FILES = $(wildcard src/%.o)
 
+CC = gcc
 CFLAGS = `pkg-config --cflags glib-2.0` -O3 -Iincludes
 LDFLAGS = `pkg-config --libs glib-2.0`
 
 all: $(OBJECT_FILES)
-	gcc src/main.c $(OBJECT_FILES) $(CFLAGS) -o programa-principal $(LDFLAGS)
+	${CC} src/main.c $(OBJECT_FILES) $(CFLAGS) -o programa-principal $(LDFLAGS)
 
 src/%.o: src/%.c
-	gcc -c $^ $(CFLAGS) -o $@ $(LDFLAGS)
+	${CC} -c $^ $(CFLAGS) -o $@ $(LDFLAGS)
 
 # $^ prerrequisitos 
 # $@ nome correspondente
