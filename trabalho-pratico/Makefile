@@ -1,10 +1,25 @@
-CFLAGS=-Wall -Iincludes
+OBJECT_FILES = $(wildcard src/%.o)
+
+CFLAGS = `pkg-config --cflags glib-2.0` -O3 -Iincludes
+LDFLAGS = `pkg-config --libs glib-2.0`
+
+all: $(OBJECT_FILES)
+	gcc src/main.c $(OBJECT_FILES) $(CFLAGS) -o programa-principal $(LDFLAGS)
+
+src/%.o: src/%.c
+	gcc -c $^ $(CFLAGS) -o $@ $(LDFLAGS)
+
+# $^ prerrequisitos 
+# $@ nome correspondente
 
 
-programa-principal: src/programa-principal.o
-	gcc $(LDFLAGS) src/programa-principal.o -o programa-principal
-
-src/programa-principal.o: src/programa-principal.c
+run: all
+	./progama-principal
 
 clean:
-	rm -f programa-principal programa-testes src/*.o
+	rm -f programa-principal src/*.o
+
+
+#IDEIAS:
+#No futuro talvez fazer um BUILDDIR
+#.PHONY: yh   Usa-se para dizer que yh não é um ficheiro
