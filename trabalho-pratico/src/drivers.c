@@ -19,8 +19,8 @@ struct drivers {
   char * account_creation;
   char * account_status;
   double total_auferido;
-  short int avaliacao_total_driver;
-  short int numero_viagens_driver;
+  int avaliacao_total_driver; // short int nao chegou para a aval media
+  int numero_viagens_driver;
   double avaliacao_media_driver;
 };
 
