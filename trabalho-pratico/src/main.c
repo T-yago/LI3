@@ -5,13 +5,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
 #include <glib.h>
-#include "users.h"
-#include "drivers.h"
-#include "rides.h"
-#include "parser.c"
+#include "../includes/users.h"
+#include "../includes/drivers.h"
+#include "../includes/rides.h"
+#include "../includes/query1.h"
+
 //como dar include a haeders fora do folder dos .c
 
 //#include "parser.c"
@@ -354,11 +356,9 @@ void query_1 (char * string) {
 
 int main () {
     GHashTable * hash_users = users_catalog();
-    GHashTable * hash_drivers = drivers_catalog ();
-    rides_catalog (hash_users,hash_drivers);
-    query1_main ("000000004780", hash_users, hash_drivers);
-
-    query2 (hash_drivers);
+    GHashTable * hash_drivers = drivers_catalog();
+    rides_catalog (hash_users, hash_drivers);
+    query1_main ("000000000004", hash_users, hash_drivers);
 
   //struct drivers *d = g_hash_table_lookup (hash_drivers,"000000000003");
   //printf ("AVAL:%f\n", d->avaliacao_media_driver); ESTÁ A FUNCIONAR, OU SEJA, OS VALORES DA AVALIACAO ESTAO NA HASHTABLE 
