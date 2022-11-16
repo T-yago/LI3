@@ -13,11 +13,11 @@ struct drivers {
   char * name;
   char * birth_day;
   char gender;
-  char * car_class;
+  char*  car_class;
   char * license_plate;
   char * city;
   char * account_creation;
-  char * account_status;
+  bool account_status;
   double total_auferido;
   int avaliacao_total_driver; // short int nao chegou 
   int numero_viagens_driver;
@@ -70,7 +70,12 @@ GHashTable * drivers_catalog () {
           d -> account_creation = strdup(token);
           break;
         case 8:
-          d -> account_status = strdup(token);
+        if (strcmp(token,"active")) {
+          d->account_status = true;
+        }
+        else {
+          d->account_status = false;
+        }
         }
         i++;
       }

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include <string.h>
-
+#include <stdbool.h>
 #include <ctype.h>
 
 #include <glib.h>
@@ -15,7 +15,7 @@ struct users {
   char * birth_date;
   char * account_creation;
   char * pay_method;
-  char * account_status;
+  bool account_status;
   double total_gasto;
   short int numero_viagens_user;
   short int avaliacao_total_user;
@@ -61,8 +61,14 @@ GHashTable * users_catalog() {
           u -> pay_method = strdup(token);
           break;
         case 6:
-          u -> account_status = strdup(token);
-          break;
+        if (strcmp(token,"active")) {
+          u->account_status = true;
+        }
+        else {
+          u->account_status = false;
+        }
+          //u -> account_status = strdup(token);
+          //break;
         }
         i++;
       }

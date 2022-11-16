@@ -81,7 +81,7 @@ for (int i=0; i < size; i++) {
 }
 void query1_driver (char*id, GHashTable * hash_drivers) {
         struct drivers * d = g_hash_table_lookup (hash_drivers,id);
-        if (!(strcmp(d->account_status,"inactive"))) {
+        if (d->account_status) {
                     FILE * output = fopen("output.txt", "w");
                     fclose (output);
         }
@@ -102,7 +102,7 @@ void query1_driver (char*id, GHashTable * hash_drivers) {
 void query1_user (char*id, GHashTable * hash_users) {
     //decidir se é user ou driver
     struct users * u = g_hash_table_lookup (hash_users,id);
-    if (!(strcmp(u->account_status,"inactive"))) {
+    if (u->account_status) {
                     FILE * output = fopen("output.txt", "w");
                     fclose (output);
         }
