@@ -1,15 +1,13 @@
 #include <stdio.h>
-
+#include <stdbool.h>
 #include <stdlib.h>
-
 #include <string.h>
-
 #include <ctype.h>
-
 #include <glib.h>
-
-#include "query1.c"
-#include "query2.c"
+#include "../includes/query1.h"
+#include "../includes/users.h"
+#include "../includes/drivers.h"
+#include "../includes/rides.h"
 
 struct rides {
   char * id;
@@ -23,6 +21,7 @@ struct rides {
   double tip;
   char * comment;
 };
+
 
 /*
 char* rides_catalog(char* id) {
@@ -115,7 +114,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
   ssize_t read;
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("rides.csv", "r");
+  FILE * file = fopen("../../Dataset/rides.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
