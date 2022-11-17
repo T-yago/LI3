@@ -1,15 +1,23 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <glib.h>
+#include "../includes/drivers.h"
+#include "../includes/users.h"
+#include "../includes/query1.h"
+
 #define DATE "09/10/2022"
 
 double calcula_total_gasto (char* car_class, short int distance, double tip ) {
   double total = 0.000;  
     if (!(strcmp(car_class,"basic"))) {
-        total = total + 3.250 + (0.620 * distance) + tip;
+      total = total + 3.250 + (0.620 * distance) + tip;
     }
     else if (!(strcmp(car_class,"green"))) {
-        total = total + 4.000 + (0.790 * distance) + tip;
+      total = total + 4.000 + (0.790 * distance) + tip;
     }
     else {
-        total = total + 5.200 + (0.94 * distance) + tip;
+      total = total + 5.200 + (0.94 * distance) + tip;
     }
     return total;
 }
@@ -57,7 +65,7 @@ short int calcula_idade (char* birthdate) {
   year = aux2[2];
 
 if (month > birth_month || (month == birth_month && day >= birth_day)) {
-     age = year - birth_year;
+  age = year - birth_year;
 }
 else  age = year - birth_year - 1;
 
@@ -66,11 +74,11 @@ else  age = year - birth_year - 1;
 
 void update_valor (GHashTable * hash_drivers) {
   uint size = g_hash_table_size (hash_drivers);
-char ** keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
-struct drivers * d = malloc(sizeof(struct drivers));
-for (int i=0; i < size; i++) {
-  d = g_hash_table_lookup (hash_drivers,keys[i]);
-  d->avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
+  gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers, &size);
+  struct drivers * d = malloc(sizeof(struct drivers));
+  for (uint i=0; i < size; i++) {
+    d = g_hash_table_lookup (hash_drivers,keys[i]);
+    d->avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
   }
  // d = g_hash_table_lookup (hash_drivers,"000000004780");
   //printf ("AVAL:%f\n", d->avaliacao_media_driver);
@@ -80,38 +88,39 @@ for (int i=0; i < size; i++) {
 
 }
 void query1_driver (char*id, GHashTable * hash_drivers) {
-        struct drivers * d = g_hash_table_lookup (hash_drivers,id);
-        if (d->account_status) {
-                    FILE * output = fopen("output.txt", "w");
-                    fclose (output);
-        }
-        else {
-        d-> avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
-          printf ("%f\n",d->avaliacao_media_driver);
+  struct drivers * d = g_hash_table_lookup (hash_drivers,id);
+  if (d->account_status) {
+    FILE * output = fopen("output.txt", "w");
+    fclose (output);
+  }
+  else {
+    d-> avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
+    printf("%s\n", d->name);
+    printf ("%f\n",d->avaliacao_media_driver);
 
-        short int age = calcula_idade (d->birth_day);
-        
-        FILE * output = fopen("output.txt", "w");
-        fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
-        fclose (output); 
-        }
+  short int age = calcula_idade (d->birth_day);
+  
+  FILE * output = fopen("Resultados/command1_output", "w");
+  fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
+  fclose (output); 
+  }
 }
 
 
 
 void query1_user (char*id, GHashTable * hash_users) {
     //decidir se é user ou driver
-    struct users * u = g_hash_table_lookup (hash_users,id);
+    struct users * u = g_hash_table_lookup (hash_users, id);
     if (u->account_status) {
-                    FILE * output = fopen("output.txt", "w");
-                    fclose (output);
-        }
-        else {
-    u-> avaliacao_media_user = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
-    short int age = calcula_idade (u->birth_date);
-    FILE * output = fopen("output.txt", "w");
-    fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
-    fclose (output);
+      FILE * output = fopen("output.txt", "w");
+      fclose (output);
+    }
+    else {
+      u-> avaliacao_media_user = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
+      short int age = calcula_idade (u->birth_date);
+      FILE * output = fopen("Resultados/command1_output", "w");
+      fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
+      fclose (output);
     } 
 }
 

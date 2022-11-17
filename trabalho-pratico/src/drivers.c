@@ -2,11 +2,15 @@
 
 #include <stdlib.h>
 
+#include <stdbool.h>
+
 #include <string.h>
 
 #include <ctype.h>
 
 #include <glib.h>
+
+#include "../includes/drivers.h"
 
 struct drivers {
   char * id;
@@ -24,15 +28,12 @@ struct drivers {
   double avaliacao_media_driver;
 };
 
-//campo rides
-
-
 GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
   GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("drivers.csv", "r");
+  FILE * file = fopen("../../Dataset/drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
