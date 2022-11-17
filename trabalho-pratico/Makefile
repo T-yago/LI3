@@ -1,25 +1,25 @@
-OBJECT_FILES = $(wildcard src/%.o)
+OBJECT_FILES = src/main.o src/parser.o src/drivers.o src/queries.o src/query1.o src/query2.o src/rides.o src/users.o
 
 CC = gcc
-CFLAGS = `pkg-config --cflags glib-2.0` -O3 -Iincludes
-LDFLAGS = `pkg-config --libs glib-2.0`
+CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0)
+LIBS = -lm $(shell pkg-config --libs glib-2.0)
+TARGET = programa-principal
 
-all: $(OBJECT_FILES)
-	mkdir -p Resultados
-	${CC} src/main.c $(OBJECT_FILES) $(CFLAGS) -o programa-principal $(LDFLAGS)
+$(TARGET): $(OBJECT_FILES)
+    @mkdir -p Resultados
+    @$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
-src/%.o: src/%.c
-	${CC} -c $^ $(CFLAGS) -o $@ $(LDFLAGS)
+%.o: %.c
+    @$(CC) $(CFLAGS) -c $< $(LIBS) -o $@
 
 # $^ prerrequisitos 
 # $@ nome correspondente
 
-
-run: all
-	./progama-principal
+run: $(TARGET)
+    ./programa-principal
 
 clean:
-	rm -rf programa-principal src/*.o Resultados
+    rm -rf programa-principal src/*.o Resultados
 
 
 #IDEIAS:
