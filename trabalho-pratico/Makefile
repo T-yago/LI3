@@ -5,6 +5,7 @@ CFLAGS = `pkg-config --cflags glib-2.0` -O3 -Iincludes
 LDFLAGS = `pkg-config --libs glib-2.0`
 
 all: $(OBJECT_FILES)
+	mkdir -p Resultados
 	${CC} src/main.c $(OBJECT_FILES) $(CFLAGS) -o programa-principal $(LDFLAGS)
 
 src/%.o: src/%.c
@@ -18,7 +19,7 @@ run: all
 	./progama-principal
 
 clean:
-	rm -f programa-principal src/*.o
+	rm -rf programa-principal src/*.o Resultados
 
 
 #IDEIAS:
