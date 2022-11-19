@@ -6,6 +6,7 @@
 #include <glib.h>
 #include "../includes/users.h"
 
+//campo gasto -> incrementar
 struct users {
   char * username;
   char * name;
@@ -29,13 +30,14 @@ GHashTable * users_catalog() {
   size_t len;
   GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
   FILE * file = fopen("../../Dataset/users.csv", "r");
+
   if (file == NULL) {
     printf("Error opening file.\n");
   }
  // int records = 0;
   int i = 0;
   do {
-    while ((read = getline( & line, & len, file)) != -1) {
+    while ((read = getline(&line, & len, file)) != -1) {
       struct users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;

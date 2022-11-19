@@ -1,15 +1,25 @@
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <glib.h>
+#include "../includes/drivers.h"
+#include "../includes/users.h"
+#include "../includes/query1.h"
+
 #define DATE "09/10/2022"
 
 double calcula_total_gasto (char* car_class, short int distance, double tip ) {
   double total = 0.000;  
     if (!(strcmp(car_class,"basic"))) {
+
         total = total + 3.250 + (0.620 * distance) + tip;
     }
     else if (!(strcmp(car_class,"green"))) {
-        total = total + 4.000 + (0.790 * distance) + tip;
+      total = total + 4.000 + (0.790 * distance) + tip;
     }
     else {
-        total = total + 5.200 + (0.94 * distance) + tip;
+      total = total + 5.200 + (0.94 * distance) + tip;
     }
     return total;
 }
@@ -58,7 +68,6 @@ short int calcula_idade (char* birthdate) {
 
 if (month > birth_month || (month == birth_month && day >= birth_day)) {
      age = year - birth_year;
-}
 else  age = year - birth_year - 1;
 
  return age;
@@ -97,8 +106,6 @@ void query1_driver (char*id, GHashTable * hash_drivers) {
         }
 }
 
-
-
 void query1_user (char*id, GHashTable * hash_users) {
     //decidir se é user ou driver
     struct users * u = g_hash_table_lookup (hash_users,id);
@@ -112,6 +119,7 @@ void query1_user (char*id, GHashTable * hash_users) {
     FILE * output = fopen("output.txt", "w");
     fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
     fclose (output);
+
     } 
 }
 
