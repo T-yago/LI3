@@ -1,21 +1,21 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <string.h>
-
+#include <stdbool.h>
 #include <ctype.h>
-
 #include <glib.h>
+#include "../includes/users.h"
 
 struct users {
   char * username;
   char * name;
   char gender;
+  unsigned short int date;
+  int distance;
   char * birth_date;
   char * account_creation;
   char * pay_method;
-  char * account_status;
+  bool account_status;
   double total_gasto;
   short int numero_viagens_user;
   short int avaliacao_total_user;
@@ -23,13 +23,12 @@ struct users {
 };
 //campo gasto -> incrementar
 
-
 GHashTable * users_catalog() {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("users.csv", "r");
+  GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
+  FILE * file = fopen("../../Dataset/users.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
@@ -61,8 +60,14 @@ GHashTable * users_catalog() {
           u -> pay_method = strdup(token);
           break;
         case 6:
-          u -> account_status = strdup(token);
-          break;
+        if (strcmp(token,"active")) {
+          u->account_status = true;
+        }
+        else {
+          u->account_status = false;
+        }
+          //u -> account_status = strdup(token);
+          //break;
         }
         i++;
       }
@@ -71,10 +76,10 @@ GHashTable * users_catalog() {
     }
     i++;
   } while (!feof(file));
+  
   //printf("%d", g_hash_table_size(hash_users));
   //struct users * user_pretendido = g_hash_table_lookup(hash_users, id);
   //printf("%s", user_pretendido->name);
-
   fclose(file);
  // g_hash_table_destroy(hash);
 
