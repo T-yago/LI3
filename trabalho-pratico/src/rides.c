@@ -26,7 +26,7 @@ struct rides {
   char * comment;
 };
 
-/*
+
 char* rides_catalog(char* id) {
   char * line = NULL;
   ssize_t read;
@@ -114,6 +114,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
   FILE * file = fopen("rides.csv", "r");
+
   if (file == NULL) {
     printf("Error opening file.\n");
   }

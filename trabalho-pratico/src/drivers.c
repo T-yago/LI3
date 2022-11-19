@@ -24,20 +24,19 @@ struct drivers {
   char * account_creation;
   bool account_status;
   double total_auferido;
-  int avaliacao_total_driver; // short int nao chegou para a aval media
+  int avaliacao_total_driver; // short int nao chegou 
   int numero_viagens_driver;
   double avaliacao_media_driver;
 };
-
-//campo rides
 
 
 GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
+
   GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
-  FILE * file = fopen("drivers.csv", "r");
+  FILE * file = fopen("../../Dataset/drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
