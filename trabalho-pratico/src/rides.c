@@ -11,6 +11,8 @@
 
 #include "query1.c"
 #include "query2.c"
+#include "query3.c"
+#include "dates.c"
 
 struct rides {
   char * id;
@@ -19,7 +21,7 @@ struct rides {
   char * driver;
   char * user;
   char * city;
-  short int distance;
+  int distance;
   short int score_user;
   short int score_driver;
   double tip;
@@ -27,94 +29,12 @@ struct rides {
 };
 
 
-char* rides_catalog(char* id) {
-  char * line = NULL;
-  ssize_t read;
-  size_t len;
-  GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("rides.csv", "r");
-  if (file == NULL) {
-    printf("Error opening file.\n");
-  }
-  int records = 0;
-  int i = 0;
-  do {
-    while ((read = getline( & line, & len, file)) != -1) {
-      struct rides * r = malloc(sizeof(struct rides));
-      char * token;
-      int i = 0;
-      while ((token = strsep( & line, ",\n"))) {
-        switch (i) {
-        case 0:
-          r -> id = strdup(token);
-          break;
-        case 1:
-          r -> date = strdup(token);
-          break;  
-        case 2:
-          r -> driver = strdup(token);
-          break;
-        case 3:
-          r -> user = strdup(token);
-          break;
-        case 4:
-          r -> city = strdup(token);
-          break;
-        case 5:
-          r -> distance = strdup(token);
-          break;
-        case 6:
-          r -> score_user = strdup(token);
-          break;
-        case 7:
-          r -> score_driver = strdup(token);
-          break;
-        case 8:
-          r -> tip = strdup(token);
-          break;
-        case 9:
-          r -> comment = strdup(token);
-          break;
-        }
-      i++;
-      }
-      //char *line_copy = strdup(line);
-      g_hash_table_insert(hash_rides, r -> id, r);
-    }
-    if (read == 7) printf("%d",i);
-    if (read != 7 && !feof(file)) {
-      printf("File format incorrect.\n");
-    }
-    i++;
-  } while (!feof(file));
-  printf("Tamanho da hash table: %d\n", g_hash_table_size(hash_rides));
-  struct rides * user_pretendido = g_hash_table_lookup(hash_rides, id);
-  printf("%s", user_pretendido->distance);
-  fclose(file);
- // g_hash_table_destroy(hash);
-  printf("\n%d records read.\n\n", records);
-  FILE * output = fopen("output.txt", "w+");
-  fprintf(output, "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s", user_pretendido-> id, user_pretendido-> date, user_pretendido-> driver, user_pretendido-> user, user_pretendido-> score_user, user_pretendido-> distance, user_pretendido-> score_user, user_pretendido-> score_driver, user_pretendido->tip);
-char* v = hash_rides;
-return v;
-}
-*/
-
 void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
   char * line = NULL;
   ssize_t read;
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
   FILE * file = fopen("rides.csv", "r");
-
   if (file == NULL) {
     printf("Error opening file.\n");
   }
@@ -203,20 +123,4 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
  // printf("%s", user_pretendido->distance);
 
   fclose(file);
- // g_hash_table_destroy(hash);
-
-  //printf("\n%d records read.\n\n", records);
-  //FILE * output = fopen("output.txt", "w+");
-  //fprintf(output, "%s;"
-   // "%s;"
-   //"%s;"
-   // "%s;"
-   // "%s;"
-   // "%s;"
-   // "%s;"
-   // "%s;"
-   // "%s", user_pretendido-> id, user_pretendido-> date, user_pretendido-> driver, user_pretendido-> user, user_pretendido-> score_user, user_pretendido-> distance, user_pretendido-> score_user, user_pretendido-> score_driver, user_pretendido->tip);
-
-//char* v = hash_rides;
-//return v;
 }
