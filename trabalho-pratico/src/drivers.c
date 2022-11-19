@@ -17,10 +17,9 @@ struct drivers {
   char * name;
   char * birth_day;
   char gender;
-
-
   char*  car_class;
   char * license_plate;
+  unsigned short int date;
   char * city;
   char * account_creation;
   bool account_status;
@@ -35,8 +34,8 @@ GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal);
 
+  GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
   FILE * file = fopen("../../Dataset/drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
@@ -75,14 +74,12 @@ GHashTable * drivers_catalog () {
           d -> account_creation = strdup(token);
           break;
         case 8:
-
         if (strcmp(token,"active")) {
           d->account_status = true;
         }
         else {
           d->account_status = false;
         }
-
         }
         i++;
       }
@@ -121,4 +118,3 @@ return v;
   //printf("%p",p);
  // return 0;
 //}
-
