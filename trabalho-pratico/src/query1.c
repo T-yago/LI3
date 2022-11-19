@@ -8,18 +8,16 @@
 #include "../includes/query1.h"
 
 #define DATE "09/10/2022"
-
 double calcula_total_gasto (char* car_class, short int distance, double tip ) {
   double total = 0.000;  
     if (!(strcmp(car_class,"basic"))) {
-
         total = total + 3.250 + (0.620 * distance) + tip;
     }
     else if (!(strcmp(car_class,"green"))) {
-      total = total + 4.000 + (0.790 * distance) + tip;
+        total = total + 4.000 + (0.790 * distance) + tip;
     }
     else {
-      total = total + 5.200 + (0.94 * distance) + tip;
+        total = total + 5.200 + (0.94 * distance) + tip;
     }
     return total;
 }
@@ -68,6 +66,7 @@ short int calcula_idade (char* birthdate) {
 
 if (month > birth_month || (month == birth_month && day >= birth_day)) {
      age = year - birth_year;
+}
 else  age = year - birth_year - 1;
 
  return age;
@@ -75,8 +74,8 @@ else  age = year - birth_year - 1;
 
 void update_valor (GHashTable * hash_drivers) {
   uint size = g_hash_table_size (hash_drivers);
-char ** keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
-struct drivers * d = malloc(sizeof(struct drivers));
+void ** keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
+struct drivers * d ;
 for (int i=0; i < size; i++) {
   d = g_hash_table_lookup (hash_drivers,keys[i]);
   d->avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
@@ -85,12 +84,11 @@ for (int i=0; i < size; i++) {
   //printf ("AVAL:%f\n", d->avaliacao_media_driver);
    // d = g_hash_table_lookup (hash_drivers,"000000007141");
   //printf ("AVAL:%f\n", d->avaliacao_media_driver);  ESTÁ A FUNCIONAR, OU SEJA, AS AVALIACOES ESTAO A SER COLOCADAS NOS STRUCTS
-
-
+//free (d);  PORQUE É QUE NÃO DÁ ERRO AO DAR FREE AO D SE EU NÃO DEI MALLOC AO D??????????????????'
 }
 void query1_driver (char*id, GHashTable * hash_drivers) {
         struct drivers * d = g_hash_table_lookup (hash_drivers,id);
-        if (!(strcmp(d->account_status,"inactive"))) {
+        if (d->account_status) {
                     FILE * output = fopen("output.txt", "w");
                     fclose (output);
         }
@@ -106,10 +104,12 @@ void query1_driver (char*id, GHashTable * hash_drivers) {
         }
 }
 
+
+
 void query1_user (char*id, GHashTable * hash_users) {
     //decidir se é user ou driver
     struct users * u = g_hash_table_lookup (hash_users,id);
-    if (!(strcmp(u->account_status,"inactive"))) {
+    if (u->account_status) {
                     FILE * output = fopen("output.txt", "w");
                     fclose (output);
         }
@@ -119,7 +119,6 @@ void query1_user (char*id, GHashTable * hash_users) {
     FILE * output = fopen("output.txt", "w");
     fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
     fclose (output);
-
     } 
 }
 
