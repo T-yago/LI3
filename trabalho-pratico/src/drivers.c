@@ -2,22 +2,26 @@
 
 #include <stdlib.h>
 
+#include <stdbool.h>
+
 #include <string.h>
 
 #include <ctype.h>
 
 #include <glib.h>
 
+#include "../includes/drivers.h"
+
 struct drivers {
   char * id;
   char * name;
   char * birth_day;
   char gender;
-  char * car_class;
+  char*  car_class;
   char * license_plate;
   char * city;
   char * account_creation;
-  char * account_status;
+  bool account_status;
   double total_auferido;
   int avaliacao_total_driver; // short int nao chegou para a aval media
   int numero_viagens_driver;
@@ -31,7 +35,7 @@ GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
   FILE * file = fopen("drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
@@ -70,7 +74,12 @@ GHashTable * drivers_catalog () {
           d -> account_creation = strdup(token);
           break;
         case 8:
-          d -> account_status = strdup(token);
+        if (strcmp(token,"active")) {
+          d->account_status = true;
+        }
+        else {
+          d->account_status = false;
+        }
         }
         i++;
       }
@@ -109,4 +118,3 @@ return v;
   //printf("%p",p);
  // return 0;
 //}
-
