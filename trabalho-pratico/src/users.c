@@ -11,6 +11,8 @@ struct users {
   char * username;
   char * name;
   char gender;
+  unsigned short int date;
+  int distance;
   char * birth_date;
   char * account_creation;
   char * pay_method;
@@ -20,13 +22,15 @@ struct users {
   short int avaliacao_total_user;
   double avaliacao_media_user;
 };
+//campo gasto -> incrementar
 
 GHashTable * users_catalog() {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("../../Dataset/users.csv", "r"); 
+  GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
+  FILE * file = fopen("../../Dataset/users.csv", "r");
+
   if (file == NULL) {
     printf("Error opening file.\n");
   }
@@ -37,7 +41,7 @@ GHashTable * users_catalog() {
       struct users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ";"))) {
+      while ((token = strsep( & line, ";\n"))) {
         switch (i) {
         case 0:
           u -> username = strdup(token);
@@ -70,14 +74,15 @@ GHashTable * users_catalog() {
         i++;
       }
       //char *line_copy = strdup(line);
-      g_hash_table_insert(hash_users, u->username, u);
+      g_hash_table_insert(hash_users, u -> username, u);
     }
     i++;
   } while (!feof(file));
+  
   //printf("%d", g_hash_table_size(hash_users));
-
+  //struct users * user_pretendido = g_hash_table_lookup(hash_users, id);
+  //printf("%s", user_pretendido->name);
   fclose(file);
-
  // g_hash_table_destroy(hash);
 
   /*printf("\n%d records read.\n\n", records);
@@ -90,7 +95,7 @@ GHashTable * users_catalog() {
     "%s"
     "%s", user_pretendido-> username, user_pretendido-> name, user_pretendido-> gender, user_pretendido-> birth_date, user_pretendido-> account_creation, user_pretendido-> pay_method, user_pretendido-> account_status);
 */
-GHashTable * v = hash_users;
+GHashTable * v =  hash_users;
 return v;
 }
 

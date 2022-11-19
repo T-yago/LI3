@@ -17,6 +17,8 @@ struct drivers {
   char * name;
   char * birth_day;
   char gender;
+
+
   char*  car_class;
   char * license_plate;
   char * city;
@@ -28,11 +30,13 @@ struct drivers {
   double avaliacao_media_driver;
 };
 
+
 GHashTable * drivers_catalog () {
   char * line = NULL;
   ssize_t read;
   size_t len;
   GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal);
+
   FILE * file = fopen("../../Dataset/drivers.csv", "r");
   if (file == NULL) {
     printf("Error opening file.\n");
@@ -71,12 +75,14 @@ GHashTable * drivers_catalog () {
           d -> account_creation = strdup(token);
           break;
         case 8:
+
         if (strcmp(token,"active")) {
           d->account_status = true;
         }
         else {
           d->account_status = false;
         }
+
         }
         i++;
       }

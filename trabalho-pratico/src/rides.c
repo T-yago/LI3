@@ -9,6 +9,9 @@
 #include "../includes/drivers.h"
 #include "../includes/rides.h"
 
+#include "query1.c"
+#include "query2.c"
+
 struct rides {
   char * id;
   char * date;
@@ -23,7 +26,6 @@ struct rides {
 };
 
 
-/*
 char* rides_catalog(char* id) {
   char * line = NULL;
   ssize_t read;
@@ -114,7 +116,8 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
   ssize_t read;
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("../../Dataset/rides.csv", "r");
+  FILE * file = fopen("rides.csv", "r");
+
   if (file == NULL) {
     printf("Error opening file.\n");
   }
