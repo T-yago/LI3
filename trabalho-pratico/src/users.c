@@ -99,6 +99,19 @@ GHashTable * v =  hash_users;
 return v;
 }
 
+void initHash_users (GHashTable * hash_users) {
+      uint size = g_hash_table_size (hash_users); 
+        struct users * u;
+              gpointer* keys = g_hash_table_get_keys_as_array (hash_users,&size);
+for (int i=0; i < size;i++) {
+    u = g_hash_table_lookup(hash_users,keys[i]);
+    u->date = 0;
+    u->distance = 0;
+  }
+  free (u);
+}
+
+
 /*
 void get_age (char * v) {
 printf ("%s",*v);

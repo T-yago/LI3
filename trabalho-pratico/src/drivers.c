@@ -111,6 +111,20 @@ GHashTable * v = hash_drivers;
 return v;
 }
 
+void initHash_drivers (GHashTable * hash_drivers) {  ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
+    uint size = g_hash_table_size (hash_drivers); 
+    struct drivers * d;
+      gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
+
+  for (int i=0; i < size;i++) {
+    d = g_hash_table_lookup(hash_drivers,keys[i]);
+    d->avaliacao_media_driver = 0;
+    d->avaliacao_total_driver = 0;
+    d->numero_viagens_driver = 0;
+   // d->date = 0;
+  }
+}
+
 //int main() {
  // drivers_catalog("9246");
 
