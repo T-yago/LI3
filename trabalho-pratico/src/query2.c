@@ -1,9 +1,5 @@
-struct query2 {
-  char * id;
-  double avaliacao_media;
-  char* name;
-  unsigned short int data;
-};
+#include "../includes/query2.h"
+
 
 int compare (const void *a, const void *b) {
   struct query2 *ia = (struct query2 *) a;
