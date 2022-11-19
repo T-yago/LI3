@@ -1,19 +1,21 @@
 #include <stdio.h>
-
+#include <stdbool.h>
 #include <stdlib.h>
-
 #include <string.h>
-
 #include <ctype.h>
-
 #include <glib.h>
+#include "../includes/query1.h"
+#include "../includes/users.h"
+#include "../includes/drivers.h"
+#include "../includes/rides.h"
 
 #include "query1.c"
 #include "query2.c"
 
 struct rides {
   char * id;
-  char * date;
+  //char * date;
+  unsigned short int date;
   char * driver;
   char * user;
   char * city;
@@ -88,10 +90,8 @@ char* rides_catalog(char* id) {
   printf("Tamanho da hash table: %d\n", g_hash_table_size(hash_rides));
   struct rides * user_pretendido = g_hash_table_lookup(hash_rides, id);
   printf("%s", user_pretendido->distance);
-
   fclose(file);
  // g_hash_table_destroy(hash);
-
   printf("\n%d records read.\n\n", records);
   FILE * output = fopen("output.txt", "w+");
   fprintf(output, "%s;"
@@ -103,11 +103,9 @@ char* rides_catalog(char* id) {
     "%s;"
     "%s;"
     "%s", user_pretendido-> id, user_pretendido-> date, user_pretendido-> driver, user_pretendido-> user, user_pretendido-> score_user, user_pretendido-> distance, user_pretendido-> score_user, user_pretendido-> score_driver, user_pretendido->tip);
-
 char* v = hash_rides;
 return v;
 }
-
 */
 
 void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
@@ -124,8 +122,10 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
         int j= 0;
 
   do {
+
     while ((read = getline( & line, & len, file)) != -1) {
-      struct rides * ride = malloc(sizeof(struct rides));
+                struct rides * ride = malloc(sizeof(struct rides));
+
       char * token;
       int i = 0;
       while ((token = strsep( & line, ";\n"))) {
@@ -134,7 +134,8 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
           ride -> id = strdup(token);
           break;
         case 1:
-          ride -> date = strdup(token);
+          //ride -> date = strdup(token);
+            ride -> date = convert_to_day (token);
           break;  
         case 2:
           ride -> driver = strdup(token);
@@ -164,23 +165,31 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
       i++;
 
       }      //escrever aqui o que colocar a cada iteracao de user
-      if (j== 0) {;} else {
+      if (j== 0) {j++;} else {
 
-      // estou a fazer malloc de algo que já tinha sido previamente alocado na mem
-         struct users * u = malloc(sizeof(struct users));
-         struct drivers * d = malloc(sizeof(struct drivers));
+      // é preciso fazer malloc de algo que já tinha sido previamente alocado na mem?????
+         struct users * u ;
+         struct drivers * d;
          u = g_hash_table_lookup (users_hash,ride->user);
          d = g_hash_table_lookup (drivers_hash,ride->driver);
         
         u->total_gasto += calcula_total_gasto(d->car_class,ride->distance,ride->tip);
         u->avaliacao_total_user += ride->score_user;
         u->numero_viagens_user++;
+        u->distance += ride->distance;
+        if (ride->date > u->date){
+        u->date = ride->date;
+        }
 
         d->total_auferido += calcula_total_gasto (d->car_class,ride->distance,ride->tip);
         d->avaliacao_total_driver += ride->score_driver;
         d->numero_viagens_driver++;
-        //printf ("%d\n",u->total_gasto);
-      }     j++;
+
+        if (ride->date > d->date){
+        d->date = ride->date;
+        }
+        //printf ("%s\n",u->username);
+      }     
 
       //char *line_copy = strdup(line);
       //g_hash_table_insert(hash_rides, ride -> id, ride);

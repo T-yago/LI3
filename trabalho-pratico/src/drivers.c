@@ -19,6 +19,7 @@ struct drivers {
   char gender;
   char*  car_class;
   char * license_plate;
+  unsigned short int date;
   char * city;
   char * account_creation;
   bool account_status;
