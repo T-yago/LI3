@@ -49,10 +49,9 @@ void query2 (GHashTable * hash_drivers, char* info, int n) {
     if (!d->account_status) {
       fprintf (output,"%s;" "%s;" "%.3f\n",(query2 + i)->id, (query2 + i)->name,(query2 +i)->avaliacao_media); 
     }
-    else  {n++;}
+    else  {numb++;}
   }
-  free (query2);
-  //free (d);
+  free (d);
   fclose (output);
 }
 /*

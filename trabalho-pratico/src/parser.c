@@ -24,8 +24,9 @@ void parser_input(char* pathfiles, char* input) {
     ssize_t read;
     size_t len;
     char* line = NULL;
-    file = fopen(inputfile, "r");
-        while((read = getline(&line, &len, file)) != -1 && !feof (file)) {
+    file = fopen(inputfile, "r+");
+    do {
+        while((read = getline(&line, &len, file)) != -1) {
             aux = strsep(&line, " ");
             numb_query = atoi(aux);
             info = strsep(&line, " \n");
@@ -39,6 +40,9 @@ void parser_input(char* pathfiles, char* input) {
             }
             n++;
         }
-
+    } while (!feof(file));
     fclose(file);
+ //   free (line);
+ //g_hash_table_destroy (hash_users);
+   // g_hash_table_destroy (hash_drivers);
 }
