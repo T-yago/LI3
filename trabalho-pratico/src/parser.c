@@ -25,8 +25,7 @@ void parser_input(char* pathfiles, char* input) {
     size_t len;
     char* line = NULL;
     file = fopen(inputfile, "r");
-    do {
-        while((read = getline(&line, &len, file)) != -1) {
+        while((read = getline(&line, &len, file)) != -1 && !feof (file)) {
             aux = strsep(&line, " ");
             numb_query = atoi(aux);
             info = strsep(&line, " \n");
@@ -40,8 +39,6 @@ void parser_input(char* pathfiles, char* input) {
             }
             n++;
         }
-    } while (!feof(file));
 
     fclose(file);
-    printf("Sucesso\n");
 }
