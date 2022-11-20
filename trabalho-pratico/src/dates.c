@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "../includes/dates.h"
+
 unsigned short int convert_to_day (char *date) {
     unsigned short int day;
     unsigned short int month;

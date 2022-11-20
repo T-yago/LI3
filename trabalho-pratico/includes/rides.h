@@ -1,12 +1,15 @@
 #ifndef RIDES_H
 #define RIDES_H
 
+#include <stdbool.h>
 #include <glib.h>
 
 struct users {
   char * username;
   char * name;
   char gender;
+  unsigned short int date;
+  int distance;
   char * birth_date;
   char * account_creation;
   char * pay_method;
@@ -25,6 +28,7 @@ struct drivers {
   char gender;
   char*  car_class;
   char * license_plate;
+  unsigned short int date;
   char * city;
   char * account_creation;
   bool account_status;
@@ -35,6 +39,6 @@ struct drivers {
   short int age;
 };
 
-void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash);
+void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char* pathfiles);
 
 #endif

@@ -10,5 +10,4 @@ void query1_driver (char*id, GHashTable * hash_drivers, int n);
 void query1_user (char*id, GHashTable * hash_users, int n);
 void query1_main (char*id, GHashTable * hash_users, GHashTable * hash_drivers, int n);
 
-
 #endif

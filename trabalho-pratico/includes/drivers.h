@@ -5,6 +5,7 @@
 
 struct drivers;
 
-GHashTable * drivers_catalog ();
+GHashTable * drivers_catalog (char* pathfiles);
+void initHash_drivers (GHashTable * hash_drivers);
 
 #endif

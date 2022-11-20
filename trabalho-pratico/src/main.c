@@ -13,6 +13,7 @@
 #include "../includes/users.h"
 #include "../includes/drivers.h"
 #include "../includes/rides.h"
+#include "../includes/parser.h"
 #include "../includes/query1.h"
 
 //como dar include a haeders fora do folder dos .c
@@ -355,12 +356,17 @@ void query_1 (char * string) {
 }
 */
 
-int main () {
-    GHashTable * hash_users = users_catalog();
-    GHashTable * hash_drivers = drivers_catalog ();
-    rides_catalog (hash_users,hash_drivers);
-    query1_main ("000000004780", hash_users, hash_drivers);
-    query2 (hash_drivers);
+int main (int argc, char** argv) {
+   if (argc == 3) {
+      char* csv_path = argv[1];
+      char* input = argv[2];
+      char pathfiles[35];
+      strcpy(pathfiles, csv_path);
+      parser_input(pathfiles, input);
+   } 
+}
+
+    //query2 (hash_drivers);
 
 
   //struct drivers *d = g_hash_table_lookup (hash_drivers,"000000000003");
@@ -369,4 +375,3 @@ int main () {
     //printf ("Total gasto:%f\n", calcula_total_gasto ("basic",10,1.00));
     //printf ("%f\n",u->total_gasto);    
     //printf ("%d\n",u->numero_viagens_user);
-}

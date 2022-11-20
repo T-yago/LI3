@@ -29,25 +29,26 @@ struct drivers {
   double avaliacao_media_driver;
 };
 
-
-GHashTable * drivers_catalog () {
+GHashTable * drivers_catalog (char* pathfiles) {
   char * line = NULL;
   ssize_t read;
   size_t len;
 
   GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
-  FILE * file = fopen("../../Dataset/drivers.csv", "r");
+  char driverfile[35];
+  strcpy(driverfile, pathfiles);
+  char* filename = strcat(driverfile, "/drivers.csv");
+  FILE * file = fopen(filename, "r"); 
   if (file == NULL) {
     printf("Error opening file.\n");
   }
-  //int records = 0;
   int i = 0;
   do {
-    while ((read = getline( & line, & len, file)) != -1) {
+    while ((read = getline(&line, &len, file)) != -1) {
       struct drivers * d = malloc(sizeof(struct drivers));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ";\n"))) {
+      while ((token = strsep(&line, ";\n"))) {
         switch (i) {
         case 0:
           d -> id = strdup(token);
@@ -107,22 +108,23 @@ GHashTable * drivers_catalog () {
     "%s;"
     "%s", user_pretendido-> id, user_pretendido-> name, user_pretendido-> birth_day, user_pretendido-> gender, user_pretendido-> car_class, user_pretendido-> license_plate, user_pretendido-> city, user_pretendido-> account_creation, user_pretendido->account_status);
 */
-GHashTable * v = hash_drivers;
-return v;
+  GHashTable * v = hash_drivers;
+  return v;
 }
+
 
 void initHash_drivers (GHashTable * hash_drivers) {  ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
     uint size = g_hash_table_size (hash_drivers); 
     struct drivers * d;
-      gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
+    gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
 
-  for (int i=0; i < size;i++) {
-    d = g_hash_table_lookup(hash_drivers,keys[i]);
-    d->avaliacao_media_driver = 0;
-    d->avaliacao_total_driver = 0;
-    d->numero_viagens_driver = 0;
-   // d->date = 0;
-  }
+    for (uint i=0; i < size;i++) {
+      d = g_hash_table_lookup(hash_drivers,keys[i]);
+      d->avaliacao_media_driver = 0;
+      d->avaliacao_total_driver = 0;
+      d->numero_viagens_driver = 0;
+    // d->date = 0;
+    }
 }
 
 //int main() {

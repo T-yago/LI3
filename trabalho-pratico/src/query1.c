@@ -1,13 +1,15 @@
-
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
 #include <glib.h>
+#include "../includes/parser.h"
 #include "../includes/drivers.h"
 #include "../includes/users.h"
 #include "../includes/query1.h"
 
 #define DATE "09/10/2022"
+
 double calcula_total_gasto (char* car_class, short int distance, double tip ) {
   double total = 0.000;  
     if (!(strcmp(car_class,"basic"))) {
@@ -76,7 +78,7 @@ void update_valor (GHashTable * hash_drivers) {
   uint size = g_hash_table_size (hash_drivers);
 void ** keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
 struct drivers * d ;
-for (int i=0; i < size; i++) {
+for (uint i=0; i < size; i++) {
   d = g_hash_table_lookup (hash_drivers,keys[i]);
   d->avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
   }
@@ -86,48 +88,50 @@ for (int i=0; i < size; i++) {
   //printf ("AVAL:%f\n", d->avaliacao_media_driver);  ESTÁ A FUNCIONAR, OU SEJA, AS AVALIACOES ESTAO A SER COLOCADAS NOS STRUCTS
 //free (d);  PORQUE É QUE NÃO DÁ ERRO AO DAR FREE AO D SE EU NÃO DEI MALLOC AO D??????????????????'
 }
-void query1_driver (char*id, GHashTable * hash_drivers) {
-        struct drivers * d = g_hash_table_lookup (hash_drivers,id);
-        if (d->account_status) {
-                    FILE * output = fopen("output.txt", "w");
-                    fclose (output);
-        }
-        else {
-        d-> avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
-          printf ("%f\n",d->avaliacao_media_driver);
 
-        short int age = calcula_idade (d->birth_day);
-        
-        FILE * output = fopen("output.txt", "w");
-        fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
-        fclose (output); 
-        }
+void query1_driver (char*id, GHashTable * hash_drivers, int n) {
+  struct drivers * d = g_hash_table_lookup (hash_drivers,id);
+  char buffer[35];
+  snprintf(buffer, 35, "Resultados/command%d_output", n);
+  if (d->account_status) {
+    FILE * output = fopen(buffer, "w");
+    fclose (output);
+  }
+  else {
+  d-> avaliacao_media_driver = (float)d->avaliacao_total_driver / (float)d->numero_viagens_driver;
+
+  short int age = calcula_idade (d->birth_day);
+  
+  FILE * output = fopen(buffer, "w");
+  fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
+  fclose (output); 
+  }
 }
 
-
-
-void query1_user (char*id, GHashTable * hash_users) {
-    //decidir se é user ou driver
-    struct users * u = g_hash_table_lookup (hash_users,id);
-    if (u->account_status) {
-                    FILE * output = fopen("output.txt", "w");
-                    fclose (output);
-        }
-        else {
+void query1_user (char*id, GHashTable * hash_users, int n) {
+  //decidir se é user ou driver
+  struct users * u = g_hash_table_lookup (hash_users,id);
+  char buffer[35];
+  snprintf(buffer, 35, "Resultados/command%d_output", n);
+  if (u->account_status) {
+    FILE * output = fopen(buffer, "w");
+    fclose (output);
+  }
+  else {
     u-> avaliacao_media_user = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
     short int age = calcula_idade (u->birth_date);
-    FILE * output = fopen("output.txt", "w");
+    FILE * output = fopen(buffer, "w");
     fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
     fclose (output);
-    } 
+  } 
 }
 
-void query1_main (char*id, GHashTable * hash_users, GHashTable * hash_drivers) {
-        if (isdigit(id[0]) == 0) {
-        query1_user (id, hash_users);
-         }
-    else {
-        query1_driver (id,hash_drivers);
-        }
-        update_valor(hash_drivers);
+void query1_main (char*id, GHashTable * hash_users, GHashTable * hash_drivers, int n) {
+  if (isdigit(id[0]) == 0) {
+  query1_user (id, hash_users, n);
+  }
+  else {
+  query1_driver (id,hash_drivers, n);
+  }
+  update_valor(hash_drivers);
 }

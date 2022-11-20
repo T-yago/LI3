@@ -24,12 +24,15 @@ struct users {
 };
 //campo gasto -> incrementar
 
-GHashTable * users_catalog() {
+GHashTable * users_catalog(char* pathfiles) {
   char * line = NULL;
   ssize_t read;
   size_t len;
   GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
-  FILE * file = fopen("../../Dataset/users.csv", "r");
+  char userfile[35];
+  strcpy(userfile, pathfiles);
+  char* filename = strcat(userfile, "/users.csv");
+  FILE * file = fopen(filename, "r"); 
 
   if (file == NULL) {
     printf("Error opening file.\n");
@@ -100,15 +103,14 @@ return v;
 }
 
 void initHash_users (GHashTable * hash_users) {
-      uint size = g_hash_table_size (hash_users); 
-        struct users * u;
-              gpointer* keys = g_hash_table_get_keys_as_array (hash_users,&size);
-for (int i=0; i < size;i++) {
+  uint size = g_hash_table_size (hash_users); 
+  struct users * u;
+  gpointer* keys = g_hash_table_get_keys_as_array (hash_users,&size);
+  for (uint i=0; i < size;i++) {
     u = g_hash_table_lookup(hash_users,keys[i]);
     u->date = 0;
     u->distance = 0;
   }
-  free (u);
 }
 
 

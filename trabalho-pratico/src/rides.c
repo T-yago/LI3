@@ -4,15 +4,11 @@
 #include <string.h>
 #include <ctype.h>
 #include <glib.h>
+#include "../includes/dates.h"
 #include "../includes/query1.h"
 #include "../includes/users.h"
 #include "../includes/drivers.h"
 #include "../includes/rides.h"
-
-#include "query1.c"
-#include "query2.c"
-#include "query3.c"
-#include "dates.c"
 
 struct rides {
   char * id;
@@ -28,13 +24,15 @@ struct rides {
   char * comment;
 };
 
-
-void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
+void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char* pathfiles) {
   char * line = NULL;
   ssize_t read;
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
-  FILE * file = fopen("rides.csv", "r");
+  char ridesfile[35];
+  strcpy(ridesfile, pathfiles);
+  char* filename = strcat(ridesfile, "/rides.csv");
+  FILE * file = fopen(filename, "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
@@ -45,7 +43,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash) {
   do {
 
     while ((read = getline( & line, & len, file)) != -1) {
-                struct rides * ride = malloc(sizeof(struct rides));
+      struct rides * ride = malloc(sizeof(struct rides));
 
       char * token;
       int i = 0;

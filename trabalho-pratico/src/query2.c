@@ -1,32 +1,35 @@
+#include <stdio.h>
+#include <glib.h>
 #include "../includes/query2.h"
 
 
 int compare (const void *a, const void *b) {
   struct query2 *ia = (struct query2 *) a;
-    struct query2 *ib = (struct query2 *) b;
+  struct query2 *ib = (struct query2 *) b;
 
-    if( ia->avaliacao_media < ib->avaliacao_media ) return 1;
-    
-    if( ia->avaliacao_media > ib->avaliacao_media ) return -1;
+  if( ia->avaliacao_media < ib->avaliacao_media ) return 1;
+  
+  if( ia->avaliacao_media > ib->avaliacao_media ) return -1;
 
-    if (ia ->avaliacao_media == ib->avaliacao_media) {
-       if (ia->data < ib->data) return 1; //se id for igual retorna a data + recente
-       if (ia->data > ib->data) return -1;
-       else if (ia->data == ib->data) { // se for para trocar é este
-        if (ia->id > ib->id) return 1;
-        if (ia->id < ib->id) return -1;
-       }
-       return -1;  // se datas também forem iguais retorna 
-    }
-    else  {return 0;}
+  if (ia ->avaliacao_media == ib->avaliacao_media) {
+      if (ia->data < ib->data) return 1; //se id for igual retorna a data + recente
+      if (ia->data > ib->data) return -1;
+      else if (ia->data == ib->data) { // se for para trocar é este
+      if (ia->id > ib->id) return 1;
+      if (ia->id < ib->id) return -1;
+      }
+      return -1;  // se datas também forem iguais retorna 
+  }
+  else  {return 0;}
 }
 
-void query2 (GHashTable * hash_drivers, int n) {
+void query2 (GHashTable * hash_drivers, char* info, int n) {
+  int numb = atoi(info);
   struct query2 * query2 = malloc (sizeof(struct query2)); 
   struct drivers * d ;
   uint size = g_hash_table_size (hash_drivers);
-  gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
-  for (int i=0; i < size ; i++) {
+  gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers, &size);
+  for (uint i=0; i < size ; i++) {
  
     d = g_hash_table_lookup(hash_drivers,keys[i]);
     
@@ -36,20 +39,22 @@ void query2 (GHashTable * hash_drivers, int n) {
     (query2 + i)->name = d->name;
   }
 
-qsort((void*)query2,size,sizeof(struct query2),compare);
-FILE * output2 = fopen("output2.txt", "w");
- for (int i=0; i<n;i++) {
-            d = g_hash_table_lookup(hash_drivers,(query2 +i)->id);
-            if (!d->account_status) {
-          fprintf (output2,"%s;" "%s;" "%.3f\n",(query2 + i)->id, (query2 + i)->name,(query2 +i)->avaliacao_media); 
+  qsort((void*)query2,size,sizeof(struct query2),compare);
 
-            }
-            else  {n++;}
-          }
-          free (query2);
-          //free (d);
-          fclose (output2);
- }
+  char buffer[35];
+  snprintf(buffer, 35, "Resultados/command%d_output", n);
+  FILE * output = fopen(buffer, "w");
+  for (int i=0; i< numb; i++) {
+    d = g_hash_table_lookup(hash_drivers,(query2 +i)->id);
+    if (!d->account_status) {
+      fprintf (output,"%s;" "%s;" "%.3f\n",(query2 + i)->id, (query2 + i)->name,(query2 +i)->avaliacao_media); 
+    }
+    else  {n++;}
+  }
+  free (query2);
+  //free (d);
+  fclose (output);
+}
 /*
  for (int i =0; i < size; i++) {
  printf ("AVAL:%f\n",query2[i].avaliacao_media);
