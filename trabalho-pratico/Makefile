@@ -1,13 +1,27 @@
-CFLAGS=-Wall -Iincludes
+OBJECT_FILES = src/main.o src/parser.o src/drivers.o src/queries.o src/query1.o src/query2.o src/rides.o src/users.o
 
-all:
-gcc users.c -Wall -o users `pkg-config --cflags --libs glib-2.0` -g
+CC = gcc
+CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0)
+LIBS = -lm $(shell pkg-config --libs glib-2.0)
+TARGET = programa-principal
 
+$(TARGET): $(OBJECT_FILES)
+	@mkdir -p Resultados
+	@$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
-programa-principal: src/programa-principal.o
-	gcc $(LDFLAGS) src/programa-principal.o -o programa-principal
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< $(LIBS) -o $@
 
-src/programa-principal.o: src/programa-principal.c
+# $^ prerrequisitos 
+# $@ nome correspondente
+
+run: $(TARGET)
+	./programa-principal
 
 clean:
-	rm -f programa-principal programa-testes src/*.o
+	rm -rf programa-principal src/*.o Resultados
+
+
+#IDEIAS:
+#No futuro talvez fazer um BUILDDIR
+#.PHONY: yh   Usa-se para dizer que yh não é um ficheiro
