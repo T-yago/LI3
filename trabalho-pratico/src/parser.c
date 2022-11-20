@@ -9,6 +9,7 @@
 #include "../includes/query1.h"
 #include "../includes/query2.h"
 #include "../includes/rides.h"
+#include "../includes/query3.h"
 
 void parser_input(char* pathfiles, char* input) {
     char* inputfile = strdup(input);
@@ -36,6 +37,9 @@ void parser_input(char* pathfiles, char* input) {
                     break;
                 case 2:
                     query2(hash_drivers, info, n);
+                    break;
+                case 3 :
+                    query3(hash_users,info,n);
                     break;
             }
             n++;

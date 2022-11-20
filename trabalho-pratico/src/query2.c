@@ -24,10 +24,10 @@ int compare (const void *a, const void *b) {
 }
 
 void query2 (GHashTable * hash_drivers, char* info, int n) {
-  int numb = atoi(info);
-  struct query2 * query2 = malloc (sizeof(struct query2)); 
   struct drivers * d ;
+  int numb = atoi(info);
   uint size = g_hash_table_size (hash_drivers);
+  struct query2 * query2 = malloc (sizeof(struct query2)); 
   gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers, &size);
   for (uint i=0; i < size ; i++) {
  

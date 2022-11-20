@@ -86,13 +86,13 @@ GHashTable * drivers_catalog (char* pathfiles) {
       }
       //char *line_copy = strdup(line);
       g_hash_table_insert(hash_drivers, d -> id, d);
+
     }
     i++;
   } while (!feof(file));
   //printf("Tamanho da hash table: %d\n", g_hash_table_size(hash_drivers));
   //struct drivers * user_pretendido = g_hash_table_lookup(hash_drivers, id);
   //printf("%s", user_pretendido->license_plate);
-
   fclose(file);
 //  g_hash_table_destroy(hash);
 /*
