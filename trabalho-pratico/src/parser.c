@@ -13,7 +13,6 @@
 
 void parser_input(char* pathfiles, char* input) {
     printf ("entrou na função do parser\n");
-    char* inputfile = strdup(input);
     GHashTable * hash_users = users_catalog(pathfiles);
     initHash_users(hash_users); 
     printf ("fez a hash dos users\n");
@@ -29,10 +28,10 @@ void parser_input(char* pathfiles, char* input) {
     ssize_t read;
     size_t len;
     char* line = NULL;
-    file = fopen(inputfile, "r+");
+    file = fopen(input, "r");
     if (file == NULL) {
     printf("Error opening input file.\n");
-  }
+    }
     do {
         while((read = getline(&line, &len, file)) != -1) {
             aux = strsep(&line, " ");
