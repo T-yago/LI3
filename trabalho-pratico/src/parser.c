@@ -41,6 +41,18 @@ void parser_input(char* pathfiles, char* input) {
                 case 3 :
                     query3(hash_users,info,n);
                     break;
+                case 4 :
+                    break;
+                case 5 : 
+                    break;
+                case 6 : 
+                    break;
+                case 7 : 
+                    break;
+                case 8 : 
+                    break;
+                case 9 : 
+                    break;
             }
             n++;
         }
