@@ -357,7 +357,7 @@ void query_1 (char * string) {
 */
 
 int main (int argc, char** argv) {
-    pritnf ("entrou na main\n");
+    printf ("entrou na main\n");
     printf ("argc:%d\n",argc);
     printf ("%s\n",argv[1]);
     printf ("%s\n",argv[2]);
