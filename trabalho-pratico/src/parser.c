@@ -30,6 +30,9 @@ void parser_input(char* pathfiles, char* input) {
     size_t len;
     char* line = NULL;
     file = fopen(inputfile, "r+");
+    if (file == NULL) {
+    printf("Error opening input file.\n");
+  }
     do {
         while((read = getline(&line, &len, file)) != -1) {
             aux = strsep(&line, " ");
