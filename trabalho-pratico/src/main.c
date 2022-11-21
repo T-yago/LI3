@@ -360,7 +360,7 @@ int main (int argc, char** argv) {
    if (argc == 3) {
       char* csv_path = argv[1];
       char* input = argv[2];
-      char pathfiles[35];
+      char pathfiles[256];
       strcpy(pathfiles, csv_path);
       parser_input(pathfiles, input);
    } 

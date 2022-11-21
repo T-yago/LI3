@@ -91,8 +91,8 @@ for (uint i=0; i < size; i++) {
 
 void query1_driver (char*id, GHashTable * hash_drivers, int n) {
   struct drivers * d = g_hash_table_lookup (hash_drivers,id);
-  char buffer[35];
-  snprintf(buffer, 35, "Resultados/command%d_output", n);
+  char buffer[256];
+  snprintf(buffer, 256, "Resultados/command%d_output", n);
   if (d->account_status) {
     FILE * output = fopen(buffer, "w");
     fclose (output);
@@ -111,8 +111,8 @@ void query1_driver (char*id, GHashTable * hash_drivers, int n) {
 void query1_user (char*id, GHashTable * hash_users, int n) {
   //decidir se é user ou driver
   struct users * u = g_hash_table_lookup (hash_users,id);
-  char buffer[35];
-  snprintf(buffer, 35, "Resultados/command%d_output", n);
+  char buffer[256];
+  snprintf(buffer, 256, "Resultados/command%d_output", n);
   if (u->account_status) {
     FILE * output = fopen(buffer, "w");
     fclose (output);
