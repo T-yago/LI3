@@ -18,6 +18,40 @@
 
 #define DATE "09/10/2022"
 
+struct users {
+  char * username;
+  char * name;
+  char gender;
+  unsigned short int date;
+  int distance;
+  char * birth_date;
+  char * account_creation;
+  char * pay_method;
+  bool account_status;
+  double total_gasto;
+  short int numero_viagens_user;
+  short int avaliacao_total_user;
+  double avaliacao_media_user;
+};
+
+struct drivers {
+  char * id;
+  char * name;
+  char * birth_day;
+  char gender;
+  char*  car_class;
+  char * license_plate;
+  unsigned short int date;
+  char * city;
+  char * account_creation;
+  bool account_status;
+  double total_auferido;
+  int avaliacao_total_driver; // short int nao chegou 
+  int numero_viagens_driver;
+  double avaliacao_media_driver;
+};
+
+
 double calcula_total_gasto(char * car_class, short int distance, double tip) {
   double total = 0.000;
   if (!(strcmp(car_class, "basic"))) {

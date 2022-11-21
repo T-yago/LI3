@@ -366,13 +366,10 @@ void query_1 (char * string) {
 */
 
 int main(int argc, char ** argv) {
-  printf("entrou na main\n");
   if (argc == 3) {
     parser_input(argv[1], argv[2]);
-    printf("entrou no parser\n");
   }
-
-  printf("acabou\n");
+ return 0;
 }
 
 //query2 (hash_drivers);

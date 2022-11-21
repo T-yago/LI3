@@ -36,7 +36,6 @@ void parser_input(char * pathfiles, char * input) {
   char * aux;
   char * info;
   int numb_query, n = 1;
-  ssize_t read;
   size_t len;
   char * line = NULL;
   file = fopen(input, "r");
@@ -44,7 +43,7 @@ void parser_input(char * pathfiles, char * input) {
     printf("Error opening input file.\n");
   }
   do {
-    while ((read = getline( & line, & len, file)) != -1) {
+    while (getline( & line, & len, file) != -1) {
       aux = strsep( & line, " ");
       numb_query = atoi(aux);
       info = strsep( & line, " \n");

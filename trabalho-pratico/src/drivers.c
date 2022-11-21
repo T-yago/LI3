@@ -45,7 +45,7 @@ GHashTable * drivers_catalog(char * pathfiles) {
   int i = 0;
   do {
     while ((read = getline( & line, & len, file)) != -1) {
-      struct drivers * d = malloc(sizeof(struct drivers));
+      Drivers * d = malloc(sizeof(struct drivers));
       char * token;
       int i = 0;
       while ((token = strsep( & line, ";\n"))) {

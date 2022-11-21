@@ -2,13 +2,38 @@
 
 #include <glib.h>
 
+#include <stdbool.h>
+
 #include "../includes/query2.h"
 
+struct drivers {
+  char * id;
+  char * name;
+  char * birth_day;
+  char gender;
+  char*  car_class;
+  char * license_plate;
+  unsigned short int date;
+  char * city;
+  char * account_creation;
+  bool account_status;
+  double total_auferido;
+  int avaliacao_total_driver; // short int nao chegou 
+  int numero_viagens_driver;
+  double avaliacao_media_driver;
+};
+
+struct query2 {
+  char * id;
+  double avaliacao_media;
+  char* name;
+  unsigned short int data;
+};
 
 int compare(const void * a,
   const void * b) {
-  struct query2 * ia = (struct query2 * ) a;
-  struct query2 * ib = (struct query2 * ) b;
+   Query2 *ia = (struct query2 *) a;
+   Query2 *ib = (struct query2 *) b;
 
   if (ia -> avaliacao_media < ib -> avaliacao_media) return 1;
 

@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-struct drivers;
+typedef struct drivers Drivers;
 
 GHashTable * drivers_catalog (char* pathfiles);
 void initHash_drivers (GHashTable * hash_drivers);

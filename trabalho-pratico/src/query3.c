@@ -4,11 +4,40 @@
 
 #include "../includes/query3.h"
 
+#include "../includes/rides.h"
+
+#include "../includes/users.h"
+
+struct users {
+  char * username;
+  char * name;
+  char gender;
+  unsigned short int date;
+  int distance;
+  char * birth_date;
+  char * account_creation;
+  char * pay_method;
+  bool account_status;
+  double total_gasto;
+  short int numero_viagens_user;
+  short int avaliacao_total_user;
+  double avaliacao_media_user;
+};
+
+
+struct query3
+ {
+  char * id;
+  int distance;
+  char* name;
+  unsigned short int data;
+};
+
 
 int compare_users(const void * a,
   const void * b) {
-  struct query3 * ia = (struct query3 * ) a;
-  struct query3 * ib = (struct query3 * ) b;
+  Query3 * ia = (struct query3 * ) a;
+  Query3 * ib = (struct query3 * ) b;
 
   if (ia -> distance < ib -> distance) return 1;
 
@@ -32,7 +61,7 @@ void query3(GHashTable * hash_users, char * info, int n) {
   int numb = atoi(info);
   uint size = g_hash_table_size(hash_users);
 
-  struct query3 * query3 = malloc(size * sizeof(struct query3));
+  Query3 * query3 = malloc(size * sizeof(struct query3));
   gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
   for (uint i = 0; i < size; i++) {
 

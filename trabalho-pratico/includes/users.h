@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-struct users;
+typedef struct users Users;
 
 GHashTable * users_catalog(char* pathfiles);
 void initHash_users (GHashTable * hash_users);

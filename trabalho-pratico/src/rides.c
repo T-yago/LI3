@@ -20,6 +20,39 @@
 
 #include "../includes/rides.h"
 
+struct users {
+  char * username;
+  char * name;
+  char gender;
+  unsigned short int date;
+  int distance;
+  char * birth_date;
+  char * account_creation;
+  char * pay_method;
+  bool account_status;
+  double total_gasto;
+  short int numero_viagens_user;
+  short int avaliacao_total_user;
+  double avaliacao_media_user;
+};
+
+struct drivers {
+  char * id;
+  char * name;
+  char * birth_day;
+  char gender;
+  char*  car_class;
+  char * license_plate;
+  unsigned short int date;
+  char * city;
+  char * account_creation;
+  bool account_status;
+  double total_auferido;
+  int avaliacao_total_driver; // short int nao chegou 
+  int numero_viagens_driver;
+  double avaliacao_media_driver;
+};
+
 struct rides {
   char * id;
   //char * date;
@@ -99,8 +132,8 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
       } else {
 
         // é preciso fazer malloc de algo que já tinha sido previamente alocado na mem?????
-        struct users * u;
-        struct drivers * d;
+        Users * u ;
+        Drivers * d;
         u = g_hash_table_lookup(users_hash, ride -> user);
         d = g_hash_table_lookup(drivers_hash, ride -> driver);
 
