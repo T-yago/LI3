@@ -91,8 +91,10 @@ for (uint i=0; i < size; i++) {
 
 void query1_driver (char*id, GHashTable * hash_drivers, int n) {
   struct drivers * d = g_hash_table_lookup (hash_drivers,id);
+
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
+
   if (d->account_status) {
     FILE * output = fopen(buffer, "w");
     fclose (output);

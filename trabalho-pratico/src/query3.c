@@ -42,6 +42,7 @@ void query3 (GHashTable * hash_users, char * info, int n) {
     
   }
 qsort((void*)query3,size,sizeof(struct query3),compare_users);
+
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   FILE * output = fopen(buffer, "w");
