@@ -359,11 +359,7 @@ void query_1 (char * string) {
 int main (int argc, char** argv) {
     printf ("entrou na main\n");
    if (argc == 3) {
-      char* csv_path = argv[1];
-      char* input = argv[2];
-      char pathfiles[256];
-      strcpy(pathfiles, csv_path);
-      parser_input(pathfiles, input);
+      parser_input(argv[1], argv[2]);
       printf ("entrou no parser\n");
    } 
 
