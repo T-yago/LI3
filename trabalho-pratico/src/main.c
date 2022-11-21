@@ -357,13 +357,20 @@ void query_1 (char * string) {
 */
 
 int main (int argc, char** argv) {
+    pritnf ("entrou na main\n");
+    printf ("argc:%d\n",argc);
+    printf ("%s\n",argv[1]);
+    printf ("%s\n",argv[2]);
    if (argc == 3) {
       char* csv_path = argv[1];
       char* input = argv[2];
       char pathfiles[256];
       strcpy(pathfiles, csv_path);
       parser_input(pathfiles, input);
+      printf ("entrou no parser\n");
    } 
+
+    printf ("acabou\n");
 }
 
     //query2 (hash_drivers);

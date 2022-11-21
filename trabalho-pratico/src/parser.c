@@ -12,12 +12,16 @@
 #include "../includes/query3.h"
 
 void parser_input(char* pathfiles, char* input) {
+    printf ("entrou na função do parser\n");
     char* inputfile = strdup(input);
     GHashTable * hash_users = users_catalog(pathfiles);
-    initHash_users(hash_users);
+    initHash_users(hash_users); 
+    printf ("fez a hash dos users\n");
     GHashTable * hash_drivers = drivers_catalog(pathfiles);
     initHash_drivers(hash_drivers);    
+    printf ("fez a hash dos drivers\n");
     rides_catalog (hash_users, hash_drivers, pathfiles); 
+    printf ("fez a hash dos rides\n");
     FILE* file;
     char* aux;
     char* info;
