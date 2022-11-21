@@ -105,6 +105,9 @@ void query1_driver (char*id, GHashTable * hash_drivers, int n) {
   short int age = calcula_idade (d->birth_day);
   
   FILE * output = fopen(buffer, "w");
+  if (output == NULL) {
+    printf("Error opening output.\n");
+  }
   fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",d->name, d->gender,age, d->avaliacao_media_driver,d->numero_viagens_driver, d->total_auferido); 
   fclose (output); 
   }
@@ -117,12 +120,18 @@ void query1_user (char*id, GHashTable * hash_users, int n) {
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   if (u->account_status) {
     FILE * output = fopen(buffer, "w");
+    if (output == NULL) {
+      printf("Error opening output.\n");
+  }
     fclose (output);
   }
   else {
     u-> avaliacao_media_user = (float)u->avaliacao_total_user / (float)u->numero_viagens_user;
     short int age = calcula_idade (u->birth_date);
     FILE * output = fopen(buffer, "w");
+    if (output == NULL) {
+      printf("Error opening output.\n");
+  }
     fprintf (output,"%s;" "%c;" "%d;" "%.3f;" "%d;" "%.3f\n",u->name, u->gender,age, u-> avaliacao_media_user,u->numero_viagens_user, u->total_gasto); 
     fclose (output);
   } 
