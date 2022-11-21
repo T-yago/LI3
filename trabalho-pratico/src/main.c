@@ -4,16 +4,25 @@
 //gcc main.c -Wall -o main `pkg-config --cflags --libs glib-2.0`
 
 #include <stdio.h>
+
 #include <stdlib.h>
+
 #include <stdbool.h>
+
 #include <string.h>
+
 #include <ctype.h>
+
 #include <glib.h>
 
 #include "../includes/users.h"
+
 #include "../includes/drivers.h"
+
 #include "../includes/rides.h"
+
 #include "../includes/parser.h"
+
 #include "../includes/query1.h"
 
 //como dar include a haeders fora do folder dos .c
@@ -356,22 +365,21 @@ void query_1 (char * string) {
 }
 */
 
-int main (int argc, char** argv) {
-    printf ("entrou na main\n");
-   if (argc == 3) {
-      parser_input(argv[1], argv[2]);
-      printf ("entrou no parser\n");
-   } 
+int main(int argc, char ** argv) {
+  printf("entrou na main\n");
+  if (argc == 3) {
+    parser_input(argv[1], argv[2]);
+    printf("entrou no parser\n");
+  }
 
-    printf ("acabou\n");
+  printf("acabou\n");
 }
 
-    //query2 (hash_drivers);
+//query2 (hash_drivers);
 
-
-  //struct drivers *d = g_hash_table_lookup (hash_drivers,"000000000003");
-  //printf ("AVAL:%f\n", d->avaliacao_media_driver); ESTÁ A FUNCIONAR, OU SEJA, OS VALORES DA AVALIACAO ESTAO NA HASHTABLE 
-    //printf ("%s\n",u->name);
-    //printf ("Total gasto:%f\n", calcula_total_gasto ("basic",10,1.00));
-    //printf ("%f\n",u->total_gasto);    
-    //printf ("%d\n",u->numero_viagens_user);
+//struct drivers *d = g_hash_table_lookup (hash_drivers,"000000000003");
+//printf ("AVAL:%f\n", d->avaliacao_media_driver); ESTÁ A FUNCIONAR, OU SEJA, OS VALORES DA AVALIACAO ESTAO NA HASHTABLE 
+//printf ("%s\n",u->name);
+//printf ("Total gasto:%f\n", calcula_total_gasto ("basic",10,1.00));
+//printf ("%f\n",u->total_gasto);    
+//printf ("%d\n",u->numero_viagens_user);

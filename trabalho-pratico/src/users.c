@@ -1,9 +1,15 @@
 #include <stdio.h>
+
 #include <stdlib.h>
+
 #include <string.h>
+
 #include <stdbool.h>
+
 #include <ctype.h>
+
 #include <glib.h>
+
 #include "../includes/users.h"
 
 //campo gasto -> incrementar
@@ -24,23 +30,23 @@ struct users {
 };
 //campo gasto -> incrementar
 
-GHashTable * users_catalog(char* pathfiles) {
+GHashTable * users_catalog(char * pathfiles) {
   char * line = NULL;
   ssize_t read;
   size_t len;
-  GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
+  GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
   char userfile[256];
   strcpy(userfile, pathfiles);
-  char* filename = strcat(userfile, "/users.csv");
-  FILE * file = fopen(filename, "r"); 
+  char * filename = strcat(userfile, "/users.csv");
+  FILE * file = fopen(filename, "r");
 
   if (file == NULL) {
     printf("Error opening file.\n");
   }
- // int records = 0;
+  // int records = 0;
   int i = 0;
   do {
-    while ((read = getline(&line, & len, file)) != -1) {
+    while ((read = getline( & line, & len, file)) != -1) {
       struct users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;
@@ -53,7 +59,7 @@ GHashTable * users_catalog(char* pathfiles) {
           u -> name = strdup(token);
           break;
         case 2:
-          u -> gender = *(token);
+          u -> gender = * (token);
           break;
         case 3:
           u -> birth_date = strdup(token);
@@ -65,12 +71,11 @@ GHashTable * users_catalog(char* pathfiles) {
           u -> pay_method = strdup(token);
           break;
         case 6:
-        if (strcmp(token,"active")) {
-          u->account_status = true;
-        }
-        else {
-          u->account_status = false;
-        }
+          if (strcmp(token, "active")) {
+            u -> account_status = true;
+          } else {
+            u -> account_status = false;
+          }
           //u -> account_status = strdup(token);
           //break;
         }
@@ -81,12 +86,12 @@ GHashTable * users_catalog(char* pathfiles) {
     }
     i++;
   } while (!feof(file));
-  
+
   //printf("%d", g_hash_table_size(hash_users));
   //struct users * user_pretendido = g_hash_table_lookup(hash_users, id);
   //printf("%s", user_pretendido->name);
   fclose(file);
- // g_hash_table_destroy(hash);
+  // g_hash_table_destroy(hash);
 
   /*printf("\n%d records read.\n\n", records);
   FILE * output = fopen("output.txt", "w+");
@@ -98,21 +103,20 @@ GHashTable * users_catalog(char* pathfiles) {
     "%s"
     "%s", user_pretendido-> username, user_pretendido-> name, user_pretendido-> gender, user_pretendido-> birth_date, user_pretendido-> account_creation, user_pretendido-> pay_method, user_pretendido-> account_status);
 */
-GHashTable * v =  hash_users;
-return v;
+  GHashTable * v = hash_users;
+  return v;
 }
 
-void initHash_users (GHashTable * hash_users) {
-  uint size = g_hash_table_size (hash_users); 
+void initHash_users(GHashTable * hash_users) {
+  uint size = g_hash_table_size(hash_users);
   struct users * u;
-  gpointer* keys = g_hash_table_get_keys_as_array (hash_users,&size);
-  for (uint i=0; i < size;i++) {
-    u = g_hash_table_lookup(hash_users,keys[i]);
-    u->date = 0;
-    u->distance = 0;
+  gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
+  for (uint i = 0; i < size; i++) {
+    u = g_hash_table_lookup(hash_users, keys[i]);
+    u -> date = 0;
+    u -> distance = 0;
   }
 }
-
 
 /*
 void get_age (char * v) {
@@ -138,9 +142,9 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 */
 
 //int main() {
-  //users_catalog("PeBaptista3");
+//users_catalog("PeBaptista3");
 
-  //struct users** p = catalog;
-  //printf("%p",p);
-  //return 0;
+//struct users** p = catalog;
+//printf("%p",p);
+//return 0;
 //}

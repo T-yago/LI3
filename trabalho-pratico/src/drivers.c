@@ -17,7 +17,7 @@ struct drivers {
   char * name;
   char * birth_day;
   char gender;
-  char*  car_class;
+  char * car_class;
   char * license_plate;
   unsigned short int date;
   char * city;
@@ -29,38 +29,38 @@ struct drivers {
   double avaliacao_media_driver;
 };
 
-GHashTable * drivers_catalog (char* pathfiles) {
+GHashTable * drivers_catalog(char * pathfiles) {
   char * line = NULL;
   ssize_t read;
   size_t len;
 
-  GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
+  GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free); // FAZER DESTROY NO FIM 
   char driverfile[256];
   strcpy(driverfile, pathfiles);
-  char* filename = strcat(driverfile, "/drivers.csv");
-  FILE * file = fopen(filename, "r"); 
+  char * filename = strcat(driverfile, "/drivers.csv");
+  FILE * file = fopen(filename, "r");
   if (file == NULL) {
     printf("Error opening file.\n");
   }
   int i = 0;
   do {
-    while ((read = getline(&line, &len, file)) != -1) {
+    while ((read = getline( & line, & len, file)) != -1) {
       struct drivers * d = malloc(sizeof(struct drivers));
       char * token;
       int i = 0;
-      while ((token = strsep(&line, ";\n"))) {
+      while ((token = strsep( & line, ";\n"))) {
         switch (i) {
         case 0:
           d -> id = strdup(token);
           break;
         case 1:
           d -> name = strdup(token);
-          break;  
+          break;
         case 2:
           d -> birth_day = strdup(token);
           break;
         case 3:
-          d -> gender = *(token);
+          d -> gender = * (token);
           break;
         case 4:
           d -> car_class = strdup(token);
@@ -75,12 +75,11 @@ GHashTable * drivers_catalog (char* pathfiles) {
           d -> account_creation = strdup(token);
           break;
         case 8:
-        if (strcmp(token,"active")) {
-          d->account_status = true;
-        }
-        else {
-          d->account_status = false;
-        }
+          if (strcmp(token, "active")) {
+            d -> account_status = true;
+          } else {
+            d -> account_status = false;
+          }
         }
         i++;
       }
@@ -94,43 +93,42 @@ GHashTable * drivers_catalog (char* pathfiles) {
   //struct drivers * user_pretendido = g_hash_table_lookup(hash_drivers, id);
   //printf("%s", user_pretendido->license_plate);
   fclose(file);
-//  g_hash_table_destroy(hash);
-/*
-  printf("\n%d records read.\n\n", records);
-  FILE * output = fopen("output.txt", "w+");
-  fprintf(output, "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s", user_pretendido-> id, user_pretendido-> name, user_pretendido-> birth_day, user_pretendido-> gender, user_pretendido-> car_class, user_pretendido-> license_plate, user_pretendido-> city, user_pretendido-> account_creation, user_pretendido->account_status);
-*/
+  //  g_hash_table_destroy(hash);
+  /*
+    printf("\n%d records read.\n\n", records);
+    FILE * output = fopen("output.txt", "w+");
+    fprintf(output, "%s;"
+      "%s;"
+      "%s;"
+      "%s;"
+      "%s;"
+      "%s;"
+      "%s;"
+      "%s;"
+      "%s", user_pretendido-> id, user_pretendido-> name, user_pretendido-> birth_day, user_pretendido-> gender, user_pretendido-> car_class, user_pretendido-> license_plate, user_pretendido-> city, user_pretendido-> account_creation, user_pretendido->account_status);
+  */
   GHashTable * v = hash_drivers;
   return v;
 }
 
+void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
+  uint size = g_hash_table_size(hash_drivers);
+  struct drivers * d;
+  gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
 
-void initHash_drivers (GHashTable * hash_drivers) {  ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
-    uint size = g_hash_table_size (hash_drivers); 
-    struct drivers * d;
-    gpointer* keys = g_hash_table_get_keys_as_array (hash_drivers,&size);
-
-    for (uint i=0; i < size;i++) {
-      d = g_hash_table_lookup(hash_drivers,keys[i]);
-      d->avaliacao_media_driver = 0;
-      d->avaliacao_total_driver = 0;
-      d->numero_viagens_driver = 0;
+  for (uint i = 0; i < size; i++) {
+    d = g_hash_table_lookup(hash_drivers, keys[i]);
+    d -> avaliacao_media_driver = 0;
+    d -> avaliacao_total_driver = 0;
+    d -> numero_viagens_driver = 0;
     // d->date = 0;
-    }
+  }
 }
 
 //int main() {
- // drivers_catalog("9246");
+// drivers_catalog("9246");
 
-  //struct drivers** p = catalog;
-  //printf("%p",p);
- // return 0;
+//struct drivers** p = catalog;
+//printf("%p",p);
+// return 0;
 //}
