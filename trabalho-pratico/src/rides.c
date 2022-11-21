@@ -29,7 +29,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char* pat
   ssize_t read;
   size_t len;
  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
-  char ridesfile[35];
+  char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char* filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");

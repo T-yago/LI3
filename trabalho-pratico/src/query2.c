@@ -41,8 +41,9 @@ void query2 (GHashTable * hash_drivers, char* info, int n) {
 
   qsort((void*)query2,size,sizeof(struct query2),compare);
 
-  char buffer[35];
-  snprintf(buffer, 35, "Resultados/command%d_output.txt", n);
+  char buffer[256];
+  snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
+
   FILE * output = fopen(buffer, "w");
   for (int i=0; i< numb; i++) {
     d = g_hash_table_lookup(hash_drivers,(query2 +i)->id);
@@ -53,6 +54,7 @@ void query2 (GHashTable * hash_drivers, char* info, int n) {
   }
   free (d);
   fclose (output);
+  printf ("Query2 done.\n");
 }
 /*
  for (int i =0; i < size; i++) {

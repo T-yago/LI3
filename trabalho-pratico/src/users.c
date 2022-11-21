@@ -29,7 +29,7 @@ GHashTable * users_catalog(char* pathfiles) {
   ssize_t read;
   size_t len;
   GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free);
-  char userfile[35];
+  char userfile[256];
   strcpy(userfile, pathfiles);
   char* filename = strcat(userfile, "/users.csv");
   FILE * file = fopen(filename, "r"); 

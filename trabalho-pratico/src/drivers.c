@@ -35,7 +35,7 @@ GHashTable * drivers_catalog (char* pathfiles) {
   size_t len;
 
   GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal,g_free,g_free); // FAZER DESTROY NO FIM 
-  char driverfile[35];
+  char driverfile[256];
   strcpy(driverfile, pathfiles);
   char* filename = strcat(driverfile, "/drivers.csv");
   FILE * file = fopen(filename, "r"); 
