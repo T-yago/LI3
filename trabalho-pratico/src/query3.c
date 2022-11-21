@@ -56,4 +56,5 @@ qsort((void*)query3,size,sizeof(struct query3),compare_users);
           free (query3);
 //          free (u);
           fclose (output);
+            printf ("Query3 done.\n");
  }

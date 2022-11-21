@@ -134,4 +134,5 @@ void query1_main (char*id, GHashTable * hash_users, GHashTable * hash_drivers, i
   query1_driver (id,hash_drivers, n);
   }
   update_valor(hash_drivers);
+  printf ("Query1 done\n");
 }

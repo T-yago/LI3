@@ -53,6 +53,7 @@ void query2 (GHashTable * hash_drivers, char* info, int n) {
   }
   free (d);
   fclose (output);
+  printf ("Query2 done.\n");
 }
 /*
  for (int i =0; i < size; i++) {
