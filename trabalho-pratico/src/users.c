@@ -131,7 +131,10 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 //*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
 
+
+
 //*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
+
 
 char * getUsernameUser(GHashTable * users_hash, Users * copyUsers){
   Users * u;
@@ -154,10 +157,53 @@ unsigned short int getDateUser(GHashTable * users_hash, Users * copyUsers){
 }
 
 
+
+char * getBirthDateUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> birth_date;
+}
+
+
+
 char * getNameUser(GHashTable * users_hash, Users * copyUsers){
   Users * u;
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   return u -> name;
+}
+
+
+char  getGenderUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> gender;
+}
+
+
+short int  getNviagensUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> numero_viagens_user;
+}
+
+
+double getAvaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> avaliacao_media_user;
+}
+
+
+double getTotalGastoUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> total_gasto;
+}
+
+short int  getAvaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> avaliacao_total_user;
 }
 
 bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
@@ -165,6 +211,13 @@ bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   return u -> account_status;
 }
+
+void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u ->avaliacao_media_user = r;
+}
+
 
 
 void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){
