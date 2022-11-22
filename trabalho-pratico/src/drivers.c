@@ -100,11 +100,13 @@ void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM 
 }
 
 
-//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
+//***************************************************** Funções de encapsulamento de drivers *********************************************************
+ 
+//***************************************************** Funções de encapsulamento de drivers *********************************************************
+ 
+//***************************************************** Funções de encapsulamento de drivers *********************************************************
 
-//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
 
-//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
 
 char * getIdDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   Drivers * d;
@@ -188,6 +190,9 @@ char * getCarClassDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
   return d -> car_class;
 }
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void totalAuferidoDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double ta){

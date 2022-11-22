@@ -125,15 +125,14 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 //printf("%p",p);
 //return 0;
 //}
+ 
+ 
+//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
+  
+//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
+  
+//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
 
-
-//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
-
-//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
-
-
-
-//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
 
 
 char * getUsernameUser(GHashTable * users_hash, Users * copyUsers){
@@ -212,12 +211,15 @@ bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
   return u -> account_status;
 }
 
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r){
   Users * u;
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   u ->avaliacao_media_user = r;
 }
-
 
 
 void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){
