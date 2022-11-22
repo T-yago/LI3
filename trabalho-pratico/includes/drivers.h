@@ -25,4 +25,5 @@ int getNviagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers);
 void avaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double r);
 
 
+
 #endif

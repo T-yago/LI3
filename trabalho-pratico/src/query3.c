@@ -68,9 +68,6 @@ void query3(GHashTable * hash_users, char * info, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   FILE * output = fopen(buffer, "w");
-  if (output == NULL) {
-    printf("Error opening output.\n");
-  }
   for (int i = 0; i < numb; i++) {
     u = g_hash_table_lookup(hash_users, (query3 + i) -> id);
     if (!getAccountStatusUser(hash_users, u)) {     //(!u -> account_status)
@@ -83,7 +80,5 @@ void query3(GHashTable * hash_users, char * info, int n) {
     }
   }
   free(query3);
-  //          free (u);
   fclose(output);
-  printf("Query3 done.\n");
 }

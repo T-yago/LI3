@@ -27,7 +27,6 @@ struct users {
 
 GHashTable * users_catalog(char * pathfiles) {
   char * line = NULL;
-  ssize_t read;
   size_t len;
   GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
   char userfile[256];
@@ -41,8 +40,8 @@ GHashTable * users_catalog(char * pathfiles) {
   // int records = 0;
   int i = 0;
   do {
-    while ((read = getline( & line, & len, file)) != -1) {
-      struct users * u = malloc(sizeof(struct users));
+    while (getline( & line, & len, file) != -1) {
+      Users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;
       while ((token = strsep( & line, ";\n"))) {
@@ -67,44 +66,27 @@ GHashTable * users_catalog(char * pathfiles) {
           break;
         case 6:
           if (strcmp(token, "active")) {
-            u -> account_status = true;
-          } else {
-            u -> account_status = false;
-          }
-          //u -> account_status = strdup(token);
-          //break;
+              u -> account_status = true;
+            } else {
+              u -> account_status = false;
+            }
         }
         i++;
       }
-      //char *line_copy = strdup(line);
       g_hash_table_insert(hash_users, u -> username, u);
     }
     i++;
   } while (!feof(file));
 
-  //printf("%d", g_hash_table_size(hash_users));
-  //struct users * user_pretendido = g_hash_table_lookup(hash_users, id);
-  //printf("%s", user_pretendido->name);
   fclose(file);
-  // g_hash_table_destroy(hash);
 
-  /*printf("\n%d records read.\n\n", records);
-  FILE * output = fopen("output.txt", "w+");
-  fprintf(output, "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s;"
-    "%s"
-    "%s", user_pretendido-> username, user_pretendido-> name, user_pretendido-> gender, user_pretendido-> birth_date, user_pretendido-> account_creation, user_pretendido-> pay_method, user_pretendido-> account_status);
-*/
   GHashTable * v = hash_users;
   return v;
 }
 
 void initHash_users(GHashTable * hash_users) {
   uint size = g_hash_table_size(hash_users);
-  struct users * u;
+  Users * u;
   gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
   for (uint i = 0; i < size; i++) {
     u = g_hash_table_lookup(hash_users, keys[i]);
@@ -149,7 +131,10 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 //*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
 
+
+
 //*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
+
 
 char * getUsernameUser(GHashTable * users_hash, Users * copyUsers){
   Users * u;
@@ -172,11 +157,13 @@ unsigned short int getDateUser(GHashTable * users_hash, Users * copyUsers){
 }
 
 
+
 char * getBirthDateUser(GHashTable * users_hash, Users * copyUsers){
   Users * u;
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   return u -> birth_date;
 }
+
 
 
 char * getNameUser(GHashTable * users_hash, Users * copyUsers){
@@ -219,19 +206,18 @@ short int  getAvaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers){
   return u -> avaliacao_total_user;
 }
 
-
 bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
   Users * u;
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   return u -> account_status;
 }
 
-
 void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r){
   Users * u;
   u = g_hash_table_lookup(users_hash, copyUsers -> username);
   u ->avaliacao_media_user = r;
 }
+
 
 
 void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){

@@ -20,39 +20,6 @@
 
 #include "../includes/rides.h"
 
-struct users {
-  char * username;
-  char * name;
-  char gender;
-  unsigned short int date;
-  int distance;
-  char * birth_date;
-  char * account_creation;
-  char * pay_method;
-  bool account_status;
-  double total_gasto;
-  short int numero_viagens_user;
-  short int avaliacao_total_user;
-  double avaliacao_media_user;
-};
-
-struct drivers {
-  char * id;
-  char * name;
-  char * birth_day;
-  char gender;
-  char*  car_class;
-  char * license_plate;
-  unsigned short int date;
-  char * city;
-  char * account_creation;
-  bool account_status;
-  double total_auferido;
-  int avaliacao_total_driver; // short int nao chegou 
-  int numero_viagens_driver;
-  double avaliacao_media_driver;
-};
-
 struct rides {
   char * id;
   //char * date;
@@ -69,24 +36,19 @@ struct rides {
 
 void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pathfiles) {
   char * line = NULL;
-  ssize_t read;
   size_t len;
-  // GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
+  //GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
   char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
-  if (file == NULL) {
-    printf("Error opening file.\n");
-  }
-  //int records = 0;
   int i = 0;
   int j = 0;
 
   do {
 
-    while ((read = getline( & line, & len, file)) != -1) {
-      struct rides * ride = malloc(sizeof(struct rides));
+    while (getline( & line, & len, file) != -1) {
+      Rides * ride = malloc(sizeof(struct rides));
 
       char * token;
       int i = 0;
@@ -125,13 +87,12 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
           break;
         }
         i++;
-
+        
+       // g_hash_table_insert(hash_rides, ride -> id, ride);
       } //escrever aqui o que colocar a cada iteracao de user
       if (j == 0) {
         j++;
       } else {
-
-        // é preciso fazer malloc de algo que já tinha sido previamente alocado na mem?????
         Users * u ;
         Drivers * d;
         double tg = 0, ta = 0;
@@ -175,7 +136,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         }*/
         dateDriver(drivers_hash, d, ride -> date);
 
-
+        free (ride);
         //printf ("%s\n",u->username);
       }
 
@@ -184,10 +145,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
     }
     i++;
   } while (!feof(file));
-
-  // printf("Tamanho da hash table: %d\n", g_hash_table_size(hash_rides));
-  // struct rides * user_pretendido = g_hash_table_lookup(hash_rides, id);
-  // printf("%s", user_pretendido->distance);
-
-  fclose(file);
+ fclose(file);
+ //GHashTable * v = hash_rides;
+  //return v;
 }

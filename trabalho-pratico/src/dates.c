@@ -90,35 +90,3 @@ char * dataToChar (unsigned short int data) {
     }
 }
 */
-
-//while (month != 0) {
-// {
-/*
-        if (month ==12) total_days += 31 ;
-        if (month >=11) total_days += 30;
-        if (month >=10)total_days += 31  ;
-        if (month >=9)total_days += 30; 
-        if (month >=8)total_days += 31  ; 
-        if (month >=7) total_days += 31 ;
-        if (month >= 6) total_days += 30;
-        if (month >= 5) total_days += 31 ;
-        if (month >=4) total_days += 30;;
-        if (month >=3) total_days += 31 ;
-        if (month >=2) total_days += 30;;
-        if (month >=1) total_days += 31 ;
-*/
-/*      if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-      {
-          total_days += 31;
-      }
-      else if (month == 4 || month == 6 || month == 9 || month == 11)
-      {
-          total_days += 30;
-      }
-      else
-      {
-          total_days += 28;
-      }
-      month--;
-  }
-*/

@@ -90,11 +90,6 @@ void update_valor(GHashTable * hash_drivers) {
     double r = (float) getAvaliacaoTotalDriver(hash_drivers, d) / (float) getNviagensDriver(hash_drivers, d);
     avaliacaoMediaDriver(hash_drivers, d, r);
   }
-  // d = g_hash_table_lookup (hash_drivers,"000000004780");
-  //printf ("AVAL:%f\n", d->avaliacao_media_driver);
-  // d = g_hash_table_lookup (hash_drivers,"000000007141");
-  //printf ("AVAL:%f\n", d->avaliacao_media_driver);  ESTÁ A FUNCIONAR, OU SEJA, AS AVALIACOES ESTAO A SER COLOCADAS NOS STRUCTS
-  //free (d);  PORQUE É QUE NÃO DÁ ERRO AO DAR FREE AO D SE EU NÃO DEI MALLOC AO D??????????????????'
 }
 
 void query1_driver(char * id, GHashTable * hash_drivers, int n) {
@@ -165,5 +160,4 @@ void query1_main(char * id, GHashTable * hash_users, GHashTable * hash_drivers, 
     query1_driver(id, hash_drivers, n);
   }
   update_valor(hash_drivers);
-  printf("Query1 done\n");
 }

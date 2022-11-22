@@ -30,4 +30,5 @@ void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r);
 
 
 
+
 #endif
