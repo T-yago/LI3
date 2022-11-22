@@ -99,14 +99,6 @@ void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM 
   }
 }
 
-//int main() {
-// drivers_catalog("9246");
-
-//struct drivers** p = catalog;
-//printf("%p",p);
-// return 0;
-//}
-
 
 //*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
 

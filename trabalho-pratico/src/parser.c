@@ -23,15 +23,11 @@
 #include "../includes/query3.h"
 
 void parser_input(char * pathfiles, char * input) {
-  printf("entrou na função do parser\n");
   GHashTable * hash_users = users_catalog(pathfiles);
   initHash_users(hash_users);
-  printf("fez a hash dos users\n");
   GHashTable * hash_drivers = drivers_catalog(pathfiles);
   initHash_drivers(hash_drivers);
-  printf("fez a hash dos drivers\n");
   rides_catalog(hash_users, hash_drivers, pathfiles);
-  printf("fez a hash dos rides\n");
   FILE * file;
   char * aux;
   char * info;
@@ -39,9 +35,6 @@ void parser_input(char * pathfiles, char * input) {
   size_t len;
   char * line = NULL;
   file = fopen(input, "r");
-  if (file == NULL) {
-    printf("Error opening input file.\n");
-  }
   do {
     while (getline( & line, & len, file) != -1) {
       aux = strsep( & line, " ");
@@ -74,7 +67,4 @@ void parser_input(char * pathfiles, char * input) {
     }
   } while (!feof(file));
   fclose(file);
-  //   free (line);
-  //g_hash_table_destroy (hash_users);
-  // g_hash_table_destroy (hash_drivers);
 }

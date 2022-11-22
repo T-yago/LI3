@@ -42,9 +42,6 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
-  if (file == NULL) {
-    printf("Error opening file.\n");
-  }
   int i = 0;
   int j = 0;
 
@@ -90,13 +87,12 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
           break;
         }
         i++;
-
+        
+       // g_hash_table_insert(hash_rides, ride -> id, ride);
       } //escrever aqui o que colocar a cada iteracao de user
       if (j == 0) {
         j++;
       } else {
-
-        // é preciso fazer malloc de algo que já tinha sido previamente alocado na mem?????
         Users * u ;
         Drivers * d;
         double tg = 0, ta = 0;
@@ -150,4 +146,6 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
     i++;
   } while (!feof(file));
  fclose(file);
+ //GHashTable * v = hash_rides;
+  //return v;
 }
