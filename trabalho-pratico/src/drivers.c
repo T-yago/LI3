@@ -147,59 +147,18 @@ int getAvaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   return d -> avaliacao_total_driver;
 }
 
+
 int getNviagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   Drivers * d;
   d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
   return d -> numero_viagens_driver;
 }
 
+
 void avaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double r){
   Drivers * d;
   d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
   d -> avaliacao_media_driver = r;
-}
-
-
-
-
-
-
-
-
-
-
-char * getIdDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> id;
-}
-
-
-bool getAccountStatus(GHashTable * drivers_hash, Drivers * copyDrivers){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> account_status;
-}
-
-
-double getAvaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> avaliacao_media_driver;
-}
-
-
-double getDateDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> date;
-}
-
-
-char * getNameaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> name;
 }
 
 
