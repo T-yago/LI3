@@ -1,13 +1,8 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <stdbool.h>
-
 #include <string.h>
-
 #include <ctype.h>
-
 #include <glib.h>
 
 #include "../includes/drivers.h"
@@ -113,8 +108,45 @@ void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM 
 //}
 
 
+//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
 
 //*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
+
+//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
+
+char * getIdDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> id;
+}
+
+
+bool getAccountStatus(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> account_status;
+}
+
+
+double getAvaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> avaliacao_media_driver;
+}
+
+
+double getDateDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> date;
+}
+
+
+char * getNameaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> name;
+}
 
 
 char * getCarClassDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
@@ -123,11 +155,13 @@ char * getCarClassDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   return d -> car_class;
 }
 
+
 void totalAuferidoDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double ta){
   Drivers * d;
   d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
   d -> total_auferido = copyDrivers -> total_auferido + ta;
 }
+
 
 void avaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers, short int r){
   Drivers * d;
@@ -135,11 +169,13 @@ void avaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers, shor
   d -> avaliacao_total_driver = copyDrivers -> avaliacao_total_driver + r;
 }
 
+
 void numeroViagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
   Drivers * d;
   d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
   d -> numero_viagens_driver = copyDrivers -> numero_viagens_driver + 1;
 }
+
 
 void dateDriver(GHashTable * drivers_hash, Drivers * copyDrivers, unsigned short int r){
   Drivers * d;

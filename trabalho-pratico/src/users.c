@@ -127,9 +127,44 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 //}
 
 
+//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
 
 //*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
 
+//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
+
+char * getUsernameUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> username;
+}
+
+
+int getDistanceUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> distance;
+}
+
+
+unsigned short int getDateUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> date;
+}
+
+
+char * getNameUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> name;
+}
+
+bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  return u -> account_status;
+}
 
 
 void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){

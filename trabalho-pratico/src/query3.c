@@ -8,25 +8,9 @@
 
 #include "../includes/users.h"
 
-struct users {
-  char * username;
-  char * name;
-  char gender;
-  unsigned short int date;
-  int distance;
-  char * birth_date;
-  char * account_creation;
-  char * pay_method;
-  bool account_status;
-  double total_gasto;
-  short int numero_viagens_user;
-  short int avaliacao_total_user;
-  double avaliacao_media_user;
-};
 
 
-struct query3
- {
+struct query3{
   char * id;
   int distance;
   char* name;
@@ -34,8 +18,7 @@ struct query3
 };
 
 
-int compare_users(const void * a,
-  const void * b) {
+int compare_users(const void * a, const void * b) {
   Query3 * ia = (struct query3 * ) a;
   Query3 * ib = (struct query3 * ) b;
 
@@ -67,10 +50,17 @@ void query3(GHashTable * hash_users, char * info, int n) {
 
     u = g_hash_table_lookup(hash_users, keys[i]);
 
-    (query3 + i) -> id = (u -> username);
-    (query3 + i) -> distance = u -> distance;
-    (query3 + i) -> data = u -> date;
-    (query3 + i) -> name = u -> name;
+    //(query3 + i) -> id = (u -> username);
+    (query3 + i) -> id = getUsernameUser(hash_users, u);
+    
+    //(query3 + i) -> distance = u -> distance;
+    (query3 + i) -> distance = getDistanceUser(hash_users, u);
+    
+    //(query3 + i) -> data = u -> date;
+    (query3 + i) -> data = getDateUser(hash_users, u);
+    
+    //(query3 + i) -> name = u -> name;
+    (query3 + i) -> name = getNameUser(hash_users, u);
 
   }
   qsort((void * ) query3, size, sizeof(struct query3), compare_users);
@@ -83,7 +73,7 @@ void query3(GHashTable * hash_users, char * info, int n) {
   }
   for (int i = 0; i < numb; i++) {
     u = g_hash_table_lookup(hash_users, (query3 + i) -> id);
-    if (!u -> account_status) {
+    if (!getAccountStatusUser(hash_users, u)) {     //(!u -> account_status)
       fprintf(output, "%s;"
         "%s;"
         "%d\n", (query3 + i) -> id, (query3 + i) -> name, (query3 + i) -> distance);
