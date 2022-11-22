@@ -57,7 +57,7 @@ int compare_users(const void * a,
 }
 
 void query3(GHashTable * hash_users, char * info, int n) {
-  struct users * u;
+  Users * u;
   int numb = atoi(info);
   uint size = g_hash_table_size(hash_users);
 
