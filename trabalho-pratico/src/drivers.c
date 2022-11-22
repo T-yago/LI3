@@ -132,3 +132,38 @@ void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM 
 //printf("%p",p);
 // return 0;
 //}
+
+
+
+//*********************************************************Funcoes de encapsulamento de drivers usadas em riders.c*****************************************
+
+
+char * getCarClassDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  return d -> car_class;
+}
+
+void totalAuferidoDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double ta){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d -> total_auferido = copyDrivers -> total_auferido + ta;
+}
+
+void avaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers, short int r){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d -> avaliacao_total_driver = copyDrivers -> avaliacao_total_driver + r;
+}
+
+void numeroViagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d -> numero_viagens_driver = copyDrivers -> numero_viagens_driver + 1;
+}
+
+void dateDriver(GHashTable * drivers_hash, Drivers * copyDrivers, unsigned short int r){
+  Drivers * d;
+  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  if (r > d -> date)  d -> date = r;
+}

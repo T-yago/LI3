@@ -1,13 +1,8 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <string.h>
-
 #include <stdbool.h>
-
 #include <ctype.h>
-
 #include <glib.h>
 
 #include "../includes/users.h"
@@ -148,3 +143,43 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 //printf("%p",p);
 //return 0;
 //}
+
+
+
+//*********************************************************Funcoes de encapsulamento de users usadas em riders.c*****************************************
+
+
+
+void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u -> numero_viagens_user = copyUsers -> numero_viagens_user + 1;
+}
+
+
+void avaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers, short int r){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u -> avaliacao_total_user = copyUsers -> avaliacao_total_user + r;
+}
+
+
+void totalDistanceUser(GHashTable * users_hash, Users * copyUsers, int r){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u -> distance = copyUsers -> distance + r;
+}
+
+void dateUser(GHashTable * users_hash, Users * copyUsers, unsigned short int r){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  if (r > u -> date)  u -> date = r;
+}
+
+
+void totalGastoUser(GHashTable * users_hash, Users * copyUsers, double tg){
+  Users * u;
+  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u->total_gasto = copyUsers -> total_gasto + tg;
+}
+

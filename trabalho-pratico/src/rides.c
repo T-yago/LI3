@@ -134,24 +134,48 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         // é preciso fazer malloc de algo que já tinha sido previamente alocado na mem?????
         Users * u ;
         Drivers * d;
+        double tg = 0, ta = 0;
         u = g_hash_table_lookup(users_hash, ride -> user);
         d = g_hash_table_lookup(drivers_hash, ride -> driver);
 
-        u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        u -> avaliacao_total_user += ride -> score_user;
-        u -> numero_viagens_user++;
-        u -> distance += ride -> distance;
+        
+        //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
+        tg = calcula_total_gasto (getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+        totalGastoUser(users_hash, u, tg);
+
+        //u -> avaliacao_total_user += ride -> score_user;
+        avaliacaoTotalUser(users_hash, u, ride -> score_user);
+
+        //u -> numero_viagens_user++;
+        incUserNumeroViagens(users_hash, u);
+
+        //u -> distance += ride -> distance;
+        totalDistanceUser(users_hash, u, ride -> distance);
+
+        /*
         if (ride -> date > u -> date) {
           u -> date = ride -> date;
-        }
+        }*/
+        dateUser(users_hash, u, ride -> date);
 
-        d -> total_auferido += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        d -> avaliacao_total_driver += ride -> score_driver;
-        d -> numero_viagens_driver++;
 
+        //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+        ta = calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+        totalAuferidoDriver(drivers_hash, d, ta);
+
+        //d -> avaliacao_total_driver += ride -> score_driver;
+        avaliacaoTotalDriver(drivers_hash, d, ride -> score_driver);
+
+        //d -> numero_viagens_driver++;
+        numeroViagensDriver(drivers_hash, d);
+
+        /*
         if (ride -> date > d -> date) {
           d -> date = ride -> date;
-        }
+        }*/
+        dateDriver(drivers_hash, d, ride -> date);
+
+
         //printf ("%s\n",u->username);
       }
 
