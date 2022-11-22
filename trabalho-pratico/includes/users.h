@@ -17,6 +17,15 @@ int getDistanceUser(GHashTable * users_hash, Users* copyUsers);
 unsigned short int getDateUser(GHashTable * users_hash, Users* copyUsers);
 char * getNameUser(GHashTable * users_hash, Users* copyUsers);
 bool getAccountStatusUser(GHashTable * users_hash, Users* copyUsers);
+char * getBirthDateUser(GHashTable * users_hash, Users * copyUsers);
+char  getGenderUser(GHashTable * users_hash, Users * copyUsers);
+short int  getAvaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers);
+short int  getNviagensUser(GHashTable * users_hash, Users * copyUsers);
+double getAvaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers);
+double getTotalGastoUser(GHashTable * users_hash, Users * copyUsers);
+void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r);
+
+
 
 
 
