@@ -95,38 +95,6 @@ void initHash_users(GHashTable * hash_users) {
   }
 }
 
-/*
-void get_age (char * v) {
-printf ("%s",*v);
-age ()
-}
-
-void age(int present_date, int present_month, int present_year, int birth_date, int birth_month, int birth_year) {//09/10/2022
-int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-   if (birth_date > present_date) {
-      present_date = present_date + month[birth_month - 1];
-      present_month = present_month - 1;
-   }
-   if (birth_month > present_month) {
-      present_year = present_year - 1;
-      present_month = present_month + 12;
-   }
-   int final_date = present_date - birth_date;
-   int final_month = present_month - birth_month;
-   int final_year = present_year - birth_year;
-   printf("Present Age Years: %d Months: %d Days: %d", final_year, final_month, final_date);
-}
-*/
-
-//int main() {
-//users_catalog("PeBaptista3");
-
-//struct users** p = catalog;
-//printf("%p",p);
-//return 0;
-//}
- 
- 
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
   
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
@@ -135,79 +103,79 @@ int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 
 
-char * getUsernameUser(GHashTable * users_hash, Users * copyUsers){
+char * getUsernameUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  return u -> username;
+  u = g_hash_table_lookup(users_hash, id);
+  return strdup(u -> username);
 }
 
 
-int getDistanceUser(GHashTable * users_hash, Users * copyUsers){
+int getDistanceUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> distance;
 }
 
 
-unsigned short int getDateUser(GHashTable * users_hash, Users * copyUsers){
+unsigned short int getDateUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> date;
 }
 
 
 
-char * getBirthDateUser(GHashTable * users_hash, Users * copyUsers){
+char * getBirthDateUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  return u -> birth_date;
+  u = g_hash_table_lookup(users_hash, id);
+  return strdup(u -> birth_date);
 }
 
 
 
-char * getNameUser(GHashTable * users_hash, Users * copyUsers){
+char * getNameUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  return u -> name;
+  u = g_hash_table_lookup(users_hash, id);
+  return strdup(u -> name);
 }
 
 
-char  getGenderUser(GHashTable * users_hash, Users * copyUsers){
+char  getGenderUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> gender;
 }
 
 
-short int  getNviagensUser(GHashTable * users_hash, Users * copyUsers){
+short int  getNviagensUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> numero_viagens_user;
 }
 
 
-double getAvaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers){
+double getAvaliacaoMediaUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> avaliacao_media_user;
 }
 
 
-double getTotalGastoUser(GHashTable * users_hash, Users * copyUsers){
+double getTotalGastoUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> total_gasto;
 }
 
-short int  getAvaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers){
+short int  getAvaliacaoTotalUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> avaliacao_total_user;
 }
 
-bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
+bool getAccountStatusUser(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   return u -> account_status;
 }
 
@@ -215,43 +183,43 @@ bool getAccountStatusUser(GHashTable * users_hash, Users * copyUsers){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void avaliacaoMediaUser(GHashTable * users_hash, Users * copyUsers, double r){
+void avaliacaoMediaUser(GHashTable * users_hash, char* id, double r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   u ->avaliacao_media_user = r;
 }
 
 
-void incUserNumeroViagens(GHashTable * users_hash, Users * copyUsers){
+void incUserNumeroViagens(GHashTable * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  u -> numero_viagens_user = copyUsers -> numero_viagens_user + 1;
+  u = g_hash_table_lookup(users_hash, id);
+  u -> numero_viagens_user = u-> numero_viagens_user + 1;
 }
 
 
-void avaliacaoTotalUser(GHashTable * users_hash, Users * copyUsers, short int r){
+void avaliacaoTotalUser(GHashTable * users_hash, char* id, short int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  u -> avaliacao_total_user = copyUsers -> avaliacao_total_user + r;
+  u = g_hash_table_lookup(users_hash, id);
+  u -> avaliacao_total_user = u-> avaliacao_total_user + r;
 }
 
 
-void totalDistanceUser(GHashTable * users_hash, Users * copyUsers, int r){
+void totalDistanceUser(GHashTable * users_hash, char* id, int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  u -> distance = copyUsers -> distance + r;
+  u = g_hash_table_lookup(users_hash, id);
+  u -> distance = u-> distance + r;
 }
 
-void dateUser(GHashTable * users_hash, Users * copyUsers, unsigned short int r){
+void dateUser(GHashTable * users_hash, char* id, unsigned short int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
+  u = g_hash_table_lookup(users_hash, id);
   if (r > u -> date)  u -> date = r;
 }
 
 
-void totalGastoUser(GHashTable * users_hash, Users * copyUsers, double tg){
+void totalGastoUser(GHashTable * users_hash, char* id, double tg){
   Users * u;
-  u = g_hash_table_lookup(users_hash, copyUsers -> username);
-  u->total_gasto = copyUsers -> total_gasto + tg;
+  u = g_hash_table_lookup(users_hash, id);
+  u->total_gasto =u-> total_gasto + tg;
 }
 

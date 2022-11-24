@@ -40,27 +40,16 @@ int compare_users(const void * a, const void * b) {
 }
 
 void query3(GHashTable * hash_users, char * info, int n) {
-  Users * u;
   int numb = atoi(info);
   uint size = g_hash_table_size(hash_users);
 
   Query3 * query3 = malloc(size * sizeof(struct query3));
   gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
   for (uint i = 0; i < size; i++) {
-
-    u = g_hash_table_lookup(hash_users, keys[i]);
-
-    //(query3 + i) -> id = (u -> username);
-    (query3 + i) -> id = getUsernameUser(hash_users, u);
-    
-    //(query3 + i) -> distance = u -> distance;
-    (query3 + i) -> distance = getDistanceUser(hash_users, u);
-    
-    //(query3 + i) -> data = u -> date;
-    (query3 + i) -> data = getDateUser(hash_users, u);
-    
-    //(query3 + i) -> name = u -> name;
-    (query3 + i) -> name = getNameUser(hash_users, u);
+    (query3 + i) -> id = getUsernameUser(hash_users, keys[i]);
+    (query3 + i) -> distance = getDistanceUser(hash_users, keys[i]);
+    (query3 + i) -> data = getDateUser(hash_users, keys[i]);
+    (query3 + i) -> name = getNameUser(hash_users, keys[i]);
 
   }
   qsort((void * ) query3, size, sizeof(struct query3), compare_users);
@@ -69,8 +58,7 @@ void query3(GHashTable * hash_users, char * info, int n) {
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   FILE * output = fopen(buffer, "w");
   for (int i = 0; i < numb; i++) {
-    u = g_hash_table_lookup(hash_users, (query3 + i) -> id);
-    if (!getAccountStatusUser(hash_users, u)) {     //(!u -> account_status)
+    if (!getAccountStatusUser(hash_users, (query3 + i) -> id)) {     //(!u -> account_status)
       fprintf(output, "%s;"
         "%s;"
         "%d\n", (query3 + i) -> id, (query3 + i) -> name, (query3 + i) -> distance);

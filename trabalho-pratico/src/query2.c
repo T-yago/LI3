@@ -41,7 +41,7 @@ int compare(const void * a,
 void query2(GHashTable * hash_drivers, char * info, int n) {
   int numb = atoi(info);
   uint size = g_hash_table_size(hash_drivers);
-  Query2 * query2 = malloc(size * sizeof(struct query2));
+  Query2 * query2 = malloc( sizeof(struct query2));
   gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
   for (uint i = 0; i < size; i++) {
 

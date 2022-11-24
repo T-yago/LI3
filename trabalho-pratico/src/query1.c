@@ -111,11 +111,9 @@ void query1_driver(char * id, GHashTable * hash_drivers, int n) {
 }
 
 void query1_user(char * id, GHashTable * hash_users, int n) {
-  //decidir se é user ou driver
-  struct users * u = g_hash_table_lookup(hash_users, id);
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
-  if ( getAccountStatusUser(hash_users, u)) {
+  if ( getAccountStatusUser(hash_users, id)) {
     FILE * output = fopen(buffer, "w");
     if (output == NULL) {
       printf("Error opening output.\n");
@@ -123,10 +121,10 @@ void query1_user(char * id, GHashTable * hash_users, int n) {
     fclose(output);
   } else {
     //u -> avaliacao_media_user = (float) u -> avaliacao_total_user / (float) u -> numero_viagens_user;
-    double r = (float) getAvaliacaoTotalUser(hash_users, u) / (float) getNviagensUser(hash_users, u);
-    avaliacaoMediaUser(hash_users, u, r);
+    double r = (float) getAvaliacaoTotalUser(hash_users, id) / (float) getNviagensUser(hash_users, id);
+    avaliacaoMediaUser(hash_users, id, r);
 
-    short int age = calcula_idade(getBirthDateUser(hash_users, u));
+    short int age = calcula_idade(getBirthDateUser(hash_users, id));
     FILE * output = fopen(buffer, "w");
     if (output == NULL) {
       printf("Error opening output.\n");
@@ -136,7 +134,7 @@ void query1_user(char * id, GHashTable * hash_users, int n) {
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", getNameUser(hash_users, u), getGenderUser(hash_users, u), age, getAvaliacaoMediaUser(hash_users, u), getNviagensUser(hash_users, u), getTotalGastoUser(hash_users, u));
+      "%.3f\n", getNameUser(hash_users, id), getGenderUser(hash_users, id), age, getAvaliacaoMediaUser(hash_users, id), getNviagensUser(hash_users, id), getTotalGastoUser(hash_users, id));
     fclose(output);
   }
 }

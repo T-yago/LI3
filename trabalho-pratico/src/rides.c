@@ -93,29 +93,26 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
       if (j == 0) {
         j++;
       } else {
-        Users * u ;
         double tg = 0, ta = 0;
-        u = g_hash_table_lookup(users_hash, ride -> user);
-
         
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
         tg = calcula_total_gasto (getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
-        totalGastoUser(users_hash, u, tg);
+        totalGastoUser(users_hash, ride->user, tg);
 
         //u -> avaliacao_total_user += ride -> score_user;
-        avaliacaoTotalUser(users_hash, u, ride -> score_user);
+        avaliacaoTotalUser(users_hash, ride->user, ride -> score_user);
 
         //u -> numero_viagens_user++;
-        incUserNumeroViagens(users_hash, u);
+        incUserNumeroViagens(users_hash,ride->user);
 
         //u -> distance += ride -> distance;
-        totalDistanceUser(users_hash, u, ride -> distance);
+        totalDistanceUser(users_hash, ride->user, ride -> distance);
 
         /*
         if (ride -> date > u -> date) {
           u -> date = ride -> date;
         }*/
-        dateUser(users_hash, u, ride -> date);
+        dateUser(users_hash, ride->user, ride -> date);
 
 
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
