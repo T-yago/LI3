@@ -39,26 +39,24 @@ int compare(const void * a,
 }
 
 void query2(GHashTable * hash_drivers, char * info, int n) {
-  Drivers * d;
   int numb = atoi(info);
   uint size = g_hash_table_size(hash_drivers);
-  struct query2 * query2 = malloc(sizeof(struct query2));
+  Query2 * query2 = malloc(size * sizeof(struct query2));
   gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
   for (uint i = 0; i < size; i++) {
 
-    d = g_hash_table_lookup(hash_drivers, keys[i]);
 
     //(query2 + i) -> id = (d -> id);
-    (query2 + i) -> id = getIdDriver(hash_drivers, d);
+    (query2 + i) -> id = getIdDriver(hash_drivers, keys[i]);
 
     //(query2 + i) -> avaliacao_media = d -> avaliacao_media_driver;
-    (query2 + i) -> avaliacao_media = getAvaliacaoMediaDriver(hash_drivers, d);
+    (query2 + i) -> avaliacao_media = getAvaliacaoMediaDriver(hash_drivers, keys[i]);
     
     //query2 + i) -> data = d -> date;
-    (query2 + i) -> data = getDateDriver(hash_drivers, d);
+    (query2 + i) -> data = getDateDriver(hash_drivers, keys[i]);
     
     //(query2 + i) -> name = d -> name;
-    (query2 + i) -> name = getNameaDriver(hash_drivers, d);
+    (query2 + i) -> name = getNameaDriver(hash_drivers, keys[i]);
 
   }
 
@@ -69,8 +67,8 @@ void query2(GHashTable * hash_drivers, char * info, int n) {
 
   FILE * output = fopen(buffer, "w");
   for (int i = 0; i < numb; i++) {
-    d = g_hash_table_lookup(hash_drivers, (query2 + i) -> id);
-    if (!getAccountStatus(hash_drivers, d)) { //(!d->account_status)
+    char* key = getIdDriver(hash_drivers, (query2 + i) -> id);
+    if (!getAccountStatus(hash_drivers, key)) { //(!d->account_status)
       fprintf(output, "%s;"
         "%s;"
         "%.3f\n", (query2 + i) -> id, (query2 + i) -> name, (query2 + i) -> avaliacao_media);

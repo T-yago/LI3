@@ -108,116 +108,116 @@ void initHash_drivers(GHashTable * hash_drivers) { ///// COLOCAR A initHash NUM 
 
 
 
-char * getIdDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+char * getIdDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> id;
+  d = g_hash_table_lookup(drivers_hash, key);
+  return strdup (d -> id);
 }
 
 
-bool getAccountStatus(GHashTable * drivers_hash, Drivers * copyDrivers){
+bool getAccountStatus(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> account_status;
 }
 
 
-double getAvaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+double getAvaliacaoMediaDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> avaliacao_media_driver;
 }
 
 
-double getDateDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+double getDateDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> date;
 }
 
 
-char * getNameaDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+char * getNameaDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> name;
+  d = g_hash_table_lookup(drivers_hash, key);
+  return strdup(d -> name);
 }
 
 
-int getAvaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+int getAvaliacaoTotalDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> avaliacao_total_driver;
+  d = g_hash_table_lookup(drivers_hash, key);
+  return d->avaliacao_total_driver;
 }
 
 
-int getNviagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+int getNviagensDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> numero_viagens_driver;
 }
 
 
-void avaliacaoMediaDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double r){
+void avaliacaoMediaDriver(GHashTable * drivers_hash, char * key, double r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   d -> avaliacao_media_driver = r;
 }
 
 
-char  getGenderDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+char  getGenderDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> gender;
 }
 
 
-char * getBirthDayDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+char * getBirthDayDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> birth_day;
+  d = g_hash_table_lookup(drivers_hash, key);
+  return strdup(d -> birth_day);
 }
 
 
-double getTotalAuferidoDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+double getTotalAuferidoDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   return d -> total_auferido;
 }
 
 
-char * getCarClassDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+char * getCarClassDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  return d -> car_class;
+  d = g_hash_table_lookup(drivers_hash, key);
+  return strdup (d -> car_class);
 }
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void totalAuferidoDriver(GHashTable * drivers_hash, Drivers * copyDrivers, double ta){
+void totalAuferidoDriver(GHashTable * drivers_hash, char * key, double ta){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  d -> total_auferido = copyDrivers -> total_auferido + ta;
+  d = g_hash_table_lookup(drivers_hash, key);
+  d -> total_auferido += ta;
 }
 
 
-void avaliacaoTotalDriver(GHashTable * drivers_hash, Drivers * copyDrivers, short int r){
+void avaliacaoTotalDriver(GHashTable * drivers_hash, char * key, short int r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  d -> avaliacao_total_driver = copyDrivers -> avaliacao_total_driver + r;
+  d = g_hash_table_lookup(drivers_hash, key);
+  d -> avaliacao_total_driver += r;
 }
 
 
-void numeroViagensDriver(GHashTable * drivers_hash, Drivers * copyDrivers){
+void numeroViagensDriver(GHashTable * drivers_hash, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
-  d -> numero_viagens_driver = copyDrivers -> numero_viagens_driver + 1;
+  d = g_hash_table_lookup(drivers_hash, key);
+  d -> numero_viagens_driver += 1;
 }
 
 
-void dateDriver(GHashTable * drivers_hash, Drivers * copyDrivers, unsigned short int r){
+void dateDriver(GHashTable * drivers_hash,char * key, unsigned short int r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, copyDrivers -> id);
+  d = g_hash_table_lookup(drivers_hash, key);
   if (r > d -> date)  d -> date = r;
 }

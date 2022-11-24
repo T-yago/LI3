@@ -94,14 +94,12 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         j++;
       } else {
         Users * u ;
-        Drivers * d;
         double tg = 0, ta = 0;
         u = g_hash_table_lookup(users_hash, ride -> user);
-        d = g_hash_table_lookup(drivers_hash, ride -> driver);
 
         
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        tg = calcula_total_gasto (getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+        tg = calcula_total_gasto (getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
         totalGastoUser(users_hash, u, tg);
 
         //u -> avaliacao_total_user += ride -> score_user;
@@ -121,20 +119,20 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
 
 
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
-        ta = calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
-        totalAuferidoDriver(drivers_hash, d, ta);
+        ta = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
+        totalAuferidoDriver(drivers_hash, ride->driver, ta);
 
         //d -> avaliacao_total_driver += ride -> score_driver;
-        avaliacaoTotalDriver(drivers_hash, d, ride -> score_driver);
+        avaliacaoTotalDriver(drivers_hash, ride->driver, ride -> score_driver);
 
         //d -> numero_viagens_driver++;
-        numeroViagensDriver(drivers_hash, d);
+        numeroViagensDriver(drivers_hash, ride->driver);
 
         /*
         if (ride -> date > d -> date) {
           d -> date = ride -> date;
         }*/
-        dateDriver(drivers_hash, d, ride -> date);
+        dateDriver(drivers_hash, ride->driver, ride -> date);
 
         free (ride);
         //printf ("%s\n",u->username);

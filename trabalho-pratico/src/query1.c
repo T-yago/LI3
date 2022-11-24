@@ -30,16 +30,7 @@ double calcula_total_gasto(char * car_class, short int distance, double tip) {
   }
   return total;
 }
-/*
-double calcula_avaliacao_media (GHashTable * hash, char* id) {
-    int avaliacao_media;
-    struct users * u = malloc(sizeof(struct users));
-    u = g_hash_table_lookup (hash,id);
-    avaliacao_media = u->avaliacao_total_user / u->numero_viagens_user;
-    free(u);
-    return avaliacao_media;
-}
-*/
+
 
 short int calcula_idade(char * birthdate) {
   short int aux[4];
@@ -83,30 +74,27 @@ short int calcula_idade(char * birthdate) {
 void update_valor(GHashTable * hash_drivers) {
   uint size = g_hash_table_size(hash_drivers);
   void ** keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
-  Drivers * d;
   for (uint i = 0; i < size; i++) {
-    d = g_hash_table_lookup(hash_drivers, keys[i]);
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
-    double r = (float) getAvaliacaoTotalDriver(hash_drivers, d) / (float) getNviagensDriver(hash_drivers, d);
-    avaliacaoMediaDriver(hash_drivers, d, r);
+    double r = (float) getAvaliacaoTotalDriver(hash_drivers, keys[i]) / (float) getNviagensDriver(hash_drivers, keys[i]);
+    avaliacaoMediaDriver(hash_drivers, keys[i], r);
   }
 }
 
 void query1_driver(char * id, GHashTable * hash_drivers, int n) {
-  Drivers * d = g_hash_table_lookup(hash_drivers, id);
 
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
-  if (getAccountStatus(hash_drivers, d)) {
+  if (getAccountStatus(hash_drivers, id)) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
-    double r = (float) getAvaliacaoTotalDriver(hash_drivers, d) / (float) getNviagensDriver(hash_drivers, d);
-    avaliacaoMediaDriver(hash_drivers, d, r);
+    double r = (float) getAvaliacaoTotalDriver(hash_drivers, id) / (float) getNviagensDriver(hash_drivers, id);
+    avaliacaoMediaDriver(hash_drivers, id, r);
 
-    short int age = calcula_idade(getBirthDayDriver(hash_drivers, d));
+    short int age = calcula_idade(getBirthDayDriver(hash_drivers, id));
 
     FILE * output = fopen(buffer, "w");
     if (output == NULL) {
@@ -117,7 +105,7 @@ void query1_driver(char * id, GHashTable * hash_drivers, int n) {
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", getNameaDriver(hash_drivers, d), getGenderDriver(hash_drivers, d), age, getAvaliacaoMediaDriver(hash_drivers, d), getNviagensDriver(hash_drivers, d), getTotalAuferidoDriver(hash_drivers, d));
+      "%.3f\n", getNameaDriver(hash_drivers, id), getGenderDriver(hash_drivers, id), age, getAvaliacaoMediaDriver(hash_drivers, id), getNviagensDriver(hash_drivers, id), getTotalAuferidoDriver(hash_drivers, id));
     fclose(output);
   }
 }
