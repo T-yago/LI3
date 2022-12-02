@@ -53,6 +53,7 @@ void query3(Catalog_Users * hash_users, char * info, int n) {
     (query3 + i) -> name = getNameUser(hash_users, keys[i]);
 
   }
+  free (keys);
   qsort((void * ) query3, size, sizeof(struct query3), compare_users);
 
   char buffer[256];
@@ -68,6 +69,10 @@ void query3(Catalog_Users * hash_users, char * info, int n) {
       numb++;
     }
   }
-  free(query3);
+  for (uint i = 0; i < size; i++) {
+    free ((query3 + i) -> id);
+    free ((query3 + i) -> name);
+  }
+  free (query3);
   fclose(output);
 }

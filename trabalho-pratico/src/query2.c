@@ -37,16 +37,17 @@ void query2(Catalog_Drivers * hash_drivers, char * info, int n) {
   uint size = get_hash_drivers_size (hash_drivers); // o tamanho é calculado no drivers.c
   //uint size = g_hash_table_size(hash_drivers->hash_drivers);
   Query2 * query2 = malloc(size * sizeof(struct query2));
-  gpointer * keys = get_keys_as_array_drivers(hash_drivers, size);
+  gpointer * keys = get_hash_keys_as_array_drivers(hash_drivers, size);
   for (uint i = 0; i < size; i++) {
 
 
     (query2 + i) -> id = getIdDriver(hash_drivers, keys[i]);
     (query2 + i) -> avaliacao_media = getAvaliacaoMediaDriver(hash_drivers, keys[i]);
     (query2 + i) -> data = getDateDriver(hash_drivers, keys[i]);
-    (query2 + i) -> name = getNameaDriver(hash_drivers, keys[i]);
+    (query2 + i) -> name = getNameDriver(hash_drivers, keys[i]);
 
   }
+  free (keys);
 
   qsort((void * ) query2, size, sizeof(struct query2), compare);
 
@@ -63,6 +64,11 @@ void query2(Catalog_Drivers * hash_drivers, char * info, int n) {
     } else {
       numb++;
     }
+    free (key);
+  }
+  for (uint i=0;i<size; i++) {
+    free((query2 + i) -> id);
+    free ((query2 + i) -> name);
   }
   free (query2);
   fclose(output);

@@ -7,7 +7,7 @@
 typedef struct users Users;
 typedef struct  catalog_users Catalog_Users;
 
-
+void free_hash_users (Catalog_Users * catalog_users);
 Catalog_Users * users_catalog(char* pathfiles);
 uint get_hash_size_users (Catalog_Users * catalog_users);
 gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);

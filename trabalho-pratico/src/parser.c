@@ -37,9 +37,11 @@ void parser_input(char * pathfiles, char * input) {
   file = fopen(input, "r");
   do {
     while (getline( & line, & len, file) != -1) {
-      aux = strsep( & line, " ");
+     char * line_aux1 = line;
+      aux = strsep( & line_aux1, " ");
       numb_query = atoi(aux);
-      info = strsep( & line, " \n");
+           char * line_aux2 = line_aux1;
+      info = strsep( & line_aux2, " \n");
       switch (numb_query) {
       case 1:
         query1_main(info, hash_users, hash_drivers, n);
@@ -66,5 +68,10 @@ void parser_input(char * pathfiles, char * input) {
       n++;
     }
   } while (!feof(file));
+  free (line);
   fclose(file);
+  free_hash_users (hash_users);
+  free_hash_drivers (hash_drivers);
+  free (hash_drivers);
+  free (hash_users);
 }

@@ -32,7 +32,7 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
   char * line = NULL;
   size_t len;
 
-  GHashTable * hash_drivers = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free); // FAZER DESTROY NO FIM 
+  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); // FAZER DESTROY NO FIM 
   char driverfile[256];
   strcpy(driverfile, pathfiles);
   char * filename = strcat(driverfile, "/drivers.csv");
@@ -43,7 +43,8 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
       Drivers * d = malloc(sizeof(struct drivers));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ";\n"))) {
+      char * line_aux = line;
+      while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
           d -> id = strdup(token);
@@ -79,8 +80,9 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
         i++;
       }
       g_hash_table_insert(hash_drivers, d -> id, d);
-
+            free (line_aux);
     }
+    free (line);
     i++;
   } while (!feof(file));
   fclose(file);
@@ -102,8 +104,28 @@ gpointer * keys = g_hash_table_get_keys_as_array(catalog_drivers->hash_drivers, 
     d -> numero_viagens_driver = 0;
     d->date = 0;
   }
+  free (keys);
 }
 
+void free_hash_drivers (Catalog_Drivers * catalog_drivers) {
+ uint size = g_hash_table_size ( catalog_drivers->hash_drivers);
+  Drivers *d ;
+  gpointer * keys = get_hash_keys_as_array_drivers (catalog_drivers, size);
+  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_drivers, &size);
+  for (uint i = 0; i < size; i++) {
+    d = g_hash_table_lookup(catalog_drivers->hash_drivers, keys[i]);
+    free (d -> id);
+    free (d-> name);
+    free (d -> birth_day);
+    free (d->car_class);
+    free (d->license_plate);
+    free (d->city);
+    free (d->account_creation);
+    free (d);
+  }
+    free (keys);
+    g_hash_table_destroy (catalog_drivers->hash_drivers);
+}
 
 //***************************************************** Funções de encapsulamento de drivers *********************************************************
  
@@ -141,7 +163,7 @@ double getDateDriver(Catalog_Drivers * catalog_drivers, char * key){
 }
 
 
-char * getNameaDriver(Catalog_Drivers * catalog_drivers, char * key){
+char * getNameDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup(d -> name);
@@ -201,7 +223,7 @@ uint get_hash_drivers_size (Catalog_Drivers * catalog_drivers) {
   return size;
 }
 
-gpointer * get_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size) {
+gpointer * get_hash_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size) {
   gpointer * aux = g_hash_table_get_keys_as_array (catalog_drivers->hash_drivers, &size);
   return aux;
 }

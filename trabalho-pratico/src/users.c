@@ -31,7 +31,7 @@ struct users {
 Catalog_Users * users_catalog(char * pathfiles) {
   char * line = NULL;
   size_t len;
-  GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+  GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
   char userfile[256];
   strcpy(userfile, pathfiles);
   char * filename = strcat(userfile, "/users.csv");
@@ -47,7 +47,8 @@ Catalog_Users * users_catalog(char * pathfiles) {
       Users * u = malloc(sizeof(struct users));
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ";\n"))) {
+      char * line_aux = line;
+      while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
           u -> username = strdup(token);
@@ -77,7 +78,9 @@ Catalog_Users * users_catalog(char * pathfiles) {
         i++;
       }
       g_hash_table_insert(hash_users, u -> username, u);
+      free (line_aux);
     }
+    free (line);
     i++;
   } while (!feof(file));
 
@@ -99,6 +102,7 @@ void initHash_users(Catalog_Users * hash_users) {
     u -> date = 0;
     u -> distance = 0;
   }
+  free (keys);
 }
 
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
@@ -106,6 +110,24 @@ void initHash_users(Catalog_Users * hash_users) {
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
   
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
+
+void free_hash_users (Catalog_Users * catalog_users) {
+ uint size = g_hash_table_size ( catalog_users->hash_users);
+  Users * u;
+  gpointer * keys = get_hash_keys_as_array_users (catalog_users, size);
+  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
+  for (uint i = 0; i < size; i++) {
+    u = g_hash_table_lookup(catalog_users->hash_users, keys[i]);
+    free (u -> username);
+    free (u -> name);
+    free (u -> birth_date);
+    free (u->account_creation);
+    free (u->pay_method);
+    free (u);
+  }
+  free(keys);
+    g_hash_table_destroy (catalog_users->hash_users);
+}
 
 
 uint get_hash_size_users (Catalog_Users * users_hash) {
