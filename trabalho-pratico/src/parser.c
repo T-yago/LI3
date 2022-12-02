@@ -23,9 +23,9 @@
 #include "../includes/query3.h"
 
 void parser_input(char * pathfiles, char * input) {
-  GHashTable * hash_users = users_catalog(pathfiles);
+  Catalog_Users * hash_users = users_catalog(pathfiles);
   initHash_users(hash_users);
-  GHashTable * hash_drivers = drivers_catalog(pathfiles);
+  Catalog_Drivers * hash_drivers = drivers_catalog(pathfiles);
   initHash_drivers(hash_drivers);
   rides_catalog(hash_users, hash_drivers, pathfiles);
   FILE * file;

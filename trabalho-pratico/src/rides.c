@@ -34,7 +34,7 @@ struct rides {
   char * comment;
 };
 
-void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pathfiles) {
+void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, char * pathfiles) {
   char * line = NULL;
   size_t len;
   //GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
@@ -49,7 +49,6 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
 
     while (getline( & line, & len, file) != -1) {
       Rides * ride = malloc(sizeof(struct rides));
-
       char * token;
       int i = 0;
       while ((token = strsep( & line, ";\n"))) {

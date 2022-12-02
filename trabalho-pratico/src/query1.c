@@ -71,9 +71,9 @@ short int calcula_idade(char * birthdate) {
   return age;
 }
 
-void update_valor(GHashTable * hash_drivers) {
-  uint size = g_hash_table_size(hash_drivers);
-  void ** keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
+void update_valor(Catalog_Drivers * hash_drivers) {
+  uint size = get_hash_drivers_size(hash_drivers);
+ gpointer *  keys = get_keys_as_array_drivers(hash_drivers, size);
   for (uint i = 0; i < size; i++) {
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
     double r = (float) getAvaliacaoTotalDriver(hash_drivers, keys[i]) / (float) getNviagensDriver(hash_drivers, keys[i]);
@@ -81,7 +81,7 @@ void update_valor(GHashTable * hash_drivers) {
   }
 }
 
-void query1_driver(char * id, GHashTable * hash_drivers, int n) {
+void query1_driver(char * id, Catalog_Drivers * hash_drivers, int n) {
 
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
@@ -97,9 +97,6 @@ void query1_driver(char * id, GHashTable * hash_drivers, int n) {
     short int age = calcula_idade(getBirthDayDriver(hash_drivers, id));
 
     FILE * output = fopen(buffer, "w");
-    if (output == NULL) {
-      printf("Error opening output.\n");
-    }
     fprintf(output, "%s;"
       "%c;"
       "%d;"
@@ -110,7 +107,7 @@ void query1_driver(char * id, GHashTable * hash_drivers, int n) {
   }
 }
 
-void query1_user(char * id, GHashTable * hash_users, int n) {
+void query1_user(char * id, Catalog_Users * hash_users, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   if ( getAccountStatusUser(hash_users, id)) {
@@ -120,15 +117,11 @@ void query1_user(char * id, GHashTable * hash_users, int n) {
     }
     fclose(output);
   } else {
-    //u -> avaliacao_media_user = (float) u -> avaliacao_total_user / (float) u -> numero_viagens_user;
     double r = (float) getAvaliacaoTotalUser(hash_users, id) / (float) getNviagensUser(hash_users, id);
     avaliacaoMediaUser(hash_users, id, r);
 
     short int age = calcula_idade(getBirthDateUser(hash_users, id));
     FILE * output = fopen(buffer, "w");
-    if (output == NULL) {
-      printf("Error opening output.\n");
-    }
     fprintf(output, "%s;"
       "%c;"
       "%d;"
@@ -139,7 +132,7 @@ void query1_user(char * id, GHashTable * hash_users, int n) {
   }
 }
 
-void query1_main(char * id, GHashTable * hash_users, GHashTable * hash_drivers, int n) {
+void query1_main(char * id, Catalog_Users * hash_users, Catalog_Drivers * hash_drivers, int n) {
   if (isdigit(id[0]) == 0) {
     query1_user(id, hash_users, n);
   } else {

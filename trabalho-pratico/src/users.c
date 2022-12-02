@@ -7,7 +7,10 @@
 
 #include "../includes/users.h"
 
-//campo gasto -> incrementar
+struct catalog_users {
+  GHashTable * hash_users;
+};
+
 struct users {
   char * username;
   char * name;
@@ -25,7 +28,7 @@ struct users {
 };
 //campo gasto -> incrementar
 
-GHashTable * users_catalog(char * pathfiles) {
+Catalog_Users * users_catalog(char * pathfiles) {
   char * line = NULL;
   size_t len;
   GHashTable * hash_users = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
@@ -80,16 +83,19 @@ GHashTable * users_catalog(char * pathfiles) {
 
   fclose(file);
 
-  GHashTable * v = hash_users;
-  return v;
+  Catalog_Users * catalog_users = malloc (sizeof (struct catalog_users));
+  catalog_users -> hash_users = hash_users;
+return catalog_users;
 }
 
-void initHash_users(GHashTable * hash_users) {
-  uint size = g_hash_table_size(hash_users);
+void initHash_users(Catalog_Users * hash_users) {
+  //uint size = get_size_users (hash_users);
+  uint size = g_hash_table_size ( hash_users->hash_users);
   Users * u;
-  gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
+  gpointer * keys = get_hash_keys_as_array_users (hash_users, size);
+  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
   for (uint i = 0; i < size; i++) {
-    u = g_hash_table_lookup(hash_users, keys[i]);
+    u = g_hash_table_lookup(hash_users->hash_users, keys[i]);
     u -> date = 0;
     u -> distance = 0;
   }
@@ -102,80 +108,89 @@ void initHash_users(GHashTable * hash_users) {
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
 
 
+uint get_hash_size_users (Catalog_Users * users_hash) {
+  uint size = g_hash_table_size (users_hash->hash_users);
+  return size;
+}
 
-char * getUsernameUser(GHashTable * users_hash, char* id){
+gpointer * get_hash_keys_as_array_users (Catalog_Users * users_hash, uint size) {
+  gpointer * aux = g_hash_table_get_keys_as_array (users_hash->hash_users, &size);
+  return aux;
+}
+
+
+char * getUsernameUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return strdup(u -> username);
 }
 
 
-int getDistanceUser(GHashTable * users_hash, char* id){
+int getDistanceUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> distance;
 }
 
 
-unsigned short int getDateUser(GHashTable * users_hash, char* id){
+unsigned short int getDateUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> date;
 }
 
 
-
-char * getBirthDateUser(GHashTable * users_hash, char* id){
+char * getBirthDateUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
-  return strdup(u -> birth_date);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
+  return strdup (u -> birth_date);
 }
 
 
 
-char * getNameUser(GHashTable * users_hash, char* id){
+char * getNameUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return strdup(u -> name);
 }
 
 
-char  getGenderUser(GHashTable * users_hash, char* id){
+char  getGenderUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> gender;
 }
 
 
-short int  getNviagensUser(GHashTable * users_hash, char* id){
+short int  getNviagensUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> numero_viagens_user;
 }
 
 
-double getAvaliacaoMediaUser(GHashTable * users_hash, char* id){
+double getAvaliacaoMediaUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> avaliacao_media_user;
 }
 
 
-double getTotalGastoUser(GHashTable * users_hash, char* id){
+double getTotalGastoUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> total_gasto;
 }
 
-short int  getAvaliacaoTotalUser(GHashTable * users_hash, char* id){
+short int  getAvaliacaoTotalUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> avaliacao_total_user;
 }
 
-bool getAccountStatusUser(GHashTable * users_hash, char* id){
+bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> account_status;
 }
 
@@ -183,43 +198,43 @@ bool getAccountStatusUser(GHashTable * users_hash, char* id){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void avaliacaoMediaUser(GHashTable * users_hash, char* id, double r){
+void avaliacaoMediaUser(Catalog_Users * users_hash, char* id, double r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   u ->avaliacao_media_user = r;
 }
 
 
-void incUserNumeroViagens(GHashTable * users_hash, char* id){
+void incUserNumeroViagens(Catalog_Users * users_hash, char* id){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   u -> numero_viagens_user = u-> numero_viagens_user + 1;
 }
 
 
-void avaliacaoTotalUser(GHashTable * users_hash, char* id, short int r){
+void avaliacaoTotalUser(Catalog_Users * users_hash, char* id, short int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   u -> avaliacao_total_user = u-> avaliacao_total_user + r;
 }
 
 
-void totalDistanceUser(GHashTable * users_hash, char* id, int r){
+void totalDistanceUser(Catalog_Users * users_hash, char* id, int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   u -> distance = u-> distance + r;
 }
 
-void dateUser(GHashTable * users_hash, char* id, unsigned short int r){
+void dateUser(Catalog_Users * users_hash, char* id, unsigned short int r){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   if (r > u -> date)  u -> date = r;
 }
 
 
-void totalGastoUser(GHashTable * users_hash, char* id, double tg){
+void totalGastoUser(Catalog_Users * users_hash, char* id, double tg){
   Users * u;
-  u = g_hash_table_lookup(users_hash, id);
+  u = g_hash_table_lookup(users_hash->hash_users, id);
   u->total_gasto =u-> total_gasto + tg;
 }
 
