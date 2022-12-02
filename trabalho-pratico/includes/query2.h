@@ -8,6 +8,6 @@
 
 typedef struct query2 Query2;
 
-void query2 (Catalog_Drivers * hash_drivers, char* info, int n);
+void query2 (Catalog_Drivers * catalog_drivers, char* info, int n);
 
 #endif 

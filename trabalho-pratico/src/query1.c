@@ -71,30 +71,30 @@ short int calcula_idade(char * birthdate) {
   return age;
 }
 
-void update_valor(Catalog_Drivers * hash_drivers) {
-  uint size = get_hash_drivers_size(hash_drivers);
- gpointer *  keys = get_keys_as_array_drivers(hash_drivers, size);
+void update_valor(Catalog_Drivers * catalog_drivers) {
+  uint size = get_hash_drivers_size(catalog_drivers);
+ gpointer *  keys = get_keys_as_array_drivers(catalog_drivers, size);
   for (uint i = 0; i < size; i++) {
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
-    double r = (float) getAvaliacaoTotalDriver(hash_drivers, keys[i]) / (float) getNviagensDriver(hash_drivers, keys[i]);
-    avaliacaoMediaDriver(hash_drivers, keys[i], r);
+    double r = (float) getAvaliacaoTotalDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
+    avaliacaoMediaDriver(catalog_drivers, keys[i], r);
   }
 }
 
-void query1_driver(char * id, Catalog_Drivers * hash_drivers, int n) {
+void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
 
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
-  if (getAccountStatus(hash_drivers, id)) {
+  if (getAccountStatus(catalog_drivers, id)) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
-    double r = (float) getAvaliacaoTotalDriver(hash_drivers, id) / (float) getNviagensDriver(hash_drivers, id);
-    avaliacaoMediaDriver(hash_drivers, id, r);
+    double r = (float) getAvaliacaoTotalDriver(catalog_drivers, id) / (float) getNviagensDriver(catalog_drivers, id);
+    avaliacaoMediaDriver(catalog_drivers, id, r);
 
-    short int age = calcula_idade(getBirthDayDriver(hash_drivers, id));
+    short int age = calcula_idade(getBirthDayDriver(catalog_drivers, id));
 
     FILE * output = fopen(buffer, "w");
     fprintf(output, "%s;"
@@ -102,41 +102,38 @@ void query1_driver(char * id, Catalog_Drivers * hash_drivers, int n) {
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", getNameaDriver(hash_drivers, id), getGenderDriver(hash_drivers, id), age, getAvaliacaoMediaDriver(hash_drivers, id), getNviagensDriver(hash_drivers, id), getTotalAuferidoDriver(hash_drivers, id));
+      "%.3f\n", getNameaDriver(catalog_drivers, id), getGenderDriver(catalog_drivers, id), age, getAvaliacaoMediaDriver(catalog_drivers, id), getNviagensDriver(catalog_drivers, id), getTotalAuferidoDriver(catalog_drivers, id));
     fclose(output);
   }
 }
 
-void query1_user(char * id, Catalog_Users * hash_users, int n) {
+void query1_user(char * id, Catalog_Users * catalog_users, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
-  if ( getAccountStatusUser(hash_users, id)) {
+  if ( getAccountStatusUser(catalog_users, id)) {
     FILE * output = fopen(buffer, "w");
-    if (output == NULL) {
-      printf("Error opening output.\n");
-    }
     fclose(output);
   } else {
-    double r = (float) getAvaliacaoTotalUser(hash_users, id) / (float) getNviagensUser(hash_users, id);
-    avaliacaoMediaUser(hash_users, id, r);
+    double r = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) getNviagensUser(catalog_users, id);
+    avaliacaoMediaUser(catalog_users, id, r);
 
-    short int age = calcula_idade(getBirthDateUser(hash_users, id));
+    short int age = calcula_idade(getBirthDateUser(catalog_users, id));
     FILE * output = fopen(buffer, "w");
     fprintf(output, "%s;"
       "%c;"
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", getNameUser(hash_users, id), getGenderUser(hash_users, id), age, getAvaliacaoMediaUser(hash_users, id), getNviagensUser(hash_users, id), getTotalGastoUser(hash_users, id));
+      "%.3f\n", getNameUser(catalog_users, id), getGenderUser(catalog_users, id), age, getAvaliacaoMediaUser(catalog_users, id), getNviagensUser(catalog_users, id), getTotalGastoUser(catalog_users, id));
     fclose(output);
   }
 }
 
-void query1_main(char * id, Catalog_Users * hash_users, Catalog_Drivers * hash_drivers, int n) {
+void query1_main(char * id, Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, int n) {
   if (isdigit(id[0]) == 0) {
-    query1_user(id, hash_users, n);
+    query1_user(id, catalog_users, n);
   } else {
-    query1_driver(id, hash_drivers, n);
+    query1_driver(id, catalog_drivers, n);
   }
-  update_valor(hash_drivers);
+  update_valor(catalog_drivers);
 }

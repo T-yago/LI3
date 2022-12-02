@@ -9,6 +9,6 @@
 
 typedef struct rides Rides;
 
-void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, char * pathfiles);
+void rides_catalog(Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, char * pathfiles);
 
 #endif

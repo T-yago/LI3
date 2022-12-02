@@ -5,6 +5,6 @@
 
 typedef struct query3 Query3;
 
-void query3 (Catalog_Users * hash_users,char* info, int n);
+void query3 (Catalog_Users * catalog_users,char* info, int n);
 
 #endif

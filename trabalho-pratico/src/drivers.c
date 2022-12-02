@@ -91,12 +91,12 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
 return catalog_drivers;
 }
 
-void initHash_drivers(Catalog_Drivers * hash_drivers) { ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
-  uint size = g_hash_table_size(hash_drivers->hash_drivers);
+void initHash_drivers(Catalog_Drivers * catalog_drivers) { ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
+  uint size = g_hash_table_size(catalog_drivers->hash_drivers);
   Drivers * d;
-gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers->hash_drivers, & size);
+gpointer * keys = g_hash_table_get_keys_as_array(catalog_drivers->hash_drivers, & size);
   for (uint i = 0; i < size; i++) {
-    d = g_hash_table_lookup(hash_drivers->hash_drivers, keys[i]);
+    d = g_hash_table_lookup(catalog_drivers->hash_drivers, keys[i]);
     d -> avaliacao_media_driver = 0;
     d -> avaliacao_total_driver = 0;
     d -> numero_viagens_driver = 0;
@@ -113,96 +113,96 @@ gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers->hash_drivers, & s
 
 
 
-char * getIdDriver(Catalog_Drivers * drivers_hash, char * key){
+char * getIdDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup (d -> id);
 }
 
 
-bool getAccountStatus(Catalog_Drivers * drivers_hash, char * key){
+bool getAccountStatus(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> account_status;
 }
 
 
-double getAvaliacaoMediaDriver(Catalog_Drivers * drivers_hash, char * key){
+double getAvaliacaoMediaDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> avaliacao_media_driver;
 }
 
 
-double getDateDriver(Catalog_Drivers * drivers_hash, char * key){
+double getDateDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> date;
 }
 
 
-char * getNameaDriver(Catalog_Drivers * drivers_hash, char * key){
+char * getNameaDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup(d -> name);
 }
 
 
-int getAvaliacaoTotalDriver(Catalog_Drivers * drivers_hash, char * key){
+int getAvaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d->avaliacao_total_driver;
 }
 
 
-int getNviagensDriver(Catalog_Drivers * drivers_hash, char * key){
+int getNviagensDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> numero_viagens_driver;
 }
 
 
-void avaliacaoMediaDriver(Catalog_Drivers * drivers_hash, char * key, double r){
+void avaliacaoMediaDriver(Catalog_Drivers * catalog_drivers, char * key, double r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> avaliacao_media_driver = r;
 }
 
 
-char  getGenderDriver(Catalog_Drivers * drivers_hash, char * key){
+char  getGenderDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> gender;
 }
 
 
-char* getBirthDayDriver(Catalog_Drivers * drivers_hash, char * key){
+char* getBirthDayDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup (d -> birth_day);
 }
 
 
-double getTotalAuferidoDriver(Catalog_Drivers * drivers_hash, char * key){
+double getTotalAuferidoDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return d -> total_auferido;
 }
 
 
-char * getCarClassDriver(Catalog_Drivers * drivers_hash, char * key){
+char * getCarClassDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup (d -> car_class);
 }
 
-uint get_hash_drivers_size (Catalog_Drivers * hash_drivers) {
-  uint size = g_hash_table_size (hash_drivers->hash_drivers);
+uint get_hash_drivers_size (Catalog_Drivers * catalog_drivers) {
+  uint size = g_hash_table_size (catalog_drivers->hash_drivers);
   return size;
 }
 
-gpointer * get_keys_as_array_drivers (Catalog_Drivers * hash_drivers, uint size) {
-  gpointer * aux = g_hash_table_get_keys_as_array (hash_drivers->hash_drivers, &size);
+gpointer * get_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size) {
+  gpointer * aux = g_hash_table_get_keys_as_array (catalog_drivers->hash_drivers, &size);
   return aux;
 }
 
@@ -210,29 +210,29 @@ gpointer * get_keys_as_array_drivers (Catalog_Drivers * hash_drivers, uint size)
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void totalAuferidoDriver(Catalog_Drivers * drivers_hash, char * key, double ta){
+void totalAuferidoDriver(Catalog_Drivers * catalog_drivers, char * key, double ta){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> total_auferido += ta;
 }
 
 
-void avaliacaoTotalDriver(Catalog_Drivers * drivers_hash, char * key, short int r){
+void avaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key, short int r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> avaliacao_total_driver += r;
 }
 
 
-void numeroViagensDriver(Catalog_Drivers * drivers_hash, char * key){
+void numeroViagensDriver(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> numero_viagens_driver += 1;
 }
 
 
-void dateDriver(Catalog_Drivers * drivers_hash,char * key, unsigned short int r){
+void dateDriver(Catalog_Drivers * catalog_drivers,char * key, unsigned short int r){
   Drivers * d;
-  d = g_hash_table_lookup(drivers_hash->hash_drivers, key);
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   if (r > d -> date)  d -> date = r;
 }
