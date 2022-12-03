@@ -93,7 +93,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
       if (j == 0) {
         j++;
       } else {
-        double tg = 0, ta = 0;
+        double tg = 0, ta = 0, ta0 = 0;
         
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
         tg = calcula_total_gasto (getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
@@ -118,6 +118,9 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
         ta = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
         totalAuferidoDriver(drivers_hash, ride->driver, ta);
+        ta0 = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, 0);
+        totalAuferidoDriverNoTips(drivers_hash, ride->driver, ta0);
+
 
         //d -> avaliacao_total_driver += ride -> score_driver;
         avaliacaoTotalDriver(drivers_hash, ride->driver, ride -> score_driver);

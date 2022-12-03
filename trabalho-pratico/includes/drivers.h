@@ -8,6 +8,7 @@ typedef struct drivers Drivers;
 GHashTable * drivers_catalog (char* pathfiles);
 void initHash_drivers (GHashTable * hash_drivers);
 void totalAuferidoDriver(GHashTable * drivers_hash, char * key, double ta);
+void totalAuferidoDriverNoTips(GHashTable * drivers_hash, char * key, double ta0);
 void avaliacaoTotalDriver(GHashTable * drivers_hash, char * key, short int r);
 void numeroViagensDriver(GHashTable * drivers_hash, char * key);
 void dateDriver(GHashTable * drivers_hash, char * key, unsigned short int r);
