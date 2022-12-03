@@ -23,7 +23,6 @@ struct drivers {
   char * account_creation;
   bool account_status;
   double total_auferido;
-  double total_auferido_no_tips;
   int avaliacao_total_driver; // short int nao chegou 
   int numero_viagens_driver;
   double avaliacao_media_driver;
@@ -237,14 +236,6 @@ void totalAuferidoDriver(Catalog_Drivers * catalog_drivers, char * key, double t
   Drivers * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> total_auferido += ta;
-}
-
-
-
-void totalAuferidoDriverNoTips(GHashTable * drivers_hash, char * key, double ta0){
-  Drivers * d;
-  d = g_hash_table_lookup(drivers_hash, key);
-  d -> total_auferido_no_tips += ta0;
 }
 
 

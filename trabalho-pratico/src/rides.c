@@ -94,11 +94,8 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
       if (j == 0) {
         j++;
       } else {
-
-        double tg = 0, ta = 0, ta0 = 0;
-
+        double total_gasto = 0, total_auferido = 0;
         char * car_class = getCarClassDriver(drivers_hash, ride->driver);
-
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
         tg = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
         totalGastoUser(users_hash, ride->user, tg);
@@ -120,12 +117,8 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
 
 
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
-
-        ta = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
-        totalAuferidoDriver(drivers_hash, ride->driver, ta);
-        ta0 = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, 0);
-        totalAuferidoDriverNoTips(drivers_hash, ride->driver, ta0);
-
+        total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
+        totalAuferidoDriver(drivers_hash, ride->driver, total_auferido);
 
         //d -> avaliacao_total_driver += ride -> score_driver;
         avaliacaoTotalDriver(drivers_hash, ride->driver, ride -> score_driver);
