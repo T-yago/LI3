@@ -100,8 +100,8 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
         char * car_class = getCarClassDriver(drivers_hash, ride->driver);
 
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        total_gasto = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
-        totalGastoUser(users_hash, ride->user, total_gasto);
+        tg = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
+        totalGastoUser(users_hash, ride->user, tg);
 
         //u -> avaliacao_total_user += ride -> score_user;
         avaliacaoTotalUser(users_hash, ride->user, ride -> score_user);
