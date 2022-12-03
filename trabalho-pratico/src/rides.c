@@ -18,6 +18,9 @@
 
 #include "../includes/drivers.h"
 
+#include "../includes/query4.h"
+
+
 #include "../includes/rides.h"
 
 struct rides {
@@ -36,6 +39,7 @@ struct rides {
 
 void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, char * pathfiles) {
   char * line = NULL;
+  //Cities_Catalog * cities_catalog = cities_catalog_create ();
   size_t len;
   //GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
   char ridesfile[256];
@@ -97,8 +101,8 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
         double total_gasto = 0, total_auferido = 0;
         char * car_class = getCarClassDriver(drivers_hash, ride->driver);
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        tg = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
-        totalGastoUser(users_hash, ride->user, tg);
+        total_gasto = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
+        totalGastoUser(users_hash, ride->user, total_gasto);
 
         //u -> avaliacao_total_user += ride -> score_user;
         avaliacaoTotalUser(users_hash, ride->user, ride -> score_user);
@@ -132,6 +136,8 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
         }*/
         dateDriver(drivers_hash, ride->driver, ride -> date);
 
+        //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
+        //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
       
         free (car_class);
 //printf ("%s\n",u->username);
