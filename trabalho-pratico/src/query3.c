@@ -8,6 +8,7 @@
 
 #include "../includes/users.h"
 
+#include "../includes/drivers.h"
 
 
 struct query3{
@@ -39,12 +40,12 @@ int compare_users(const void * a, const void * b) {
   }
 }
 
-void query3(GHashTable * hash_users, char * info, int n) {
+void query3(Catalog_Users * hash_users, char * info, int n) {
   int numb = atoi(info);
-  uint size = g_hash_table_size(hash_users);
+  uint size = get_hash_size_users (hash_users);
 
   Query3 * query3 = malloc(size * sizeof(struct query3));
-  gpointer * keys = g_hash_table_get_keys_as_array(hash_users, & size);
+  gpointer * keys = get_hash_keys_as_array_users(hash_users,size);
   for (uint i = 0; i < size; i++) {
     (query3 + i) -> id = getUsernameUser(hash_users, keys[i]);
     (query3 + i) -> distance = getDistanceUser(hash_users, keys[i]);
@@ -52,6 +53,7 @@ void query3(GHashTable * hash_users, char * info, int n) {
     (query3 + i) -> name = getNameUser(hash_users, keys[i]);
 
   }
+  free (keys);
   qsort((void * ) query3, size, sizeof(struct query3), compare_users);
 
   char buffer[256];
@@ -67,6 +69,10 @@ void query3(GHashTable * hash_users, char * info, int n) {
       numb++;
     }
   }
-  free(query3);
+  for (uint i = 0; i < size; i++) {
+    free ((query3 + i) -> id);
+    free ((query3 + i) -> name);
+  }
+  free (query3);
   fclose(output);
 }

@@ -34,7 +34,7 @@ struct rides {
   char * comment;
 };
 
-void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pathfiles) {
+void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, char * pathfiles) {
   char * line = NULL;
   size_t len;
   //GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
@@ -42,17 +42,16 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
-  int i = 0;
   int j = 0;
 
   do {
 
     while (getline( & line, & len, file) != -1) {
       Rides * ride = malloc(sizeof(struct rides));
-
       char * token;
       int i = 0;
-      while ((token = strsep( & line, ";\n"))) {
+      char * line_aux = line;
+      while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
           ride -> id = strdup(token);
@@ -89,15 +88,20 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         i++;
         
        // g_hash_table_insert(hash_rides, ride -> id, ride);
-      } //escrever aqui o que colocar a cada iteracao de user
+      }
+              free (line_aux);
+ //escrever aqui o que colocar a cada iteracao de user
       if (j == 0) {
         j++;
       } else {
+
         double tg = 0, ta = 0, ta0 = 0;
-        
+
+        char * car_class = getCarClassDriver(drivers_hash, ride->driver);
+
         //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
-        tg = calcula_total_gasto (getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
-        totalGastoUser(users_hash, ride->user, tg);
+        total_gasto = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
+        totalGastoUser(users_hash, ride->user, total_gasto);
 
         //u -> avaliacao_total_user += ride -> score_user;
         avaliacaoTotalUser(users_hash, ride->user, ride -> score_user);
@@ -116,6 +120,7 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
 
 
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+
         ta = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, ride -> tip);
         totalAuferidoDriver(drivers_hash, ride->driver, ta);
         ta0 = calcula_total_gasto(getCarClassDriver(drivers_hash, ride->driver), ride -> distance, 0);
@@ -134,14 +139,19 @@ void rides_catalog(GHashTable * users_hash, GHashTable * drivers_hash, char * pa
         }*/
         dateDriver(drivers_hash, ride->driver, ride -> date);
 
-        free (ride);
-        //printf ("%s\n",u->username);
-      }
-
-      //char *line_copy = strdup(line);
-      //g_hash_table_insert(hash_rides, ride -> id, ride);
+      
+        free (car_class);
+//printf ("%s\n",u->username);
+      }      //char *line_copy = strdup(line);
+    free (ride->id);
+    free (ride->driver);
+    free (ride->user);
+    free (ride->city);
+    free (ride->comment);     
+    free (ride); //g_hash_table_insert(hash_rides, ride -> id, ride);
     }
-    i++;
+  free (line);
+    
   } while (!feof(file));
  fclose(file);
  //GHashTable * v = hash_rides;

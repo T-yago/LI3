@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <glib.h>
-#include <stdbool.h>
-
 #include "../includes/query2.h"
-#include "../includes/drivers.h"
-
 
 
 
@@ -38,27 +32,22 @@ int compare(const void * a,
   }
 }
 
-void query2(GHashTable * hash_drivers, char * info, int n) {
+void query2(Catalog_Drivers * hash_drivers, char * info, int n) {
   int numb = atoi(info);
-  uint size = g_hash_table_size(hash_drivers);
-  Query2 * query2 = malloc( sizeof(struct query2));
-  gpointer * keys = g_hash_table_get_keys_as_array(hash_drivers, & size);
+  uint size = get_hash_drivers_size (hash_drivers); // o tamanho é calculado no drivers.c
+  //uint size = g_hash_table_size(hash_drivers->hash_drivers);
+  Query2 * query2 = malloc(size * sizeof(struct query2));
+  gpointer * keys = get_hash_keys_as_array_drivers(hash_drivers, size);
   for (uint i = 0; i < size; i++) {
 
 
-    //(query2 + i) -> id = (d -> id);
     (query2 + i) -> id = getIdDriver(hash_drivers, keys[i]);
-
-    //(query2 + i) -> avaliacao_media = d -> avaliacao_media_driver;
     (query2 + i) -> avaliacao_media = getAvaliacaoMediaDriver(hash_drivers, keys[i]);
-    
-    //query2 + i) -> data = d -> date;
     (query2 + i) -> data = getDateDriver(hash_drivers, keys[i]);
-    
-    //(query2 + i) -> name = d -> name;
-    (query2 + i) -> name = getNameaDriver(hash_drivers, keys[i]);
+    (query2 + i) -> name = getNameDriver(hash_drivers, keys[i]);
 
   }
+  free (keys);
 
   qsort((void * ) query2, size, sizeof(struct query2), compare);
 
@@ -75,6 +64,11 @@ void query2(GHashTable * hash_drivers, char * info, int n) {
     } else {
       numb++;
     }
+    free (key);
+  }
+  for (uint i=0;i<size; i++) {
+    free((query2 + i) -> id);
+    free ((query2 + i) -> name);
   }
   free (query2);
   fclose(output);

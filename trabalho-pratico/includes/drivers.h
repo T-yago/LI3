@@ -4,6 +4,8 @@
 #include <glib.h>
 
 typedef struct drivers Drivers;
+typedef struct catalog_drivers Catalog_Drivers;
+
 
 GHashTable * drivers_catalog (char* pathfiles);
 void initHash_drivers (GHashTable * hash_drivers);
@@ -24,6 +26,7 @@ char * getCarClassDriver(GHashTable * drivers_hash, char * key);
 int getAvaliacaoTotalDriver(GHashTable * drivers_hash, char * key);
 int getNviagensDriver(GHashTable * drivers_hash, char * key);
 void avaliacaoMediaDriver(GHashTable * drivers_hash, char * key, double r);
+
 
 
 

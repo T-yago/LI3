@@ -2,32 +2,33 @@
 #define USERS_H
 
 #include <glib.h>
+#include <stdbool.h>
 
 typedef struct users Users;
+typedef struct  catalog_users Catalog_Users;
 
-GHashTable * users_catalog(char* pathfiles);
-void initHash_users (GHashTable * hash_users);
-void incUserNumeroViagens(GHashTable * users_hash, char * id);
-void avaliacaoTotalUser(GHashTable * users_hash, char * id, short int r);
-void totalDistanceUser(GHashTable * users_hash, char * id, int r);
-void dateUser(GHashTable * users_hash, char * id, unsigned short int r);
-void totalGastoUser(GHashTable * users_hash, char * id, double tg);
-char * getUsernameUser(GHashTable * users_hash, char * id);
-int getDistanceUser(GHashTable * users_hash, char * id);
-unsigned short int getDateUser(GHashTable * users_hash, char * id);
-char * getNameUser(GHashTable * users_hash, char * id);
-bool getAccountStatusUser(GHashTable * users_hash, char * id);
-char * getBirthDateUser(GHashTable * users_hash, char * id);
-char  getGenderUser(GHashTable * users_hash, char * id);
-short int  getAvaliacaoTotalUser(GHashTable * users_hash, char * id);
-short int  getNviagensUser(GHashTable * users_hash, char * id);
-double getAvaliacaoMediaUser(GHashTable * users_hash, char * id);
-double getTotalGastoUser(GHashTable * users_hash, char * id);
-void avaliacaoMediaUser(GHashTable * users_hash, char * id, double r);
-
-
-
-
+void free_hash_users (Catalog_Users * catalog_users);
+Catalog_Users * users_catalog(char* pathfiles);
+uint get_hash_size_users (Catalog_Users * catalog_users);
+gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);
+void initHash_users(Catalog_Users * catalog_users);
+void incUserNumeroViagens(Catalog_Users * catalog_users, char * id);
+void avaliacaoTotalUser(Catalog_Users * catalog_users, char * id, short int r);
+void totalDistanceUser(Catalog_Users * catalog_users, char * id, int r);
+void dateUser(Catalog_Users * catalog_users, char * id, unsigned short int r);
+void totalGastoUser(Catalog_Users * catalog_users, char * id, double tg);
+char * getUsernameUser(Catalog_Users * catalog_users, char * id);
+int getDistanceUser(Catalog_Users * catalog_users, char * id);
+unsigned short int getDateUser(Catalog_Users * catalog_users, char * id);
+char * getNameUser(Catalog_Users * catalog_users, char * id);
+bool getAccountStatusUser(Catalog_Users * catalog_users, char * id);
+char * getBirthDateUser(Catalog_Users * catalog_users, char* id);
+char  getGenderUser(Catalog_Users * catalog_users, char * id);
+short int  getAvaliacaoTotalUser(Catalog_Users * catalog_users, char * id);
+short int  getNviagensUser(Catalog_Users * catalog_users, char * id);
+double getAvaliacaoMediaUser(Catalog_Users * catalog_users, char * id);
+double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
+void avaliacaoMediaUser(Catalog_Users * catalog_users, char * id, double r);
 
 
 
