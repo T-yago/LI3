@@ -18,7 +18,6 @@
 
 #include "../includes/drivers.h"
 
-
 #include "../includes/rides.h"
 
 struct rides {
@@ -116,7 +115,6 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
           u -> date = ride -> date;
         }*/
         dateUser(users_hash, ride->user, ride -> date);
-        send_date_to_query5 (ride->date);
 
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
         total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
