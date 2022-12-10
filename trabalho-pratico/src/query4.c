@@ -85,10 +85,9 @@
           char* city = strdup(info);
         Cities * aux = g_hash_table_lookup (catalog_cities->cities_hash, city);
         double avaliacao_media = aux->total_gasto / aux->num_rides;
-        printf ("%f\n",avaliacao_media);
 
         char buffer[256];
         snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
         FILE * output = fopen(buffer, "w");
-        fprintf(output, "%.3f",avaliacao_media);
+        fprintf(output, "%.3f\n",avaliacao_media);
     }
