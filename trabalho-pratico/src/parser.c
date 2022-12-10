@@ -22,12 +22,16 @@
 
 #include "../includes/query3.h"
 
+#include "../includes/query4.h"
+
 void parser_input(char * pathfiles, char * input) {
   Catalog_Users * hash_users = users_catalog(pathfiles);
   initHash_users(hash_users);
   Catalog_Drivers * hash_drivers = drivers_catalog(pathfiles);
   initHash_drivers(hash_drivers);
-  rides_catalog(hash_users, hash_drivers, pathfiles);
+  Catalog_Cities * catalog_cities = init_hash_cities();
+  rides_catalog(hash_users, hash_drivers, catalog_cities, pathfiles);
+
   FILE * file;
   char * aux;
   char * info;
@@ -37,10 +41,10 @@ void parser_input(char * pathfiles, char * input) {
   file = fopen(input, "r");
   do {
     while (getline( & line, & len, file) != -1) {
-     char * line_aux1 = line;
+      char * line_aux1 = line;
       aux = strsep( & line_aux1, " ");
       numb_query = atoi(aux);
-           char * line_aux2 = line_aux1;
+      char * line_aux2 = line_aux1;
       info = strsep( & line_aux2, " \n");
       switch (numb_query) {
       case 1:
@@ -53,6 +57,7 @@ void parser_input(char * pathfiles, char * input) {
         query3(hash_users, info, n);
         break;
       case 4:
+        query4(catalog_cities,info,n);
         break;
       case 5:
         break;

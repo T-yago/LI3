@@ -18,6 +18,8 @@
 
 #include "../includes/drivers.h"
 
+#include "../includes/query4.h"
+
 #include "../includes/rides.h"
 
 struct rides {
@@ -34,7 +36,7 @@ struct rides {
   char * comment;
 };
 
-void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, char * pathfiles) {
+void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
   char * line = NULL;
   //Cities_Catalog * cities_catalog = cities_catalog_create ();
   size_t len;
@@ -116,6 +118,11 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
         }*/
         dateUser(users_hash, ride->user, ride -> date);
 
+        double total_gasto_sem_tips = calcula_total_gasto (car_class, ride -> distance, 0);
+       
+        insert_cities_hash (catalog_cities, ride->city, total_gasto_sem_tips);
+        //printf ("Depois da insert: %p\n",catalog_cities);
+        //hash_cities_get_n_viagens (catalog_cities, ride->city);
         //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
         total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
         totalAuferidoDriver(drivers_hash, ride->driver, total_auferido);
@@ -135,6 +142,9 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, c
         //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
         //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
       
+
+
+
         free (car_class);
 //printf ("%s\n",u->username);
       }      //char *line_copy = strdup(line);
