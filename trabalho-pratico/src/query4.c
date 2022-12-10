@@ -23,8 +23,8 @@
         GHashTable * cities_hash = g_hash_table_new (g_str_hash, g_str_equal);
         Catalog_Cities * catalog_cities = malloc  (sizeof (struct catalog_cities));
         catalog_cities->cities_hash  = cities_hash;
-        catalog_cities->cities_list = malloc (6 * sizeof (char*)); //TROCAR ISTO DEPOIS
-        for (int i=0; i <= 5;i++ ) {
+        catalog_cities->cities_list = malloc (159 * sizeof (char*)); //TROCAR ISTO DEPOIS
+        for (int i=0; i < 159;i++ ) {
             catalog_cities->cities_list[i] = NULL;
         }
         return catalog_cities;
@@ -43,9 +43,6 @@
         
 
             if (!strcmp (city, cities_catalog->cities_list[i])) {
-               // printf ("Econtrou duas iguais:");
-               // printf ("%s e %s\n\n",city,cities_catalog->cities_list[i]);
-               // printf ("%p\n",cities_catalog->cities_hash);
                 found = 1;
             }
 
@@ -55,7 +52,6 @@
             }
         //printf ("%s não estava na lista\n", city);
         if (cities_catalog->cities_list[0] == NULL) cities_catalog->cities_list[0] = strdup (city);
-        //printf ("INDEX 0: %s\n", cities_catalog->cities_list[0]);
         //printf ("acabou o check_city\n\n");
         return found;
     }
