@@ -34,8 +34,8 @@ struct ride {
   char * user;
   char * city;
   int distance;
-  short int score_user;
-  short int score_driver;
+  unsigned short int score_user;
+  unsigned short int score_driver;
   double tip;
   char * comment;
 };
@@ -101,44 +101,49 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         j++;
       } else {
         double total_gasto = 0, total_auferido = 0;
-        char * car_class = getCarClassDriver(drivers_hash, ride->driver);
-        //u -> total_gasto += calcula_total_gasto(d -> car_class, ride -> distance, ride -> tip);
+        
+        char * driver = strdup (ride->driver);
+        char * user = strdup (ride->user);   
+        char * city = strdup (ride->city);     
+        
+        char * car_class = getCarClassDriver(drivers_hash, driver);
+
         total_gasto = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
-        totalGastoUser(users_hash, ride->user, total_gasto);
+        totalGastoUser(users_hash, user, total_gasto);
 
         //u -> avaliacao_total_user += ride -> score_user;
-        avaliacaoTotalUser(users_hash, ride->user, ride -> score_user);
+        avaliacaoTotalUser(users_hash, user, ride -> score_user);
 
         //u -> numero_viagens_user++;
-        incUserNumeroViagens(users_hash,ride->user);
+        incUserNumeroViagens(users_hash,user);
 
         //u -> distance += ride -> distance;
-        totalDistanceUser(users_hash, ride->user, ride -> distance);
+        totalDistanceUser(users_hash, user, ride -> distance);
 
         /*
         if (ride -> date > u -> date) {
           u -> date = ride -> date;
         }*/
-        dateUser(users_hash, ride->user, ride -> date);
+        dateUser(users_hash, user, ride -> date);
 
         double total_gasto_sem_tips = calcula_total_gasto (car_class, ride -> distance, 0);
        
-        insert_cities_hash (catalog_cities, ride->city, total_gasto_sem_tips);
+        insert_cities_hash (catalog_cities, city, total_gasto_sem_tips);
         
         total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
-        totalAuferidoDriver(drivers_hash, ride->driver, total_auferido);
+        totalAuferidoDriver(drivers_hash, driver, total_auferido);
 
         //d -> avaliacao_total_driver += ride -> score_driver;
-        avaliacaoTotalDriver(drivers_hash, ride->driver, ride -> score_driver);
+        avaliacaoTotalDriver(drivers_hash, driver, ride -> score_driver);
 
         //d -> numero_viagens_driver++;
-        numeroViagensDriver(drivers_hash, ride->driver);
+        numeroViagensDriver(drivers_hash, driver);
 
         /*
         if (ride -> date > d -> date) {
           d -> date = ride -> date;
         }*/
-        dateDriver(drivers_hash, ride->driver, ride -> date);
+        dateDriver(drivers_hash, driver, ride -> date);
 
         //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
         //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
