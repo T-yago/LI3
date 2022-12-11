@@ -19,7 +19,7 @@
 #define DATE "09/10/2022"
 
 
-double calcula_total_gasto(char * car_class, short int distance, double tip) {
+double calcula_total_gasto(char* car_class, short int distance, double tip) {
   double total = 0.000;
   if (!(strcmp(car_class, "basic"))) {
     total = total + 3.250 + (0.620 * distance) + tip;
@@ -71,7 +71,7 @@ short int calcula_idade(char * birthdate) {
   return age;
 }
 
-void update_valor(Catalog_Drivers * catalog_drivers) {
+void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   uint size = get_hash_drivers_size(catalog_drivers);
  gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
   for (uint i = 0; i < size; i++) {
@@ -119,8 +119,7 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
-    double r = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) getNviagensUser(catalog_users, id);
-    avaliacaoMediaUser(catalog_users, id, r);
+    double avaliacao_media = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) getNviagensUser(catalog_users, id);
 
     char * name = getNameUser(catalog_users, id);
     char * birthday = getBirthDateUser(catalog_users, id);
@@ -131,7 +130,7 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", name, getGenderUser(catalog_users, id), age, getAvaliacaoMediaUser(catalog_users, id), getNviagensUser(catalog_users, id), getTotalGastoUser(catalog_users, id));
+      "%.3f\n", name, getGenderUser(catalog_users, id), age, avaliacao_media, getNviagensUser(catalog_users, id), getTotalGastoUser(catalog_users, id));
     fclose(output);
     free (birthday);
     free (name);
@@ -144,5 +143,5 @@ void query1_main(char * id, Catalog_Users * catalog_users, Catalog_Drivers * cat
   } else {
     query1_driver(id, catalog_drivers, n);
   }
-  update_valor(catalog_drivers);
+  update_avaliacao_media_driver(catalog_drivers);
 }
