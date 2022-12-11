@@ -22,7 +22,11 @@
 
 #include "../includes/rides.h"
 
-struct rides {
+struct catalog_rides {
+  GHashTable * hash_rides;
+};
+
+struct ride {
   char * id;
   //char * date;
   unsigned short int date;
@@ -36,11 +40,10 @@ struct rides {
   char * comment;
 };
 
-void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
+Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
   char * line = NULL;
-  //Cities_Catalog * cities_catalog = cities_catalog_create ();
   size_t len;
-  //GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
   char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
@@ -50,7 +53,7 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, C
   do {
 
     while (getline( & line, & len, file) != -1) {
-      Rides * ride = malloc(sizeof(struct rides));
+      Ride * ride = malloc(sizeof(struct ride));
       char * token;
       int i = 0;
       char * line_aux = line;
@@ -90,7 +93,7 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, C
         }
         i++;
         
-       // g_hash_table_insert(hash_rides, ride -> id, ride);
+        g_hash_table_insert(hash_rides, ride -> id, ride);
       }
               free (line_aux);
  //escrever aqui o que colocar a cada iteracao de user
@@ -121,9 +124,7 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, C
         double total_gasto_sem_tips = calcula_total_gasto (car_class, ride -> distance, 0);
        
         insert_cities_hash (catalog_cities, ride->city, total_gasto_sem_tips);
-        //printf ("Depois da insert: %p\n",catalog_cities);
-        //hash_cities_get_n_viagens (catalog_cities, ride->city);
-        //d -> total_auferido += calcula_total_gasto(getCarClassDriver(drivers_hash, d), ride -> distance, ride -> tip);
+        
         total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
         totalAuferidoDriver(drivers_hash, ride->driver, total_auferido);
 
@@ -141,24 +142,49 @@ void rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, C
 
         //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
         //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
-      
-
-
-
-        free (car_class);
+  
+       // free (car_class);
 //printf ("%s\n",u->username);
       }      //char *line_copy = strdup(line);
-    free (ride->id);
-    free (ride->driver);
-    free (ride->user);
-    free (ride->city);
-    free (ride->comment);     
-    free (ride); //g_hash_table_insert(hash_rides, ride -> id, ride);
+   // free (ride->id);
+    //free (ride->driver);
+    //free (ride->user);
+    //free (ride->city);
+    //free (ride->comment);     
+    //free (ride); //g_hash_table_insert(hash_rides, ride -> id, ride);
     }
   free (line);
     
   } while (!feof(file));
  fclose(file);
- //GHashTable * v = hash_rides;
-  //return v;
+ Catalog_Rides * catalog_rides = malloc (sizeof (struct catalog_rides));
+ catalog_rides->hash_rides = hash_rides; 
+  return catalog_rides;
+}
+
+
+
+unsigned short int get_ride_date (Catalog_Rides * catalog_rides, char * id) {
+  Ride* aux  = g_hash_table_lookup (catalog_rides->hash_rides,id);
+return aux->date;
+}
+
+int get_ride_distance (Catalog_Rides * catalog_rides, char * id) {
+  Ride * aux  = g_hash_table_lookup (catalog_rides->hash_rides,id);
+  return aux->distance;
+}
+
+uint get_hash_rides_size (Catalog_Rides * catalog_rides) {
+  uint size = g_hash_table_size (catalog_rides->hash_rides);
+  return size;
+}
+
+gpointer * get_hash_keys_as_array_rides (Catalog_Rides * catalog_rides, uint size) {
+  gpointer * aux = g_hash_table_get_keys_as_array (catalog_rides->hash_rides, &size);
+return aux;
+}
+
+char * get_ride_driver (Catalog_Rides * catalog_rides, char* id) {
+  Ride* aux = g_hash_table_lookup (catalog_rides->hash_rides,id);
+  return strdup (aux->driver);
 }
