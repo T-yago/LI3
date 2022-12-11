@@ -24,7 +24,6 @@ struct users {
   double total_gasto;
   short int numero_viagens_user;
   short int avaliacao_total_user;
-  double avaliacao_media_user;
 };
 //campo gasto -> incrementar
 
@@ -191,11 +190,11 @@ short int  getNviagensUser(Catalog_Users * users_hash, char* id){
 }
 
 
-double getAvaliacaoMediaUser(Catalog_Users * users_hash, char* id){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  return u -> avaliacao_media_user;
-}
+//double getAvaliacaoMediaUser(Catalog_Users * users_hash, char* id){
+  //Users * u;
+  //u = g_hash_table_lookup(users_hash->hash_users, id);
+  //return u -> avaliacao_media_user;
+//}
 
 
 double getTotalGastoUser(Catalog_Users * users_hash, char* id){
@@ -220,11 +219,11 @@ bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void avaliacaoMediaUser(Catalog_Users * users_hash, char* id, double r){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  u ->avaliacao_media_user = r;
-}
+//void avaliacaoMediaUser(Catalog_Users * users_hash, char* id, double r){
+ // Users * u;
+  //u = g_hash_table_lookup(users_hash->hash_users, id);
+  //u ->avaliacao_media_user = r;
+//}
 
 
 void incUserNumeroViagens(Catalog_Users * users_hash, char* id){
