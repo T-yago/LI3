@@ -79,6 +79,10 @@ void parser_input(char * pathfiles, char * input) {
   fclose(file);
   free_hash_users (catalog_users);
   free_hash_drivers (catalog_drivers);
+  free_hash_rides (catalog_rides);
+  free_hash_cities (catalog_cities);
   free (catalog_users);
   free (catalog_drivers);
+  free (catalog_cities);
+  free (catalog_rides);
 }

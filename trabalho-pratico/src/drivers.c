@@ -59,7 +59,7 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
           d -> gender = * (token);
           break;
         case 4:
-          d -> car_class = strdup(token);
+          d -> car_class = strdup (token);
           break;
         case 5:
           d -> license_plate = strdup(token);

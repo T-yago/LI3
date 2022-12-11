@@ -28,8 +28,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     {
     date = get_ride_date (catalog_rides,keys[i]);
     char * driver =  (get_ride_driver (catalog_rides,keys[i]));
-    if (!strcmp(driver,"driver")) printf ("driver: %s\n",driver);
-    else {
+    if (strcmp(driver,"driver")) { // se nao for igual a "driver" -> tentar retirar da hash estes "driver"
     char * car_class =  (getCarClassDriver(catalog_drivers,driver));
      int distance = get_ride_distance(catalog_rides,keys[i]);
     total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
@@ -38,11 +37,14 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
             preco_medio += total_gasto_sem_tips;
             num_rides++;
         }
+                free (car_class);
+
     }
+            free (driver);
     }
         preco_medio = preco_medio / num_rides;
 
-   
+    free (keys);
     char buffer[256];
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 

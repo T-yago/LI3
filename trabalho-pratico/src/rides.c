@@ -43,7 +43,7 @@ struct ride {
 Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
   char * line = NULL;
   size_t len;
-  GHashTable * hash_rides = g_hash_table_new(g_str_hash, g_str_equal);
+  GHashTable * hash_rides = g_hash_table_new (g_str_hash, g_str_equal);
   char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
@@ -145,21 +145,17 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         }*/
         dateDriver(drivers_hash, driver, ride -> date);
 
+        free (city);
+        free (user);
+        free (driver);
+
         //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
         //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
   
-       // free (car_class);
-//printf ("%s\n",u->username);
-      }      //char *line_copy = strdup(line);
-   // free (ride->id);
-    //free (ride->driver);
-    //free (ride->user);
-    //free (ride->city);
-    //free (ride->comment);     
-    //free (ride); //g_hash_table_insert(hash_rides, ride -> id, ride);
-    }
-  free (line);
-    
+       free (car_class);
+      }      
+ }
+  free (line);  
   } while (!feof(file));
  fclose(file);
  Catalog_Rides * catalog_rides = malloc (sizeof (struct catalog_rides));
@@ -167,6 +163,23 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
   return catalog_rides;
 }
 
+
+void free_hash_rides (Catalog_Rides * catalog_rides) {
+ uint size = g_hash_table_size ( catalog_rides->hash_rides);
+  Ride *ride ;
+  gpointer * keys = g_hash_table_get_keys_as_array (catalog_rides->hash_rides, &size);
+  for (uint i = 0; i < size; i++) {
+    ride = g_hash_table_lookup(catalog_rides->hash_rides, keys[i]);
+    free (ride->id);
+    free (ride ->city);
+    free (ride-> driver);
+    free (ride->user);
+    free (ride->comment);
+    free (ride);
+  }
+  free (keys);
+   g_hash_table_destroy (catalog_rides->hash_rides);
+}
 
 
 unsigned short int get_ride_date (Catalog_Rides * catalog_rides, char * id) {

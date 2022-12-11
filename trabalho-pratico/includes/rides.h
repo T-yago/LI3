@@ -17,5 +17,6 @@ int get_ride_distance (Catalog_Rides * catalog_rides, char * id);
 uint get_hash_rides_size (Catalog_Rides * catalog_rides);
 gpointer * get_hash_keys_as_array_rides (Catalog_Rides * catalog_rides, uint size);
 char * get_ride_driver (Catalog_Rides * catalog_rides, char* id);
+void free_hash_rides (Catalog_Rides * catalog_rides);
 
 #endif
