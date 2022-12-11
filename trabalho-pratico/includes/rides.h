@@ -8,8 +8,14 @@
 #include "../includes/query4.h"
 
 
-typedef struct rides Rides;
+typedef struct ride Ride;
+typedef struct catalog_rides Catalog_Rides;
 
-void rides_catalog(Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, Catalog_Cities * catalog_cities, char * pathfiles);
+Catalog_Rides* rides_catalog(Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, Catalog_Cities * catalog_cities, char * pathfiles);
+unsigned short int get_ride_date (Catalog_Rides * catalog_rides, char * id);
+int get_ride_distance (Catalog_Rides * catalog_rides, char * id);
+uint get_hash_rides_size (Catalog_Rides * catalog_rides);
+gpointer * get_hash_keys_as_array_rides (Catalog_Rides * catalog_rides, uint size);
+char * get_ride_driver (Catalog_Rides * catalog_rides, char* id);
 
 #endif
