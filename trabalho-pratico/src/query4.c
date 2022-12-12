@@ -77,15 +77,21 @@ void insert_cities_hash (Catalog_Cities * cities_catalog , char * city, double t
 }
 
 void query4 (Catalog_Cities * catalog_cities, char * info , int n) {
-    char* city = strdup(info);
-    Cities * aux = g_hash_table_lookup (catalog_cities->cities_hash, city);
-    double avaliacao_media = aux->total_gasto / aux->num_rides;
-
     char buffer[256];
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
     FILE * output = fopen(buffer, "w");
-    fprintf(output, "%.3f\n",avaliacao_media);
-    free (city);
+
+    char* city = strdup(info);
+    Cities * aux = g_hash_table_lookup (catalog_cities->cities_hash, city);
+    if (!aux) fclose(output);
+    else 
+    {
+        double avaliacao_media = aux->total_gasto / aux->num_rides;
+        fprintf(output, "%.3f\n",avaliacao_media);
+        free (city);
+        fclose (output);
+    }
+  
 }
 
 void free_hash_cities (Catalog_Cities * catalog_cities) {

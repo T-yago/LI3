@@ -210,8 +210,9 @@ short int  getAvaliacaoTotalUser(Catalog_Users * users_hash, char* id){
 }
 
 bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  Users * u; // incluir opcao para o caso de nao haver na hash
   u = g_hash_table_lookup(users_hash->hash_users, id);
+  if (u== NULL) return true;
   return u -> account_status;
 }
 

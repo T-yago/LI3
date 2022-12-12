@@ -23,14 +23,13 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     
     int hash_rides_size = get_hash_rides_size (catalog_rides);
     gpointer * keys = get_hash_keys_as_array_rides (catalog_rides,hash_rides_size);
-
     for (int i=0; i < hash_rides_size; i++) 
     {
     date = get_ride_date (catalog_rides,keys[i]);
     char * driver =  (get_ride_driver (catalog_rides,keys[i]));
     if (strcmp(driver,"driver")) { // se nao for igual a "driver" -> tentar retirar da hash estes "driver"
     char * car_class =  (getCarClassDriver(catalog_drivers,driver));
-     int distance = get_ride_distance(catalog_rides,keys[i]);
+    int distance = get_ride_distance(catalog_rides,keys[i]); // talvz trocar para long?
     total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
         if (date > dateinf && date <= datesup) 
         {

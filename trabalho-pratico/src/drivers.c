@@ -145,6 +145,7 @@ char * getIdDriver(Catalog_Drivers * catalog_drivers, char * key){
 bool getAccountStatus(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
+  if (d== NULL) return true;
   return d -> account_status;
 }
 
