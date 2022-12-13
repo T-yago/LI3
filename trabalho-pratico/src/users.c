@@ -16,14 +16,14 @@ struct users {
   char * name;
   char gender;
   unsigned short int date;
-  int distance;
+  unsigned short int distance;
   char * birth_date;
   char * account_creation;
   char * pay_method;
   bool account_status;
   double total_gasto;
-  short int numero_viagens_user;
-  short int avaliacao_total_user;
+  unsigned short int numero_viagens_user;
+  unsigned short int avaliacao_total_user;
 };
 //campo gasto -> incrementar
 

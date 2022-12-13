@@ -19,7 +19,7 @@
 #define DATE "09/10/2022"
 
 
-double calcula_total_gasto(char* car_class, short int distance, double tip) {
+double calcula_total_gasto(char* car_class, unsigned short int distance, double tip) {
   double total = 0.000;
   if (!(strcmp(car_class, "basic"))) {
     total = total + 3.250 + (0.620 * distance) + tip;
