@@ -29,7 +29,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     char * driver =  (get_ride_driver (catalog_rides,keys[i]));
     if (strcmp(driver,"driver")) { // se nao for igual a "driver" -> tentar retirar da hash estes "driver"
     char * car_class =  (getCarClassDriver(catalog_drivers,driver));
-    int distance = get_ride_distance(catalog_rides,keys[i]); // talvz trocar para long?
+    unsigned short int distance = get_ride_distance(catalog_rides,keys[i]); // talvz trocar para long?
     total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
         if (date > dateinf && date <= datesup) 
         {
@@ -41,7 +41,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     }
             free (driver);
     }
-        preco_medio = preco_medio / num_rides;
+    if (num_rides != 0) preco_medio = preco_medio / num_rides;
 
     free (keys);
     char buffer[256];

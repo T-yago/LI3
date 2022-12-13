@@ -33,7 +33,7 @@ struct ride {
   char * driver;
   char * user;
   char * city;
-  int distance;
+  unsigned short int distance;
   unsigned short int score_user;
   unsigned short int score_driver;
   double tip;
@@ -187,7 +187,7 @@ unsigned short int get_ride_date (Catalog_Rides * catalog_rides, char * id) {
 return aux->date;
 }
 
-int get_ride_distance (Catalog_Rides * catalog_rides, char * id) {
+unsigned short int get_ride_distance (Catalog_Rides * catalog_rides, char * id) {
   Ride * aux  = g_hash_table_lookup (catalog_rides->hash_rides,id);
   return aux->distance;
 }
