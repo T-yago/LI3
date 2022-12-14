@@ -196,6 +196,12 @@ void free_hash_drivers (Catalog_Drivers * catalog_drivers) {
   }
     free (keys);
     g_hash_table_destroy (catalog_drivers->hash_drivers);
+    Query2 aux;
+    for (uint i = 0; i < size; i++) {
+      aux = catalog_drivers->top_N_drivers[i];
+    free (aux.id);
+    free (aux.name);
+    }
     free (catalog_drivers->top_N_drivers);
 }
 
