@@ -48,8 +48,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
-  int j = 0;
-
+  getline (&line,&len,file);
   do {
 
     while (getline( & line, & len, file) != -1) {
@@ -97,9 +96,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
       }
               free (line_aux);
  //escrever aqui o que colocar a cada iteracao de user
-      if (j == 0) {
-        j++;
-      } else {
+
         double total_gasto = 0, total_auferido = 0;
         
         char * driver = strdup (ride->driver);
@@ -153,7 +150,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
   
        free (car_class);
-      }      
+          
  }
   free (line);  
   } while (!feof(file));

@@ -21,7 +21,7 @@
 
 
     Catalog_Cities * init_hash_cities () {
-        GHashTable * cities_hash = g_hash_table_new_full (g_str_hash, g_str_equal,g_free,g_free);
+        GHashTable * cities_hash = g_hash_table_new (g_str_hash, g_str_equal);
         Catalog_Cities * catalog_cities = malloc  (sizeof (struct catalog_cities));
         catalog_cities->cities_hash  = cities_hash;
         catalog_cities->cities_list = malloc (159 * sizeof (char*)); //TROCAR ISTO DEPOIS
@@ -104,7 +104,7 @@ void free_hash_cities (Catalog_Cities * catalog_cities) {
     free (city->key);
     free (city);
     }
-    free (keys);
+    free (keys); 
     g_hash_table_destroy (catalog_cities->cities_hash);
     for (int i=0;i < 159;i++) free (catalog_cities->cities_list[i]);
     free (catalog_cities->cities_list);

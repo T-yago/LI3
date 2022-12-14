@@ -9,6 +9,14 @@
 
 struct catalog_drivers {
   GHashTable * hash_drivers;
+  Query2 * top_N_drivers;
+};
+
+struct query2 {
+  char * id;
+  double avaliacao_media;
+  char* name;
+  unsigned short int data;
 };
 
 struct drivers {
@@ -31,13 +39,13 @@ struct drivers {
 Catalog_Drivers * drivers_catalog(char * pathfiles) {
   char * line = NULL;
   size_t len;
-
-  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); // FAZER DESTROY NO FIM 
+  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); 
   char driverfile[256];
   strcpy(driverfile, pathfiles);
   char * filename = strcat(driverfile, "/drivers.csv");
   FILE * file = fopen(filename, "r");
   int i = 0;
+  getline (&line,&len,file);
   do {
     while (getline( & line, & len, file) != -1) {
       Drivers * d = malloc(sizeof(struct drivers));
@@ -93,6 +101,53 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
 return catalog_drivers;
 }
 
+
+int compare(const void * a,
+  const void * b) {
+   Query2 *ia = (struct query2 *) a;
+   Query2 *ib = (struct query2 *) b;
+
+  if (ia -> avaliacao_media < ib -> avaliacao_media) return 1;
+
+  if (ia -> avaliacao_media > ib -> avaliacao_media) return -1;
+
+  if (ia -> avaliacao_media == ib -> avaliacao_media) {
+    if (ia -> data < ib -> data) return 1; //se id for igual retorna a data + recente
+    if (ia -> data > ib -> data) return -1;
+    else if (ia -> data == ib -> data) { // se for para trocar é este
+      if (ia -> id > ib -> id) return 1;
+      if (ia -> id < ib -> id) return -1;
+    }
+    return -1; // se datas também forem iguais retorna 
+  } else {
+    return 0;
+  }
+}
+
+void top_N_drivers (Catalog_Drivers * catalog_drivers) {
+  uint size_hash = get_hash_drivers_size(catalog_drivers);
+  Query2 * query2 = malloc (size_hash * (sizeof (Query2)));
+  
+  gpointer * keys = get_hash_keys_as_array_drivers(catalog_drivers, size_hash);
+  for (uint i = 0; i < size_hash; i++) {
+    if (strcmp (keys[i],"id")) {
+      
+    Drivers * d = g_hash_table_lookup(catalog_drivers->hash_drivers,keys[i]);
+    double aval_total = d->avaliacao_total_driver;
+    double num_rides = getNviagensDriver (catalog_drivers,keys[i]);
+    (query2 + i) -> id = getIdDriver(catalog_drivers, keys[i]);
+    (query2 +i) -> avaliacao_media =  aval_total / num_rides;
+    (query2 + i) -> data = getDateDriver(catalog_drivers, keys[i]);
+    (query2 + i) -> name = getNameDriver(catalog_drivers, keys[i]);
+    }
+  }
+  free (keys);
+
+  qsort((void * ) query2, size_hash, sizeof(struct query2), compare);
+  catalog_drivers->top_N_drivers = query2;
+  
+}
+
 void initHash_drivers(Catalog_Drivers * catalog_drivers) { ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
   uint size = g_hash_table_size(catalog_drivers->hash_drivers);
   Drivers * d;
@@ -105,6 +160,22 @@ gpointer * keys = g_hash_table_get_keys_as_array(catalog_drivers->hash_drivers, 
     d->date = 0;
   }
   free (keys);
+}
+
+char * get_name_driver_top_N (Catalog_Drivers * catalog_drivers,int n) {
+  Query2  aux = catalog_drivers->top_N_drivers[n];
+return  strdup(aux.name);
+
+}
+
+char * get_id_driver_top_N (Catalog_Drivers * catalog_drivers, int n) {
+  Query2  aux = catalog_drivers->top_N_drivers[n];
+  return  strdup(aux.id);
+}
+
+double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int n) {
+   Query2 aux = catalog_drivers->top_N_drivers[n];
+   return aux.avaliacao_media;
 }
 
 void free_hash_drivers (Catalog_Drivers * catalog_drivers) {
@@ -125,6 +196,7 @@ void free_hash_drivers (Catalog_Drivers * catalog_drivers) {
   }
     free (keys);
     g_hash_table_destroy (catalog_drivers->hash_drivers);
+    free (catalog_drivers->top_N_drivers);
 }
 
 //***************************************************** Funções de encapsulamento de drivers *********************************************************
@@ -259,3 +331,5 @@ void dateDriver(Catalog_Drivers * catalog_drivers,char * key, unsigned short int
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   if (r > d -> date)  d -> date = r;
 }
+
+

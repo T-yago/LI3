@@ -33,6 +33,7 @@ void parser_input(char * pathfiles, char * input) {
   initHash_drivers(catalog_drivers);
   Catalog_Cities * catalog_cities = init_hash_cities();
   Catalog_Rides * catalog_rides = rides_catalog(catalog_users, catalog_drivers, catalog_cities, pathfiles);
+  top_N_drivers (catalog_drivers);
 
   FILE * file;
   char * info_1;

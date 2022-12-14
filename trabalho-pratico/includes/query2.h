@@ -6,8 +6,6 @@
 #include <stdbool.h>
 #include "../includes/drivers.h"
 
-typedef struct query2 Query2;
-
 void query2 (Catalog_Drivers * catalog_drivers, char* info, int n);
 
 #endif 
