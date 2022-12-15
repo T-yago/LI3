@@ -25,7 +25,6 @@ struct users {
   unsigned short int numero_viagens_user;
   unsigned short int avaliacao_total_user;
 };
-//campo gasto -> incrementar
 
 Catalog_Users * users_catalog(char * pathfiles) {
   char * line = NULL;
@@ -91,11 +90,9 @@ return catalog_users;
 }
 
 void initHash_users(Catalog_Users * hash_users) {
-  //uint size = get_size_users (hash_users);
   uint size = g_hash_table_size ( hash_users->hash_users);
   Users * u;
   gpointer * keys = get_hash_keys_as_array_users (hash_users, size);
-  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
   for (uint i = 0; i < size; i++) {
     u = g_hash_table_lookup(hash_users->hash_users, keys[i]);
     u -> date = 0;
@@ -190,12 +187,6 @@ short int  getNviagensUser(Catalog_Users * users_hash, char* id){
 }
 
 
-//double getAvaliacaoMediaUser(Catalog_Users * users_hash, char* id){
-  //Users * u;
-  //u = g_hash_table_lookup(users_hash->hash_users, id);
-  //return u -> avaliacao_media_user;
-//}
-
 
 double getTotalGastoUser(Catalog_Users * users_hash, char* id){
   Users * u;
@@ -218,13 +209,6 @@ bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-//void avaliacaoMediaUser(Catalog_Users * users_hash, char* id, double r){
- // Users * u;
-  //u = g_hash_table_lookup(users_hash->hash_users, id);
-  //u ->avaliacao_media_user = r;
-//}
 
 
 void incUserNumeroViagens(Catalog_Users * users_hash, char* id){

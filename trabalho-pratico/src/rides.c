@@ -95,7 +95,6 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         g_hash_table_insert(hash_rides, ride -> id, ride);
       }
               free (line_aux);
- //escrever aqui o que colocar a cada iteracao de user
 
         double total_gasto = 0, total_auferido = 0;
         
@@ -130,24 +129,16 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         total_auferido = calcula_total_gasto(car_class, ride -> distance, ride -> tip);
         totalAuferidoDriver(drivers_hash, driver, total_auferido);
 
-        //d -> avaliacao_total_driver += ride -> score_driver;
         avaliacaoTotalDriver(drivers_hash, driver, ride -> score_driver);
 
-        //d -> numero_viagens_driver++;
         numeroViagensDriver(drivers_hash, driver);
 
-        /*
-        if (ride -> date > d -> date) {
-          d -> date = ride -> date;
-        }*/
         dateDriver(drivers_hash, driver, ride -> date);
 
         free (city);
         free (user);
         free (driver);
 
-        //double gasto_por_ride = calcula_total_gasto (car_class, ride -> distance, 0);
-        //insert_cities_hash (cities_catalog,ride->city,gasto_por_ride);
   
        free (car_class);
           

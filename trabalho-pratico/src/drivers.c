@@ -101,7 +101,9 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
 return catalog_drivers;
 }
 
+//---------------- -------------------------------Funções auxiliares da query2 ---------------------------------------------//
 
+// Função de comparação que ordena o array com os top_N_users
 int compare(const void * a,
   const void * b) {
    Query2 *ia = (struct query2 *) a;
@@ -124,6 +126,7 @@ int compare(const void * a,
   }
 }
 
+// Função que cria um array com os top "N" users e o coloca no catálogo dos drivers
 void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   uint size_hash = get_hash_drivers_size(catalog_drivers);
   Query2 * query2 = malloc (size_hash * (sizeof (Query2)));
@@ -147,6 +150,9 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   catalog_drivers->top_N_drivers = query2;
   
 }
+
+//---------------- -----------------------------Fim das funções auxiliares da query2 ---------------------------------------------//
+
 
 void initHash_drivers(Catalog_Drivers * catalog_drivers) { ///// COLOCAR A initHash NUM SÍTIO + APROPRIADO
   uint size = g_hash_table_size(catalog_drivers->hash_drivers);
