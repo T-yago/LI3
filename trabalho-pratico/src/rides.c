@@ -28,7 +28,6 @@ struct catalog_rides {
 
 struct ride {
   char * id;
-  //char * date;
   unsigned short int date;
   char * driver;
   char * user;
@@ -41,16 +40,18 @@ struct ride {
 };
 
 Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
-  char * line = NULL;
-  size_t len;
   GHashTable * hash_rides = g_hash_table_new (g_str_hash, g_str_equal);
+  
+  
   char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
+  
+  char * line = NULL;
+  size_t len;
   getline (&line,&len,file);
   do {
-
     while (getline( & line, & len, file) != -1) {
       Ride * ride = malloc(sizeof(struct ride));
       char * token;
@@ -62,7 +63,6 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
           ride -> id = strdup(token);
           break;
         case 1:
-          //ride -> date = strdup(token);
           ride -> date = convert_to_day(token);
           break;
         case 2:
@@ -96,6 +96,8 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
       }
               free (line_aux);
 
+
+        //---- interações com os outros módulos que são feitas aquando da leitura do ficheiro---//
         double total_gasto = 0, total_auferido = 0;
         
         char * driver = strdup (ride->driver);
@@ -107,19 +109,12 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         total_gasto = calcula_total_gasto (car_class, ride -> distance, ride -> tip);
         totalGastoUser(users_hash, user, total_gasto);
 
-        //u -> avaliacao_total_user += ride -> score_user;
         avaliacaoTotalUser(users_hash, user, ride -> score_user);
 
-        //u -> numero_viagens_user++;
         incUserNumeroViagens(users_hash,user);
 
-        //u -> distance += ride -> distance;
         totalDistanceUser(users_hash, user, ride -> distance);
 
-        /*
-        if (ride -> date > u -> date) {
-          u -> date = ride -> date;
-        }*/
         dateUser(users_hash, user, ride -> date);
 
         double total_gasto_sem_tips = calcula_total_gasto (car_class, ride -> distance, 0);
@@ -138,10 +133,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         free (city);
         free (user);
         free (driver);
-
-  
-       free (car_class);
-          
+        free (car_class);  
  }
   free (line);  
   } while (!feof(file));

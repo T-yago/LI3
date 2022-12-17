@@ -37,6 +37,7 @@ Users* create_user (char** tokens, void* catalog) {
   user->account_creation = strdup (tokens[4]); 
   user->pay_method = strdup (tokens[5]);
   user->account_status = strcmp(tokens[6], "active") == 0;
+  
   Catalog_Users* catalog_users = (Catalog_Users*)catalog;
   g_hash_table_insert(catalog_users->hash_users, user->username, user);
   return user;
