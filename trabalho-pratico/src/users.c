@@ -6,6 +6,8 @@
 #include <glib.h>
 
 #include "../includes/users.h"
+#include "../includes/parser_generic.h"
+
 
 struct catalog_users {
   GHashTable * hash_users;
@@ -26,66 +28,32 @@ struct users {
   unsigned short int avaliacao_total_user;
 };
 
+Users* create_user (char** tokens, void* catalog) {
+  Users* user = malloc(sizeof(Users));
+  user->username = strdup (tokens[0]);
+  user->name = strdup (tokens[1]);
+  user->gender = *tokens[2];
+  user->birth_date = strdup (tokens[3]);
+  user->account_creation = strdup (tokens[4]); 
+  user->pay_method = strdup (tokens[5]);
+  user->account_status = strcmp(tokens[6], "active") == 0;
+  Catalog_Users* catalog_users = (Catalog_Users*)catalog;
+  g_hash_table_insert(catalog_users->hash_users, user->username, user);
+  return user;
+}
+
 Catalog_Users * users_catalog(char * pathfiles) {
-  char * line = NULL;
-  size_t len;
+  // Cria a hashtable e adiciona-a ao catálogo
   GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
+  Catalog_Users * catalog_users = malloc (sizeof (struct catalog_users));
+  catalog_users -> hash_users = hash_users;
+
+  //chama a função parser para o ficheiro pretendido
   char userfile[256];
   strcpy(userfile, pathfiles);
   char * filename = strcat(userfile, "/users.csv");
-  FILE * file = fopen(filename, "r");
+  parse_csv(filename, (create_fn)create_user, catalog_users);
 
-  if (file == NULL) {
-    printf("Error opening file.\n");
-  }
-  // int records = 0;
-  int i = 0;
-  do {
-    while (getline( & line, & len, file) != -1) {
-      Users * u = malloc(sizeof(struct users));
-      char * token;
-      int i = 0;
-      char * line_aux = line;
-      while ((token = strsep( & line_aux, ";\n"))) {
-        switch (i) {
-        case 0:
-          u -> username = strdup(token);
-          break;
-        case 1:
-          u -> name = strdup(token);
-          break;
-        case 2:
-          u -> gender = * (token);
-          break;
-        case 3:
-          u -> birth_date = strdup(token);
-          break;
-        case 4:
-          u -> account_creation = strdup(token);
-          break;
-        case 5:
-          u -> pay_method = strdup(token);
-          break;
-        case 6:
-          if (strcmp(token, "active")) {
-              u -> account_status = true;
-            } else {
-              u -> account_status = false;
-            }
-        }
-        i++;
-      }
-      g_hash_table_insert(hash_users, u -> username, u);
-      free (line_aux);
-    }
-    free (line);
-    i++;
-  } while (!feof(file));
-
-  fclose(file);
-
-  Catalog_Users * catalog_users = malloc (sizeof (struct catalog_users));
-  catalog_users -> hash_users = hash_users;
 return catalog_users;
 }
 

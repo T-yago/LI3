@@ -2,10 +2,12 @@
 #define DRIVERS_H
 
 #include <glib.h>
+#include <stdbool.h>
 
 typedef struct drivers Drivers;
 typedef struct catalog_drivers Catalog_Drivers;
 typedef struct query2 Query2;
+
 
 void top_N_drivers (Catalog_Drivers * catalog_drivers);
 Catalog_Drivers * drivers_catalog(char * pathfiles);

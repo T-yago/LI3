@@ -60,7 +60,7 @@ void query3(Catalog_Users * hash_users, char * info, int n) {
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
   FILE * output = fopen(buffer, "w");
   for (int i = 0; i < numb; i++) {
-    if (!getAccountStatusUser(hash_users, (query3 + i) -> id)) {     //(!u -> account_status)
+    if (getAccountStatusUser(hash_users, (query3 + i) -> id)) {     //(!u -> account_status)
       fprintf(output, "%s;"
         "%s;"
         "%d\n", (query3 + i) -> id, (query3 + i) -> name, (query3 + i) -> distance);

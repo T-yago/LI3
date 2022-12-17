@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <glib.h>
+#include "../includes/parser_generic.h"
 
 #include "../includes/drivers.h"
 
@@ -36,70 +37,41 @@ struct drivers {
   double avaliacao_media_driver;
 };
 
-Catalog_Drivers * drivers_catalog(char * pathfiles) {
-  char * line = NULL;
-  size_t len;
-  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); 
-  char driverfile[256];
-  strcpy(driverfile, pathfiles);
-  char * filename = strcat(driverfile, "/drivers.csv");
-  FILE * file = fopen(filename, "r");
-  int i = 0;
-  getline (&line,&len,file);
-  do {
-    while (getline( & line, & len, file) != -1) {
-      Drivers * d = malloc(sizeof(struct drivers));
-      char * token;
-      int i = 0;
-      char * line_aux = line;
-      while ((token = strsep( & line_aux, ";\n"))) {
-        switch (i) {
-        case 0:
-          d -> id = strdup(token);
-          break;
-        case 1:
-          d -> name = strdup(token);
-          break;
-        case 2:
-          d -> birth_day = strdup(token);
-          break;
-        case 3:
-          d -> gender = * (token);
-          break;
-        case 4:
-          d -> car_class = strdup (token);
-          break;
-        case 5:
-          d -> license_plate = strdup(token);
-          break;
-        case 6:
-          d -> city = strdup(token);
-          break;
-        case 7:
-          d -> account_creation = strdup(token);
-          break;
-        case 8:
-          if (strcmp(token, "active")) {
-            d -> account_status = true;
-          } else {
-            d -> account_status = false;
-          }
-        }
-        i++;
-      }
-      g_hash_table_insert(hash_drivers, d -> id, d);
-            free (line_aux);
-    }
-    free (line);
-    i++;
-  } while (!feof(file));
-  fclose(file);
-  
-  Catalog_Drivers * catalog_drivers = malloc (sizeof (struct catalog_drivers));
-  catalog_drivers -> hash_drivers = hash_drivers;
+  Drivers* create_driver(char** tokens, void* catalog) {
+    Drivers* driver = malloc(sizeof(Drivers));
+    driver->id = strdup(tokens[0]);
+    driver->name = strdup(tokens[1]);
+    driver->birth_day = strdup(tokens[2]);
+    driver->gender = *tokens[3];
+    driver->car_class = strdup(tokens[4]);
+    driver->license_plate = strdup(tokens[5]);
+    driver->city = strdup(tokens[6]);
+    driver->account_creation = strdup(tokens[7]);
+    driver->account_status = strcmp(tokens[8], "active") == 0;
+    Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
+    g_hash_table_insert(catalog_drivers->hash_drivers, driver->id, driver);
+    return driver;
+  }
 
-return catalog_drivers;
-}
+
+
+  Catalog_Drivers * drivers_catalog(char * pathfiles) {
+    Catalog_Drivers * catalog_drivers = malloc (sizeof (struct catalog_drivers));
+        GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); 
+    catalog_drivers -> hash_drivers = hash_drivers;
+
+    char driverfile[256];
+    strcpy(driverfile, pathfiles);
+    char * filename = strcat(driverfile, "/drivers.csv");
+  
+
+  // Call parse_csv with the create and insert functions
+  parse_csv(filename, (create_fn)create_driver, catalog_drivers);
+
+
+
+  return catalog_drivers;
+  }
 
 //---------------- -------------------------------Funções auxiliares da query2 ---------------------------------------------//
 
@@ -133,8 +105,7 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   
   gpointer * keys = get_hash_keys_as_array_drivers(catalog_drivers, size_hash);
   for (uint i = 0; i < size_hash; i++) {
-    if (strcmp (keys[i],"id")) {
-      
+
     Drivers * d = g_hash_table_lookup(catalog_drivers->hash_drivers,keys[i]);
     double aval_total = d->avaliacao_total_driver;
     double num_rides = getNviagensDriver (catalog_drivers,keys[i]);
@@ -142,7 +113,7 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
     (query2 +i) -> avaliacao_media =  aval_total / num_rides;
     (query2 + i) -> data = getDateDriver(catalog_drivers, keys[i]);
     (query2 + i) -> name = getNameDriver(catalog_drivers, keys[i]);
-    }
+
   }
   free (keys);
 

@@ -87,7 +87,7 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
-  if (getAccountStatus(catalog_drivers, id)) {
+  if (!getAccountStatus(catalog_drivers, id)) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
@@ -115,7 +115,7 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
 void query1_user(char * id, Catalog_Users * catalog_users, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
-  if  (getAccountStatusUser(catalog_users, id)) {
+  if  (!getAccountStatusUser(catalog_users, id)) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
