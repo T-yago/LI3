@@ -47,7 +47,7 @@ struct drivers {
     driver->license_plate = strdup(tokens[5]);
     driver->city = strdup(tokens[6]);
     driver->account_creation = strdup(tokens[7]);
-    driver->account_status = strcmp(tokens[8], "active") == 0;
+    driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A') == 1;
     Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
     g_hash_table_insert(catalog_drivers->hash_drivers, driver->id, driver);
     return driver;
@@ -103,12 +103,14 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   uint size_hash = get_hash_drivers_size(catalog_drivers);
   Query2 * query2 = malloc (size_hash * (sizeof (Query2)));
   
+  double aval_total = 0;
+  double num_rides = 0;
   gpointer * keys = get_hash_keys_as_array_drivers(catalog_drivers, size_hash);
   for (uint i = 0; i < size_hash; i++) {
 
     Drivers * d = g_hash_table_lookup(catalog_drivers->hash_drivers,keys[i]);
-    double aval_total = d->avaliacao_total_driver;
-    double num_rides = getNviagensDriver (catalog_drivers,keys[i]);
+    aval_total = d->avaliacao_total_driver;
+    num_rides = getNviagensDriver (catalog_drivers,keys[i]);
     (query2 + i) -> id = getIdDriver(catalog_drivers, keys[i]);
     (query2 +i) -> avaliacao_media =  aval_total / num_rides;
     (query2 + i) -> data = getDateDriver(catalog_drivers, keys[i]);
@@ -134,7 +136,8 @@ gpointer * keys = g_hash_table_get_keys_as_array(catalog_drivers->hash_drivers, 
     d -> avaliacao_media_driver = 0;
     d -> avaliacao_total_driver = 0;
     d -> numero_viagens_driver = 0;
-    d->date = 0;
+    d ->total_auferido = 0;
+    d-> date = 0;
   }
   free (keys);
 }
@@ -200,7 +203,7 @@ char * getIdDriver(Catalog_Drivers * catalog_drivers, char * key){
 bool getAccountStatus(Catalog_Drivers * catalog_drivers, char * key){
   Drivers * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
-  if (d== NULL) return true;
+  if (d== NULL) return false;
   return d -> account_status;
 }
 

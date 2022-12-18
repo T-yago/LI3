@@ -28,6 +28,7 @@ struct users {
   unsigned short int avaliacao_total_user;
 };
 
+
 Users* create_user (char** tokens, void* catalog) {
   Users* user = malloc(sizeof(Users));
   user->username = strdup (tokens[0]);
@@ -36,7 +37,7 @@ Users* create_user (char** tokens, void* catalog) {
   user->birth_date = strdup (tokens[3]);
   user->account_creation = strdup (tokens[4]); 
   user->pay_method = strdup (tokens[5]);
-  user->account_status = strcmp(tokens[6], "active") == 0;
+  user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')) == 1;
   
   Catalog_Users* catalog_users = (Catalog_Users*)catalog;
   g_hash_table_insert(catalog_users->hash_users, user->username, user);
@@ -66,6 +67,9 @@ void initHash_users(Catalog_Users * hash_users) {
     u = g_hash_table_lookup(hash_users->hash_users, keys[i]);
     u -> date = 0;
     u -> distance = 0;
+    u -> total_gasto = 0;
+    u -> numero_viagens_user = 0;
+    u -> avaliacao_total_user = 0;
   }
   free (keys);
 }
@@ -172,7 +176,7 @@ short int  getAvaliacaoTotalUser(Catalog_Users * users_hash, char* id){
 bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
   Users * u; // incluir opcao para o caso de nao haver na hash
   u = g_hash_table_lookup(users_hash->hash_users, id);
-  if (u== NULL) return true;
+  if (u== NULL) return false;
   return u -> account_status;
 }
 

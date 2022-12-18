@@ -21,13 +21,13 @@
 
 double calcula_total_gasto(char* car_class, unsigned short int distance, double tip) {
   double total = 0.000;
-  if (!(strcmp(car_class, "basic"))) {
+  if (car_class[0] =='b' || car_class[0] == 'B') {
     total = total + 3.250 + (0.620 * distance) + tip;
-  } else if (!(strcmp(car_class, "green"))) {
+  } else if (car_class[0] == 'g'|| car_class[0] == 'G') {
     total = total + 4.000 + (0.790 * distance) + tip;
-  } else {
+  } else if (car_class[0] == 'p' || car_class [0] == 'P') {
     total = total + 5.200 + (0.94 * distance) + tip;
-  }
+    }
   return total;
 }
 
@@ -73,10 +73,11 @@ short int calcula_idade(char * birthdate) {
 
 void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   uint size = get_hash_drivers_size(catalog_drivers);
+  double r = 0;
  gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
   for (uint i = 0; i < size; i++) {
     //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
-    double r = (float) getAvaliacaoTotalDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
+    r = (float) getAvaliacaoTotalDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
     avaliacaoMediaDriver(catalog_drivers, keys[i], r);
   }
   free (keys);
