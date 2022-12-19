@@ -27,7 +27,6 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     {
     date = get_ride_date (catalog_rides,keys[i]);
     char * driver =  (get_ride_driver (catalog_rides,keys[i]));
-    if (strcmp(driver,"driver")) { // se nao for igual a "driver" -> tentar retirar da hash estes "driver"
     char * car_class =  (getCarClassDriver(catalog_drivers,driver));
     unsigned short int distance = get_ride_distance(catalog_rides,keys[i]); // talvz trocar para long?
     total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
@@ -38,7 +37,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
         }
                 free (car_class);
 
-    }
+    
             free (driver);
     }
     if (num_rides != 0) preco_medio = preco_medio / num_rides;
@@ -48,6 +47,6 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
     FILE * output = fopen(buffer, "w");
-    fprintf(output, "%.3f\n", preco_medio);
+     if (preco_medio != 0) fprintf(output, "%.3f\n", preco_medio);
     fclose(output);
 }
