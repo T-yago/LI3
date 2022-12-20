@@ -30,7 +30,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     char * car_class =  (getCarClassDriver(catalog_drivers,driver));
     unsigned short int distance = get_ride_distance(catalog_rides,keys[i]); // talvz trocar para long?
     total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
-        if (date > dateinf && date <= datesup) 
+        if (date >= dateinf && date <= datesup) 
         {
             preco_medio += total_gasto_sem_tips;
             num_rides++;
