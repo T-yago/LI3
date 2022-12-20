@@ -186,3 +186,8 @@ char * get_ride_driver (Catalog_Rides * catalog_rides, char* id) {
   Ride* aux = g_hash_table_lookup (catalog_rides->hash_rides,id);
   return strdup (aux->driver);
 }
+
+char * get_ride_city (Catalog_Rides * catalog_rides, char* id) {
+  Ride* aux = g_hash_table_lookup (catalog_rides->hash_rides,id);
+  return strdup (aux->city);
+}
