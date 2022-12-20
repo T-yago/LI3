@@ -26,6 +26,9 @@
 
 #include "../includes/query5.h"
 
+#include "../includes/query6.h"
+
+
 void parser_input(char * pathfiles, char * input) {
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
@@ -38,6 +41,7 @@ void parser_input(char * pathfiles, char * input) {
   FILE * file;
   char * info_1;
   char * info_2;
+  char * info_3;
   int numb_query, n = 1;
   size_t len;
   char * line = NULL;
@@ -45,8 +49,9 @@ void parser_input(char * pathfiles, char * input) {
   do {
     while (getline( & line, & len, file) != -1) {
       numb_query = atoi(strtok( line, " "));
-      info_1 = strtok(NULL, " \n");
-      info_2 = strtok (NULL, "\n");
+      info_1 = strtok(NULL, "  \n");
+      info_2 = strtok (NULL, " \n");
+      info_3 = strtok(NULL, "\n");
 
       switch (numb_query) {
       case 1:
@@ -65,6 +70,7 @@ void parser_input(char * pathfiles, char * input) {
         query5(info_1,info_2,catalog_drivers,catalog_rides,n);
         break;
       case 6:
+        query6(info_1,info_2,info_3,catalog_rides,n);
         break;
       case 7:
         break;
