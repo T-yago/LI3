@@ -31,8 +31,8 @@ int compare_users(const void * a, const void * b) {
     if (ia -> data < ib -> data) return 1; //se id for igual retorna a data + recente
     if (ia -> data > ib -> data) return -1;
     else if (ia -> data == ib -> data) { // se for para trocar é este
-      if (ia -> id > ib -> id) return 1;
-      if (ia -> id < ib -> id) return -1;
+      if (strcmp (ia -> id , ib -> id) > 0) return 1;
+      if (strcmp (ia -> id, ib -> id) < 0) return -1;
     }
     return -1; // se datas também forem iguais retorna 
   } else {
@@ -40,6 +40,9 @@ int compare_users(const void * a, const void * b) {
   }
 }
 
+
+//   if (strcmp (ia -> id, ib -> id) < 0) return 1;
+//    if (strcmp (ia -> id , ib -> id) > 0) return -1;
 void query3(Catalog_Users * hash_users, char * info, int n) {
   int numb = atoi(info);
   uint size = get_hash_size_users (hash_users);

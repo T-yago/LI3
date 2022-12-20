@@ -2,8 +2,6 @@
 
 
 
-
-
 void query2(Catalog_Drivers * catalog_drivers, char * info, int n) {
   int numb = atoi(info);
 
