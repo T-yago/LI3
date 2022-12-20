@@ -26,16 +26,15 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Rides * catalog_ri
     gpointer * keys = get_hash_keys_as_array_rides (catalog_rides,hash_rides_size);
 
     for (int i=0; i < hash_rides_size; i++) {
-        char * driver = (get_ride_driver (catalog_rides,keys[i]));
         char * ride_city = (get_ride_city (catalog_rides,keys[i]));
-        if (strcmp(driver,"driver")) {
-            date = get_ride_date (catalog_rides,keys[i]);
-            int distance = get_ride_distance(catalog_rides,keys[i]);
-            if ((date > dateinf) && (date <= datesup) && (!strcmp(strdup(city),ride_city))){
-                distancia_media += distance;
-                num_rides++;
-            }
+        date = get_ride_date (catalog_rides,keys[i]);
+        int distance = get_ride_distance(catalog_rides,keys[i]);
+        if ((date > dateinf) && (date <= datesup) && (!strcmp(strdup(city),ride_city))){
+            distancia_media += distance;
+            num_rides++;
         }
+
+        free(ride_city);
     }
     if (num_rides != 0)    distancia_media = distancia_media / num_rides;
     else    distancia_media = 0;
