@@ -23,13 +23,11 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Rides * catalog_ri
     unsigned short int dateinf = convert_to_day (dateA);
     unsigned short int datesup = convert_to_day (dateB);
 
-    int hash_rides_size = get_hash_rides_size (catalog_rides);
-    gpointer * keys = get_hash_keys_as_array_rides (catalog_rides,hash_rides_size);
-
-    for (int i=0; i < hash_rides_size; i++) {
-        char * ride_city = (get_ride_city (catalog_rides,keys[i]));
-        date = get_ride_date (catalog_rides,keys[i]);
-        int distance = get_ride_distance(catalog_rides,keys[i]);
+    uint array_length = get_array_rides_length (catalog_rides);
+    for (uint i=0; i < array_length; i++) {
+        char * ride_city = get_ride_city (catalog_rides,i);
+        date = get_ride_date (catalog_rides,i);
+        int distance = get_ride_distance(catalog_rides,i);
         if ((!strcmp(city_query,ride_city) && (date > dateinf) && (date <= datesup))){
             distancia_media += distance;
             num_rides++;
@@ -45,6 +43,6 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Rides * catalog_ri
     FILE * output = fopen(buffer, "w");
     fprintf(output, "%.3f\n", distancia_media);
     fclose(output);
-    free (keys);
     free (city_query);
+    
 }
