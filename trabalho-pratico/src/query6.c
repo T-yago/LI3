@@ -28,7 +28,7 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Rides * catalog_ri
         char * ride_city = get_ride_city (catalog_rides,i);
         date = get_ride_date (catalog_rides,i);
         int distance = get_ride_distance(catalog_rides,i);
-        if ((!strcmp(city_query,ride_city) && (date > dateinf) && (date <= datesup))){
+        if ((!strcmp(city_query,ride_city) && (date >= dateinf) && (date <= datesup))){
             distancia_media += distance;
             num_rides++;
         }
