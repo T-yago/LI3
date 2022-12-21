@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <glib.h>
-#include "../includes/parser_generic.h"
+#include "../includes/parser.h"
 
 #include "../includes/drivers.h"
 

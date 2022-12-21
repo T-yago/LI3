@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef QUERIES_HANDLER_H
+#define QUERIES_HANDLER_H
 
 void queries_handler(char* pathfiles, char* input);
 

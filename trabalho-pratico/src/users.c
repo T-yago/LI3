@@ -6,7 +6,7 @@
 #include <glib.h>
 
 #include "../includes/users.h"
-#include "../includes/parser_generic.h"
+#include "../includes/parser.h"
 
 
 struct catalog_users {

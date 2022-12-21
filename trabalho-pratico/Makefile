@@ -1,4 +1,4 @@
-OBJECT_FILES = src/main.o src/queries_handler.o src/drivers.o src/query1.o src/query2.o src/query3.o src/query4.o src/query5.o src/query6.o src/parser_generic.o src/rides.o src/users.o src/dates.o
+OBJECT_FILES = src/main.o src/queries_handler.o src/drivers.o src/query1.o src/query2.o src/query3.o src/query4.o src/query5.o src/query6.o src/parser.o src/rides.o src/users.o src/dates.o
 
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0)

@@ -1,5 +1,5 @@
-#ifndef PARSER_GENERIC_H
-#define PARSER_GENERIC_H
+#ifndef PARSER_H
+#define PARSER_H
 
 #include <glib.h>
 
