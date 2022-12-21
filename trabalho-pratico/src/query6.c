@@ -41,7 +41,7 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Rides * catalog_ri
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
     FILE * output = fopen(buffer, "w");
-    fprintf(output, "%.3f\n", distancia_media);
+    if (distancia_media !=0) fprintf(output, "%.3f\n", distancia_media);
     fclose(output);
     free (city_query);
     
