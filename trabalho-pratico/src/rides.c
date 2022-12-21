@@ -50,14 +50,6 @@ void sort_rides_by_date(Ride** rides, size_t num_rides) {
   qsort((void*)rides, num_rides, sizeof(Ride*), compare_rides);
 }
 
-void print (Catalog_Rides * catalog_rides) {
-  uint length = catalog_rides->array_length; 
-  for (uint i=0; i < length; i++) {
-        Ride* aux = catalog_rides->array_rides[i];
-    printf ("%s\n",aux->city);
-    printf ("%d\n",aux->date); 
-  }
-}
 
 Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
   Ride ** array_rides = malloc(100 * sizeof(Ride*));  
