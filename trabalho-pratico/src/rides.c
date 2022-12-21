@@ -62,11 +62,14 @@ void print (Catalog_Rides * catalog_rides) {
 Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drivers_hash, Catalog_Cities * catalog_cities, char * pathfiles) {
   Ride ** array_rides = malloc(100 * sizeof(Ride*));  
   uint num_rides = 0;
+  
+  // abertura do ficheiro
   char ridesfile[256];
   strcpy(ridesfile, pathfiles);
   char * filename = strcat(ridesfile, "/rides.csv");
   FILE * file = fopen(filename, "r");
   
+  //parsing
   char * line = NULL;
   size_t len;
   getline (&line,&len,file);
@@ -111,6 +114,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         }
         i++;
       }
+        // Insere a ride no array e realoca espaço se necessário
         array_rides[num_rides] = ride;
         num_rides++;    
         if (num_rides % 100 == 0) array_rides = realloc(array_rides, sizeof(Ride*) * (num_rides + 100)); 
@@ -154,16 +158,20 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
         free (driver);
         free (car_class);
         free (line_aux);
- }
+    }
   free (line);  
   } while (!feof(file));
- fclose(file);
+ 
+ // Adiciona o array e o seu comprimento ao catálogo
  Catalog_Rides * catalog_rides = malloc (sizeof (struct catalog_rides));
  catalog_rides->array_rides = array_rides; 
  catalog_rides->array_length = num_rides;
+
+ // Ordena o catálogo por datas
  sort_rides_by_date (catalog_rides->array_rides,catalog_rides->array_length);
-// print(catalog_rides);
-  return catalog_rides;
+
+fclose(file);
+return catalog_rides;
 }
 
 
@@ -185,25 +193,6 @@ uint get_array_rides_length (Catalog_Rides * catalog_rides) {
   return catalog_rides->array_length;
 }
 
-/*
-void free_hash_rides (Catalog_Rides * catalog_rides) {
- uint size = g_hash_table_size ( catalog_rides->hash_rides);
-  Ride *ride ;
-  gpointer * keys = g_hash_table_get_keys_as_array (catalog_rides->hash_rides, &size);
-  for (uint i = 0; i < size; i++) {
-    ride = g_hash_table_lookup(catalog_rides->hash_rides, keys[i]);
-    free (ride->id);
-    free (ride ->city);
-    free (ride-> driver);
-    free (ride->user);
-    free (ride->comment);
-    free (ride);
-  }
-  free (keys);
-   g_hash_table_destroy (catalog_rides->hash_rides);
-}
-*/
-
 unsigned short int get_ride_date (Catalog_Rides * catalog_rides, int index) {
   Ride* aux  = catalog_rides->array_rides[index]; 
 return aux->date;
@@ -213,8 +202,6 @@ unsigned short int get_ride_distance (Catalog_Rides * catalog_rides, int index) 
   Ride* aux  = catalog_rides->array_rides[index]; 
   return aux->distance;
 }
-
-
 
 char * get_ride_driver (Catalog_Rides * catalog_rides, int index) {
   Ride* aux  = catalog_rides->array_rides[index]; 

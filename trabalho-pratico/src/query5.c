@@ -28,6 +28,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     date = get_ride_date (catalog_rides,i);
         if (date >= dateinf && date <= datesup) 
         {
+            printf ("%d\n",get_ride_date(catalog_rides,i));
         char * driver =  (get_ride_driver (catalog_rides,i));
         char * car_class =  (getCarClassDriver(catalog_drivers,driver));
         unsigned short int distance = get_ride_distance(catalog_rides,i); // talvz trocar para long?
