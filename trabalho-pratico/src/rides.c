@@ -167,7 +167,7 @@ return catalog_rides;
 }
 
 
-void free_array_rides (Catalog_Rides* catalog_rides) {
+void free_rides_catalog (Catalog_Rides* catalog_rides) {
  uint length = catalog_rides->array_length; 
   for (uint i=0; i < length; i++) {
     Ride* aux = catalog_rides->array_rides[i];
@@ -179,6 +179,7 @@ void free_array_rides (Catalog_Rides* catalog_rides) {
     free (aux);
   }
   free (catalog_rides->array_rides);
+  free (catalog_rides);
 }
 
 uint get_array_rides_length (Catalog_Rides * catalog_rides) {

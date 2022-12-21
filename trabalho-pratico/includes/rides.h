@@ -16,7 +16,7 @@ unsigned short int get_ride_date (Catalog_Rides * catalog_rides, int index);
 unsigned short int get_ride_distance (Catalog_Rides * catalog_rides, int index);
 char * get_ride_driver (Catalog_Rides * catalog_rides, int index);
 char * get_ride_city (Catalog_Rides * catalog_rides, int index);
-void free_array_rides (Catalog_Rides * catalog_rides);
+void free_rides_catalog (Catalog_Rides * catalog_rides);
 uint get_array_rides_length (Catalog_Rides * catalog_rides);
 
 #endif

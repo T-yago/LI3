@@ -11,6 +11,7 @@
 
 struct catalog_users {
   GHashTable * hash_users;
+  User_Distance_Data* top_N_users;
 };
 
 struct users {
@@ -45,6 +46,7 @@ Users* create_user (char** tokens, void* catalog) {
 }
 
 Catalog_Users * users_catalog(char * pathfiles) {
+  
   // Cria a hashtable e adiciona-a ao catálogo
   GHashTable * hash_users = g_hash_table_new(g_str_hash, g_str_equal);
   Catalog_Users * catalog_users = malloc (sizeof (struct catalog_users));
@@ -74,30 +76,72 @@ void initHash_users(Catalog_Users * hash_users) {
   free (keys);
 }
 
-//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
-  
-//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
-  
-//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
 
-void free_hash_users (Catalog_Users * catalog_users) {
- uint size = g_hash_table_size ( catalog_users->hash_users);
-  Users * u;
-  gpointer * keys = get_hash_keys_as_array_users (catalog_users, size);
-  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
-  for (uint i = 0; i < size; i++) {
-    u = g_hash_table_lookup(catalog_users->hash_users, keys[i]);
-    free (u -> username);
-    free (u -> name);
-    free (u -> birth_date);
-    free (u->account_creation);
-    free (u->pay_method);
-    free (u);
+//--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
+
+struct user_distance_data{
+  char * id;
+  int distance;
+  char* name;
+  unsigned short int data;
+};
+
+int compare_users(const void * a, const void * b) {
+  User_Distance_Data * ia = (User_Distance_Data * ) a;
+  User_Distance_Data * ib = (User_Distance_Data * ) b;
+
+  if (ia -> distance < ib -> distance) return 1;
+
+  if (ia -> distance > ib -> distance) return -1;
+
+  if (ia -> distance == ib -> distance) {
+    if (ia -> data < ib -> data) return 1; //se id for igual retorna a data + recente
+    if (ia -> data > ib -> data) return -1;
+    else if (ia -> data == ib -> data) { // se for para trocar é este
+      if (strcmp (ia -> id , ib -> id) > 0) return 1;
+      if (strcmp (ia -> id, ib -> id) < 0) return -1;
+    }
+    return -1; // se datas também forem iguais retorna 
+  } else {
+    return 0;
   }
-  free(keys);
-    g_hash_table_destroy (catalog_users->hash_users);
 }
 
+void top_N_users (Catalog_Users* catalog_users) {
+  uint size_hash = get_hash_size_users (catalog_users);
+  User_Distance_Data * user_distance_data = malloc (size_hash * sizeof (User_Distance_Data));
+  gpointer * keys = get_hash_keys_as_array_users (catalog_users,size_hash);
+
+  for (uint i=0; i < size_hash;i++) {
+    (user_distance_data + i) -> id = getUsernameUser(catalog_users, keys[i]);
+    (user_distance_data + i) -> distance = getDistanceUser(catalog_users, keys[i]);
+    (user_distance_data + i) -> data = getDateUser(catalog_users, keys[i]);
+    (user_distance_data + i) -> name = getNameUser(catalog_users, keys[i]);
+  }
+  free (keys);
+  qsort((void * ) user_distance_data, size_hash, sizeof(struct user_distance_data), compare_users);
+  catalog_users->top_N_users = user_distance_data;
+}
+
+char * get_top_N_users_id (Catalog_Users* catalog_users,int index) {
+  User_Distance_Data aux = catalog_users->top_N_users[index];
+  return strdup (aux.id);
+}
+
+char * get_top_N_users_name (Catalog_Users* catalog_users, int index) {
+  User_Distance_Data aux = catalog_users->top_N_users[index];
+  return strdup (aux.name);
+}
+
+unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int index) {
+  User_Distance_Data aux = catalog_users->top_N_users[index];
+  return  aux.distance;
+}
+
+
+
+//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
+    
 
 uint get_hash_size_users (Catalog_Users * users_hash) {
   uint size = g_hash_table_size (users_hash->hash_users);
@@ -181,7 +225,7 @@ bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
 }
 
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------Funções que interagem com o catálogo dos users-----------------------------------------------------------------------------------------------------------------
 
 
 void incUserNumeroViagens(Catalog_Users * users_hash, char* id){
@@ -217,3 +261,29 @@ void totalGastoUser(Catalog_Users * users_hash, char* id, double tg){
   u->total_gasto =u-> total_gasto + tg;
 }
 
+//----------------------------------------------Função free--------------------------------------------------//
+
+void free_users_catalog (Catalog_Users * catalog_users) {
+ uint size = g_hash_table_size ( catalog_users->hash_users);
+  Users * u;
+  gpointer * keys = get_hash_keys_as_array_users (catalog_users, size);
+  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
+  for (uint i = 0; i < size; i++) {
+    u = g_hash_table_lookup(catalog_users->hash_users, keys[i]);
+    free (u -> username);
+    free (u -> name);
+    free (u -> birth_date);
+    free (u->account_creation);
+    free (u->pay_method);
+    free (u);
+  }
+  free(keys);
+    g_hash_table_destroy (catalog_users->hash_users);
+    for (uint i = 0; i < size; i++) {
+    User_Distance_Data aux = catalog_users->top_N_users[i];
+    free (aux.id);
+    free (aux.name);
+  }
+  free (catalog_users->top_N_users);
+  free (catalog_users);
+}

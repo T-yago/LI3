@@ -14,6 +14,8 @@
 
 #include "../includes/drivers.h"
 
+#include "../includes/drivers_services.h"
+
 #include "../includes/query1.h"
 
 #include "../includes/query2.h"
@@ -31,14 +33,17 @@
 
 void queries_handler (char * pathfiles, char * input) {
   
-  // cria os catálogos
+  // criação dos catálogos
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
   Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
   initHash_drivers(catalog_drivers);
   Catalog_Cities * catalog_cities = init_hash_cities();
   Catalog_Rides * catalog_rides = rides_catalog(catalog_users, catalog_drivers, catalog_cities, pathfiles);
+  
+  // criação das estruturas auxiliares para as queries
   top_N_drivers (catalog_drivers);
+  top_N_users (catalog_users);
 
   // lê o ficheiro de input das queries
   FILE * file;
@@ -89,12 +94,9 @@ void queries_handler (char * pathfiles, char * input) {
   // liberta a memória associada aos catálogos
   free (line);
   fclose(file);
-  free_hash_users (catalog_users);
-  free_hash_drivers (catalog_drivers);
-  free_array_rides (catalog_rides);
+  free_users_catalog (catalog_users);
+  free_drivers_catalog (catalog_drivers);
+  free_rides_catalog (catalog_rides);
   free_hash_cities (catalog_cities);
-  free (catalog_users);
-  free (catalog_drivers);
   free (catalog_cities);
-  free (catalog_rides);
 }
