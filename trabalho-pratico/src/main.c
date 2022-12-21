@@ -15,20 +15,12 @@
 
 #include <glib.h>
 
-#include "../includes/users.h"
-
-#include "../includes/drivers.h"
-
-#include "../includes/rides.h"
-
-#include "../includes/parser.h"
-
-#include "../includes/query1.h"
+#include "../includes/queries_handler.h"
 
 
 int main(int argc, char ** argv) {
   if (argc == 3) {
-    parser_input(argv[1], argv[2]);
+    queries_handler(argv[1], argv[2]);
   }
  return 0;
 }

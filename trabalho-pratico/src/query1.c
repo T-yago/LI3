@@ -8,8 +8,6 @@
 
 #include <glib.h>
 
-#include "../includes/parser.h"
-
 #include "../includes/drivers.h"
 
 #include "../includes/users.h"

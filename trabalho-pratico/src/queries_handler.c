@@ -8,7 +8,7 @@
 
 #include <glib.h>
 
-#include "../includes/parser.h"
+#include "../includes/queries_handler.h"
 
 #include "../includes/users.h"
 
@@ -29,7 +29,9 @@
 #include "../includes/query6.h"
 
 
-void parser_input(char * pathfiles, char * input) {
+void queries_handler (char * pathfiles, char * input) {
+  
+  // cria os catálogos
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
   Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
@@ -38,6 +40,7 @@ void parser_input(char * pathfiles, char * input) {
   Catalog_Rides * catalog_rides = rides_catalog(catalog_users, catalog_drivers, catalog_cities, pathfiles);
   top_N_drivers (catalog_drivers);
 
+  // lê o ficheiro de input das queries
   FILE * file;
   char * info_1;
   char * info_2;
@@ -82,11 +85,12 @@ void parser_input(char * pathfiles, char * input) {
       n++;
     }
   } while (!feof(file));
+ 
+  // liberta a memória associada aos catálogos
   free (line);
   fclose(file);
   free_hash_users (catalog_users);
   free_hash_drivers (catalog_drivers);
-  //free_hash_rides (catalog_rides);
   free_array_rides (catalog_rides);
   free_hash_cities (catalog_cities);
   free (catalog_users);
