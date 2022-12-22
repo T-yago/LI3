@@ -32,9 +32,7 @@ void insert_cities_hash (Catalog_Cities * cities_catalog , char * city_to_check,
                 city->total_gasto = 0;
                 city->key = key;
                 city->total_gasto += total_gasto_por_ride;
-                city->num_rides =0;
-                city->num_rides +=1;
-
+                city->num_rides =1;
                 g_hash_table_insert (cities_catalog->cities_hash, key, city); 
 
             }
@@ -62,10 +60,16 @@ void free_cities_catalog (Catalog_Cities * catalog_cities) {
 
 uint get_num_rides_city (Catalog_Cities * catalog_cities, char * city) {
     City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
-    return aux->num_rides;
+     return aux->num_rides;
 }
 
 double get_total_gasto_city (Catalog_Cities* catalog_cities, char * city) {
     City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
     return aux->total_gasto;
+}
+
+bool is_in_hash_cities (Catalog_Cities * catalog_cities, char* city) {
+    City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
+    if (!aux) return false;
+    else return true;
 }

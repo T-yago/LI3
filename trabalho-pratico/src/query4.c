@@ -18,12 +18,15 @@ void query4 (Catalog_Cities * catalog_cities, char * info , int n) {
     double avaliacao_media = 0;
     double total_gasto = 0;
     uint num_rides = 0;
+    if (!is_in_hash_cities(catalog_cities,city)) fclose (output);
+    else {
         total_gasto = get_total_gasto_city (catalog_cities,city);
         num_rides = get_num_rides_city (catalog_cities,city);
         avaliacao_media = total_gasto / num_rides;
         if (avaliacao_media != 0) fprintf(output, "%.3f\n",avaliacao_media);
         free (city);
         fclose (output);
+    }
 }
 
 
