@@ -28,7 +28,7 @@ struct catalog_rides {
 };
 
 struct ride {
-  char * id;
+  uint id;
   unsigned short int date;
   char * driver;
   char * user;
@@ -74,7 +74,7 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
       while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
-          ride -> id = strdup(token);
+          ride -> id = atoi (token);
           break;
         case 1:
           ride -> date = convert_to_day(token);
@@ -89,19 +89,19 @@ Catalog_Rides* rides_catalog(Catalog_Users * users_hash, Catalog_Drivers * drive
           ride -> city = strdup(token);
           break;
         case 5:
-          ride -> distance = atof(token);
+          ride -> distance = atoi (token);
           break;
         case 6:
-          ride -> score_user = atof(token);
+          ride -> score_user = atoi (token);
           break;
         case 7:
-          ride -> score_driver = atof(token);
+          ride -> score_driver = atoi (token);
           break;
         case 8:
           ride -> tip = atof(token);
           break;
         case 9:
-          ride -> comment = strdup(token);
+          //ride -> comment = strdup(token);
           break;
         }
         i++;
@@ -172,9 +172,8 @@ void free_rides_catalog (Catalog_Rides* catalog_rides) {
   for (uint i=0; i < length; i++) {
     Ride* aux = catalog_rides->array_rides[i];
     free (aux->city);
-    free (aux->comment);
+    //free (aux->comment);
     free (aux->driver);
-    free (aux->id);
     free (aux->user);
     free (aux);
   }
