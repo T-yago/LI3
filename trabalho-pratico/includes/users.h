@@ -22,7 +22,7 @@ int getDistanceUser(Catalog_Users * catalog_users, char * id);
 unsigned short int getDateUser(Catalog_Users * catalog_users, char * id);
 char * getNameUser(Catalog_Users * catalog_users, char * id);
 bool getAccountStatusUser(Catalog_Users * catalog_users, char * id);
-char * getBirthDateUser(Catalog_Users * catalog_users, char* id);
+short int get_age_user(Catalog_Users * users_hash, char* id);
 char  getGenderUser(Catalog_Users * catalog_users, char * id);
 short int  getAvaliacaoTotalUser(Catalog_Users * catalog_users, char * id);
 short int  getNviagensUser(Catalog_Users * catalog_users, char * id);

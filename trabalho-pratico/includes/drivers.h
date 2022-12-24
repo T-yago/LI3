@@ -20,7 +20,7 @@ double getAvaliacaoMediaDriver(Catalog_Drivers * catalog_drivers, char * key);
 double getDateDriver(Catalog_Drivers * catalog_drivers, char * key);
 char * getNameDriver(Catalog_Drivers * catalog_drivers, char * key);
 char   getGenderDriver(Catalog_Drivers * catalog_drivers, char * key);
-char* getBirthDayDriver(Catalog_Drivers * catalog_drivers, char * key);
+short int get_age_driver (Catalog_Drivers * catalog_drivers, char * key);
 double getTotalAuferidoDriver(Catalog_Drivers * catalog_drivers, char * key);
 char * getCarClassDriver(Catalog_Drivers * catalog_drivers, char * key);
 int getAvaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key);

@@ -45,7 +45,7 @@ void queries_handler (char * pathfiles, char * input) {
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
   // criação das estruturas auxiliares para as queries
-  top_N_drivers (catalog_drivers);
+  top_N_drivers (catalog_drivers);  // talvez mudar de sítio
   top_N_users (catalog_users);
 
   // lê o ficheiro de input das queries
@@ -86,6 +86,7 @@ void queries_handler (char * pathfiles, char * input) {
       case 7:
         break;
       case 8:
+      //  query8 (info_1,info2)
         break;
       case 9:
         break;

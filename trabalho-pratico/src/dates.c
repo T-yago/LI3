@@ -11,10 +11,6 @@ unsigned short int convert_to_day(char * date) {
   int meses [12] = {0,31,59,90,120,151,181,212,243,273,304,334};
   total_days += meses [month-1];
 
-  //if (month >= 2) {
-  //  if (year % 4 == 0) total_days++;
- // }
-
   year = year - 2000;
   while (year != 0) {
     if (year % 4 == 0) {

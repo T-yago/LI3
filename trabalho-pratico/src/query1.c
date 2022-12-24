@@ -89,12 +89,10 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
-    //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
     double r = (float) getAvaliacaoTotalDriver(catalog_drivers, id) / (float) getNviagensDriver(catalog_drivers, id);
     avaliacaoMediaDriver(catalog_drivers, id, r);
 
-    char * birthday = getBirthDayDriver(catalog_drivers, id);
-    short int age = calcula_idade(birthday);
+    short int age = get_age_driver(catalog_drivers, id);
     char * name = getNameDriver(catalog_drivers, id);
 
     FILE * output = fopen(buffer, "w");
@@ -105,7 +103,6 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
       "%d;"
       "%.3f\n", name, getGenderDriver(catalog_drivers, id), age, getAvaliacaoMediaDriver(catalog_drivers, id), getNviagensDriver(catalog_drivers, id), getTotalAuferidoDriver(catalog_drivers, id));
     fclose(output);
-    free (birthday);
     free (name);
   }
 }
@@ -120,8 +117,7 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
     double avaliacao_media = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) getNviagensUser(catalog_users, id);
 
     char * name = getNameUser(catalog_users, id);
-    char * birthday = getBirthDateUser(catalog_users, id);
-    short int age = calcula_idade(birthday);
+    short int age = get_age_user(catalog_users,id);
     FILE * output = fopen(buffer, "w");
     fprintf(output, "%s;"
       "%c;"
@@ -130,7 +126,6 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
       "%d;"
       "%.3f\n", name, getGenderUser(catalog_users, id), age, avaliacao_media, getNviagensUser(catalog_users, id), getTotalGastoUser(catalog_users, id));
     fclose(output);
-    free (birthday);
     free (name);
   }
 }

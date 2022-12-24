@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <glib.h>
 #include "../includes/parser.h"
+#include "../includes/query1.h"
+#include "../includes/dates.h"
 
 #include "../includes/drivers.h"
 
@@ -16,7 +18,7 @@ struct catalog_drivers {
 struct driver {
   char * id;
   char * name;
-  char * birth_day;
+  short int age;
   char gender;
   char * car_class;
   char * license_plate;
@@ -34,7 +36,7 @@ struct driver {
     Driver* driver = malloc(sizeof(Driver));
     driver->id = strdup(tokens[0]);
     driver->name = strdup(tokens[1]);
-    driver->birth_day = strdup(tokens[2]);
+    driver->age = calcula_idade (tokens[2]);
     driver->gender = *tokens[3];
     driver->car_class = strdup(tokens[4]);
     driver->license_plate = strdup(tokens[5]);
@@ -99,6 +101,8 @@ int compare(const void * a,
 }
 
 // Função que cria um array com os top "N" users e o coloca no catálogo dos drivers
+
+// Substituir por foreach
 void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   uint size_hash = get_hash_drivers_size(catalog_drivers);
   Driver_Aval_Date * driver_aval_date = malloc (size_hash * (sizeof (Driver_Aval_Date)));
@@ -231,10 +235,10 @@ char  getGenderDriver(Catalog_Drivers * catalog_drivers, char * key){
 }
 
 
-char* getBirthDayDriver(Catalog_Drivers * catalog_drivers, char * key){
+short int get_age_driver (Catalog_Drivers * catalog_drivers, char * key){
   Driver * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
-  return strdup (d -> birth_day);
+  return (d -> age);
 }
 
 
@@ -298,7 +302,7 @@ void free_driver_data(gpointer key, gpointer value, gpointer user_data) {
   Driver *d = (Driver *)value;
   free (d->id);
   free (d->name);
-  free (d->birth_day);
+  //free (d->birth_day);
   free (d->car_class);
   free (d->license_plate);
   free (d->city);

@@ -7,7 +7,7 @@
 
 #include "../includes/users.h"
 #include "../includes/parser.h"
-
+#include "../includes/query1.h"
 
 struct catalog_users {
   GHashTable * hash_users;
@@ -20,7 +20,7 @@ struct users {
   char gender;
   unsigned short int date;
   unsigned short int distance;
-  char * birth_date;
+  short int age;
   char * account_creation;
   char * pay_method;
   bool account_status;
@@ -35,7 +35,7 @@ Users* create_user (char** tokens, void* catalog) {
   user->username = strdup (tokens[0]);
   user->name = strdup (tokens[1]);
   user->gender = *tokens[2];
-  user->birth_date = strdup (tokens[3]);
+  user->age = calcula_idade (tokens[3]);
   user->account_creation = strdup (tokens[4]); 
   user->pay_method = strdup (tokens[5]);
   user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')) == 1;
@@ -175,10 +175,10 @@ unsigned short int getDateUser(Catalog_Users * users_hash, char* id){
 }
 
 
-char * getBirthDateUser(Catalog_Users * users_hash, char* id){
+short int get_age_user(Catalog_Users * users_hash, char* id){
   Users * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
-  return strdup (u -> birth_date);
+  return  u -> age;
 }
 
 
@@ -267,7 +267,7 @@ void free_user_data(gpointer key, gpointer value, gpointer user_data) {
   Users *u = (Users *)value;
   free (u->username);
   free (u->name);
-  free (u->birth_date);
+  //free (u->birth_date);
   free (u->account_creation);
   free (u->pay_method);
   free (u);

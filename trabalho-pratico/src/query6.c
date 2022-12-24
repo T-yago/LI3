@@ -21,10 +21,6 @@ void query6 (char * city, char * dateA, char * dateB, Catalog_Cities* catalog_ci
     unsigned short int datesup = convert_to_day (dateB);
 
     distancia_media = get_average_distance (catalog_cities,catalog_rides, city_query,dateinf,datesup);
-     //   printf ("%f\n",distancia_media);
-
-    //if (num_rides != 0)    distancia_media = distancia_media / num_rides;
-    //else    distancia_media = 0;
     
     if (distancia_media !=0) fprintf(output, "%.3f\n", distancia_media);
     fclose(output);
