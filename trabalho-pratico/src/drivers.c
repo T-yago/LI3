@@ -25,7 +25,7 @@ struct driver {
   char * account_creation;
   bool account_status;
   double total_auferido;
-  int avaliacao_total_driver; // short int nao chegou 
+  int avaliacao_total_driver;
   int numero_viagens_driver;
   double avaliacao_media_driver;
 };
@@ -298,7 +298,6 @@ void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
  uint size = g_hash_table_size ( catalog_drivers->hash_drivers);
   Driver *d ;
   gpointer * keys = get_hash_keys_as_array_drivers (catalog_drivers, size);
-  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_drivers, &size);
   for (uint i = 0; i < size; i++) {
     d = g_hash_table_lookup(catalog_drivers->hash_drivers, keys[i]);
     free (d -> id);

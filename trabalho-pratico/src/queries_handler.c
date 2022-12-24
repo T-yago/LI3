@@ -14,13 +14,14 @@
 
 #include "../includes/drivers.h"
 
+#include "../includes/rides.h"
+
 #include "../includes/cities.h"
 
 #include "../includes/query1.h"
 
 #include "../includes/query2.h"
 
-#include "../includes/rides.h"
 
 #include "../includes/query3.h"
 
@@ -30,6 +31,7 @@
 
 #include "../includes/query6.h"
 
+#include "../includes/data.h"
 
 void queries_handler (char * pathfiles, char * input) {
   
@@ -38,8 +40,9 @@ void queries_handler (char * pathfiles, char * input) {
   initHash_users(catalog_users);
   Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
   initHash_drivers(catalog_drivers);
+  Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
   Catalog_Cities * catalog_cities = cities_catalog ();
-  Catalog_Rides * catalog_rides = rides_catalog(catalog_users, catalog_drivers, catalog_cities, pathfiles);
+  fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
   // criação das estruturas auxiliares para as queries
   top_N_drivers (catalog_drivers);
@@ -78,7 +81,7 @@ void queries_handler (char * pathfiles, char * input) {
         query5(info_1,info_2,catalog_drivers,catalog_rides,n);
         break;
       case 6:
-        query6(info_1,info_2,info_3,catalog_rides,n);
+        query6(info_1,info_2,info_3,catalog_cities, catalog_rides,n);
         break;
       case 7:
         break;

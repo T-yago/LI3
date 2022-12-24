@@ -74,7 +74,6 @@ void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   double r = 0;
  gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
   for (uint i = 0; i < size; i++) {
-    //d -> avaliacao_media_driver = (float) d -> avaliacao_total_driver / (float) d -> numero_viagens_driver;
     r = (float) getAvaliacaoTotalDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
     avaliacaoMediaDriver(catalog_drivers, keys[i], r);
   }

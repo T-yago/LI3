@@ -18,6 +18,7 @@
 #include "../includes/queries_handler.h"
 
 
+
 int main(int argc, char ** argv) {
   if (argc == 3) {
     queries_handler(argv[1], argv[2]);

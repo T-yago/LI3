@@ -6,7 +6,7 @@
     #include <glib.h>
 
     #include "../includes/query4.h"
-    #include "../includes/cities.h"
+    
 
 
 void query4 (Catalog_Cities * catalog_cities, char * info , int n) {
@@ -17,7 +17,7 @@ void query4 (Catalog_Cities * catalog_cities, char * info , int n) {
     char* city = strdup(info);
     double avaliacao_media = 0;
     double total_gasto = 0;
-    uint num_rides = 0;
+    unsigned int num_rides = 0;
     if (!is_in_hash_cities(catalog_cities,city)) fclose (output);
     else {
         total_gasto = get_total_gasto_city (catalog_cities,city);
