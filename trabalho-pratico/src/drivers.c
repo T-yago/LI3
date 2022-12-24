@@ -294,29 +294,35 @@ void dateDriver(Catalog_Drivers * catalog_drivers,char * key, unsigned short int
 
 //--------------------------------------------Função free---------------------------------------------------------//
 
+void free_driver_data(gpointer key, gpointer value, gpointer user_data) {
+  Driver *d = (Driver *)value;
+  free (d->id);
+  free (d->name);
+  free (d->birth_day);
+  free (d->car_class);
+  free (d->license_plate);
+  free (d->city);
+  free (d->account_creation);
+  free (d);
+  (void)key;/*unused*/
+  (void)user_data;/*unused*/
+}
+
+
 void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
- uint size = g_hash_table_size ( catalog_drivers->hash_drivers);
-  Driver *d ;
-  gpointer * keys = get_hash_keys_as_array_drivers (catalog_drivers, size);
-  for (uint i = 0; i < size; i++) {
-    d = g_hash_table_lookup(catalog_drivers->hash_drivers, keys[i]);
-    free (d -> id);
-    free (d-> name);
-    free (d -> birth_day);
-    free (d->car_class);
-    free (d->license_plate);
-    free (d->city);
-    free (d->account_creation);
-    free (d);
+  uint size = g_hash_table_size ( catalog_drivers->hash_drivers);
+  
+  g_hash_table_foreach(catalog_drivers->hash_drivers, (GHFunc)free_driver_data, NULL);
+  g_hash_table_destroy (catalog_drivers->hash_drivers);
+  
+  Driver_Aval_Date aux;
+  for (uint i = 0; i < size; i++) 
+  {
+    aux = catalog_drivers->top_N_drivers[i];
+  free (aux.id);
+  free (aux.name);
   }
-    free (keys);
-    g_hash_table_destroy (catalog_drivers->hash_drivers);
-    Driver_Aval_Date aux;
-    for (uint i = 0; i < size; i++) {
-      aux = catalog_drivers->top_N_drivers[i];
-    free (aux.id);
-    free (aux.name);
-    }
-    free (catalog_drivers->top_N_drivers);
-    free (catalog_drivers);
+
+  free (catalog_drivers->top_N_drivers);
+  free (catalog_drivers);
 }

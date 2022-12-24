@@ -95,13 +95,13 @@ int compare_users(const void * a, const void * b) {
   if (ia -> distance > ib -> distance) return -1;
 
   if (ia -> distance == ib -> distance) {
-    if (ia -> data < ib -> data) return 1; //se id for igual retorna a data + recente
+    if (ia -> data < ib -> data) return 1; 
     if (ia -> data > ib -> data) return -1;
-    else if (ia -> data == ib -> data) { // se for para trocar é este
+    else if (ia -> data == ib -> data) { 
       if (strcmp (ia -> id , ib -> id) > 0) return 1;
       if (strcmp (ia -> id, ib -> id) < 0) return -1;
     }
-    return -1; // se datas também forem iguais retorna 
+    return -1; 
   } else {
     return 0;
   }
@@ -263,21 +263,22 @@ void totalGastoUser(Catalog_Users * users_hash, char* id, double tg){
 
 //----------------------------------------------Função free--------------------------------------------------//
 
+void free_user_data(gpointer key, gpointer value, gpointer user_data) {
+  Users *u = (Users *)value;
+  free (u->username);
+  free (u->name);
+  free (u->birth_date);
+  free (u->account_creation);
+  free (u->pay_method);
+  free (u);
+  (void)key;/*unused*/
+  (void)user_data;/*unused*/
+}
+
+
 void free_users_catalog (Catalog_Users * catalog_users) {
  uint size = g_hash_table_size ( catalog_users->hash_users);
-  Users * u;
-  gpointer * keys = get_hash_keys_as_array_users (catalog_users, size);
-  //gpointer * keys = g_hash_table_get_keys_as_array ( hash_users, &size);
-  for (uint i = 0; i < size; i++) {
-    u = g_hash_table_lookup(catalog_users->hash_users, keys[i]);
-    free (u -> username);
-    free (u -> name);
-    free (u -> birth_date);
-    free (u->account_creation);
-    free (u->pay_method);
-    free (u);
-  }
-  free(keys);
+    g_hash_table_foreach(catalog_users->hash_users, (GHFunc)free_user_data, NULL);
     g_hash_table_destroy (catalog_users->hash_users);
     for (uint i = 0; i < size; i++) {
     User_Distance_Data aux = catalog_users->top_N_users[i];
