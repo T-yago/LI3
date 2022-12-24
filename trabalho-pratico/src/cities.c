@@ -12,7 +12,6 @@ struct catalog_cities {
 };
 
 struct city {
-    char * key;
     double total_gasto;
     unsigned int num_rides;
     unsigned int* array_dates;
@@ -33,7 +32,6 @@ void fill_cities_catalog (Catalog_Cities * cities_catalog , char * city_to_check
                 char* key = strdup (city_to_check);
                 City* city = malloc (sizeof (City));
                 city->total_gasto = 0;
-                city->key = key; //pode-se retirar depois
                 city->total_gasto += total_gasto_por_ride;
                 city->num_rides =1;
                 
@@ -55,20 +53,20 @@ void fill_cities_catalog (Catalog_Cities * cities_catalog , char * city_to_check
     }     
 }
 
+void free_city_data(gpointer key, gpointer value, gpointer user_data) {
+  City *city = (City *)value;
+  free (city->array_dates);
+  free (city);
+  free (key);
+  (void)(user_data); /* unused */   // flag que diz ao compilador para ignorar a não utiliação de uma variável.
+}
+
+
 void free_cities_catalog (Catalog_Cities * catalog_cities) {
-    uint size = g_hash_table_size ( catalog_cities->cities_hash);
-    City *city ;
-    gpointer * keys = g_hash_table_get_keys_as_array (catalog_cities->cities_hash, &size);
-    for (uint i = 0; i < size; i++) {
-    city = g_hash_table_lookup(catalog_cities->cities_hash, keys[i]);
-    free (city->key);
-    free (city->array_dates);
-    free (city);
-    }
-    free (keys); 
+    g_hash_table_foreach(catalog_cities->cities_hash, (GHFunc)free_city_data, NULL);
     g_hash_table_destroy (catalog_cities->cities_hash);
     free (catalog_cities);
-    }
+}
 
 
 uint get_num_rides_city (Catalog_Cities * catalog_cities, char * city) {
