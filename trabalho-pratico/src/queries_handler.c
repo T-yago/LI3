@@ -31,6 +31,8 @@
 
 #include "../includes/query6.h"
 
+#include "../includes/query8.h"
+
 #include "../includes/data.h"
 
 void queries_handler (char * pathfiles, char * input) {
@@ -42,6 +44,7 @@ void queries_handler (char * pathfiles, char * input) {
   initHash_drivers(catalog_drivers);
   Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
   Catalog_Cities * catalog_cities = cities_catalog ();
+  init_array_genders (catalog_rides);
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
   // criação das estruturas auxiliares para as queries
@@ -86,7 +89,7 @@ void queries_handler (char * pathfiles, char * input) {
       case 7:
         break;
       case 8:
-      //  query8 (info_1,info2)
+       query8 (info_1[0], atoi(info_2), catalog_rides, catalog_users, catalog_drivers, n);
         break;
       case 9:
         break;

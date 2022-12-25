@@ -8,6 +8,7 @@
 #include "../includes/users.h"
 #include "../includes/parser.h"
 #include "../includes/query1.h"
+#include "../includes/dates.h"
 
 struct catalog_users {
   GHashTable * hash_users;
@@ -21,7 +22,7 @@ struct users {
   unsigned short int date;
   unsigned short int distance;
   short int age;
-  char * account_creation;
+  unsigned short int account_creation;
   char * pay_method;
   bool account_status;
   double total_gasto;
@@ -36,7 +37,7 @@ Users* create_user (char** tokens, void* catalog) {
   user->name = strdup (tokens[1]);
   user->gender = *tokens[2];
   user->age = calcula_idade (tokens[3]);
-  user->account_creation = strdup (tokens[4]); 
+  user->account_creation = convert_to_day (tokens[4]); 
   user->pay_method = strdup (tokens[5]);
   user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')) == 1;
   
@@ -142,6 +143,12 @@ unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int 
 
 //***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
     
+
+unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key) {
+  Users * u;
+  u = g_hash_table_lookup(catalog_users->hash_users, key);
+  return u->account_creation;
+}    
 
 uint get_hash_size_users (Catalog_Users * users_hash) {
   uint size = g_hash_table_size (users_hash->hash_users);
@@ -268,7 +275,7 @@ void free_user_data(gpointer key, gpointer value, gpointer user_data) {
   free (u->username);
   free (u->name);
   //free (u->birth_date);
-  free (u->account_creation);
+//  free (u->account_creation);
   free (u->pay_method);
   free (u);
   (void)key;/*unused*/

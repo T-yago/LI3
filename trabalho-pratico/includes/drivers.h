@@ -27,6 +27,7 @@ int getAvaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key);
 int getNviagensDriver(Catalog_Drivers * catalog_drivers, char * key);
 void avaliacaoMediaDriver(Catalog_Drivers * catalog_drivers, char * key, double r);
 uint get_hash_drivers_size (Catalog_Drivers * catalog_drivers);
+unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drivers, char* key);
 gpointer * get_hash_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size);
 
 

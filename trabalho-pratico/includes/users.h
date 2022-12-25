@@ -28,6 +28,7 @@ short int  getAvaliacaoTotalUser(Catalog_Users * catalog_users, char * id);
 short int  getNviagensUser(Catalog_Users * catalog_users, char * id);
 double getAvaliacaoMediaUser(Catalog_Users * catalog_users, char * id);
 double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
+unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key);
 void avaliacaoMediaUser(Catalog_Users * catalog_users, char * id, double r);
 
 

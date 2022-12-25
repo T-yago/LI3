@@ -24,7 +24,7 @@ struct driver {
   char * license_plate;
   unsigned short int date;
   char * city;
-  char * account_creation;
+  unsigned short int account_creation;
   bool account_status;
   double total_auferido;
   int avaliacao_total_driver;
@@ -41,7 +41,7 @@ struct driver {
     driver->car_class = strdup(tokens[4]);
     driver->license_plate = strdup(tokens[5]);
     driver->city = strdup(tokens[6]);
-    driver->account_creation = strdup(tokens[7]);
+    driver->account_creation = convert_to_day(tokens[7]);
     driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A') == 1;
     Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
     g_hash_table_insert(catalog_drivers->hash_drivers, driver->id, driver);
@@ -169,6 +169,11 @@ double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int n) {
  
 //***************************************************** Funções de encapsulamento de drivers *********************************************************
 
+unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drivers, char* key) {
+  Driver * d;
+  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
+  return d->account_creation;
+}
 
 
 char * getIdDriver(Catalog_Drivers * catalog_drivers, char * key){
@@ -306,7 +311,7 @@ void free_driver_data(gpointer key, gpointer value, gpointer user_data) {
   free (d->car_class);
   free (d->license_plate);
   free (d->city);
-  free (d->account_creation);
+  //free (d->account_creation);
   free (d);
   (void)key;/*unused*/
   (void)user_data;/*unused*/
