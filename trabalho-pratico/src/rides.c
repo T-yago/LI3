@@ -25,13 +25,14 @@ struct catalog_rides {
   uint array_ages_M_length;
   Ride_Ages** array_ages_F;
   uint array_ages_F_length;
+  Q9 **array_q9;
+  uint array_q9_length;
 };
-
-
 
 struct ride {
   unsigned int id;
   unsigned short int date;
+  char* datestr;
   char * driver;
   char * user;
   char * city;
@@ -233,6 +234,73 @@ unsigned int * check_gender_in_rides (Catalog_Rides* catalog_rides, char gender,
   return array_ids;  
 }
 
+struct q9
+{
+  int ride_id;
+  unsigned short int ride_dateint;
+  char *ride_date;
+  char *city;
+  unsigned short int distance;
+  double tip;
+};
+
+void init_array_q9(Catalog_Rides *catalog_rides)
+{
+  Q9 **array_q9 = malloc(100000 * sizeof(Q9 *));
+  catalog_rides->array_q9 = array_q9;
+  catalog_rides->array_q9_length = 0;
+}
+
+void insert_array_q9(Catalog_Rides *catalog_rides, int id, unsigned short int ride_distance, char *ride_city, double ride_tip, unsigned short int ride_dateint, int index)
+{
+  Q9 *q9 = malloc(sizeof(Q9));
+  q9->ride_id = id;
+  q9->ride_dateint = ride_dateint;
+  q9->ride_date = get_ride_datestr(catalog_rides, index);
+  q9->distance = ride_distance;
+  q9->city = strdup(ride_city);
+  q9->tip = ride_tip;
+  catalog_rides->array_q9[catalog_rides->array_q9_length] = q9;
+  catalog_rides->array_q9_length++;
+  if (catalog_rides->array_q9_length % 100000 == 0)
+    catalog_rides->array_q9 = realloc(catalog_rides->array_q9, sizeof(Q9 *) * (catalog_rides->array_q9_length + 100000));
+}
+
+int compareq9(const void *a, const void *b)
+{
+  const Q9 *aa = *(Q9 **)a;
+  const Q9 *bb = *(Q9 **)b;
+
+  // Sort by distance first
+  if (aa->distance > bb->distance) return -1;
+  
+  else if (aa->distance < bb->distance) return 1;
+  
+  // If distances are equal, sort by dateint
+  else if (aa->distance == bb->distance) {
+    if (aa->ride_dateint > bb->ride_dateint) return -1;
+  
+    else if (aa->ride_dateint < bb->ride_dateint) return 1;
+
+    // If distances and dateints are equal, sort by ride_id
+    else if (aa->ride_dateint == bb->ride_dateint) {
+
+      if (aa->ride_id > bb->ride_id) return -1;
+  
+      else if (aa->ride_id < bb->ride_id) return 1;
+    }
+  }
+  // If everything is equal, return 0
+  return 0;
+}
+
+void sort_arrayq9(Catalog_Rides *catalog_rides)
+{
+  Q9 **q9 = catalog_rides->array_q9;
+  uint length = catalog_rides->array_q9_length;
+  qsort((void *)q9, length, sizeof(Q9 *), compareq9);
+}
+
 
 void free_rides_catalog (Catalog_Rides* catalog_rides) {
  uint length = catalog_rides->array_length; 
@@ -254,9 +322,16 @@ void free_rides_catalog (Catalog_Rides* catalog_rides) {
     free (aux->id_driver);
     free (aux->id_user);
   }
+  for (uint i = 0; i < catalog_rides->array_q9_length; i++)
+  {
+    Q9 *aux = catalog_rides->array_q9[i];
+    free(aux->city);
+    free(aux->ride_date);
+  }
   free (catalog_rides->array_ages_F);
   free (catalog_rides->array_ages_M);
   free (catalog_rides->array_rides);
+  free(catalog_rides->array_q9);
   free (catalog_rides);
 }
 
@@ -299,6 +374,12 @@ char* get_ride_user (Catalog_Rides* catalog_rides, int index) {
   return strdup (aux->user);
 }
 
+char* get_ride_datestr(Catalog_Rides *catalog_rides, int index) 
+{
+  Ride *aux = catalog_rides->array_rides[index];
+  return strdup(aux->datestr);
+}
+
 unsigned short int get_score_user_ride (Catalog_Rides* catalog_rides, int index) {
     Ride* aux  = catalog_rides->array_rides[index]; 
   return aux->score_user;
@@ -307,6 +388,47 @@ unsigned short int get_score_user_ride (Catalog_Rides* catalog_rides, int index)
 unsigned short int get_score_driver_ride (Catalog_Rides* catalog_rides, int index) {
     Ride* aux  = catalog_rides->array_rides[index]; 
   return aux->score_driver;
+}
+
+int get_arrayq9_size(Catalog_Rides *catalog_rides)
+{
+  return catalog_rides->array_q9_length;
+}
+
+
+unsigned short int get_ridedateint_q9(Catalog_Rides *catalog_rides, int index) {
+  Q9* aux = catalog_rides->array_q9[index];
+  return aux->ride_dateint;
+}
+
+int get_ride_id_q9(Catalog_Rides *catalog_rides, int index)
+{
+  Q9 *aux = catalog_rides->array_q9[index];
+  return aux->ride_id;
+}
+
+char *get_ride_date_q9(Catalog_Rides *catalog_rides, int index)
+{
+  Q9 *aux = catalog_rides->array_q9[index];
+  return aux->ride_date;
+}
+
+char *get_ride_city_q9(Catalog_Rides *catalog_rides, int index)
+{
+  Q9 *aux = catalog_rides->array_q9[index];
+  return strdup(aux->city);
+}
+
+unsigned short int get_ride_distance_q9(Catalog_Rides *catalog_rides, int index)
+{
+  Q9 *aux = catalog_rides->array_q9[index];
+  return aux->distance;
+}
+
+double get_ride_tip_q9(Catalog_Rides *catalog_rides, int index)
+{
+  Q9 *aux = catalog_rides->array_q9[index];
+  return aux->tip;
 }
 
 
