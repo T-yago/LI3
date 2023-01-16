@@ -56,6 +56,8 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, id);
 
         insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user,driver,id);
+
+        insert_array_q9(catalog_rides, id, ride_distance, ride_city, ride_tip, ride_date, i);
         
         free (user);
         free (driver);
@@ -63,6 +65,6 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         free (ride_city);
 
     }
-
     sort_array_genders (catalog_rides);
+    sort_arrayq9(catalog_rides);
 }
