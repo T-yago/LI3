@@ -94,7 +94,7 @@ void queries_handler (char * pathfiles, char * input) {
         query8 (info_1[0], atoi(info_2), catalog_rides, catalog_users, catalog_drivers, n);
         break;
       case 9:
-        query9(catalog_rides, info1, info2, n);
+        query9(catalog_rides, info_1, info_2, n);
         break;
       }
       n++;
