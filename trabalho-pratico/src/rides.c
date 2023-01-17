@@ -155,24 +155,21 @@ void insert_arrays_genders (Catalog_Users* catalog_users,Catalog_Drivers* catalo
   
   if (gender_driver == gender_user) 
   {
-    if (gender_driver == 'M') {
       Ride_Ages * ride = malloc (sizeof (Ride_Ages));
       ride->id_driver = strdup (driver);
       ride->data_creation_driver = get_data_creation_days_driver (catalog_drivers,driver);
       ride->data_creation_user = get_data_creation_days_user (catalog_users, user);
       ride->id_user = strdup (user);
       ride->id_ride = id;
+    
+    if (gender_driver == 'M') {
+      
       catalog_rides->array_ages_M [catalog_rides->array_ages_M_length] = ride;
       catalog_rides->array_ages_M_length++;
       if (catalog_rides->array_ages_M_length % 100 == 0) catalog_rides->array_ages_M = realloc(catalog_rides->array_ages_M, sizeof(Ride_Ages*) * (catalog_rides->array_ages_M_length + 100)); 
+    
     }
     else {
-      Ride_Ages * ride = malloc (sizeof (Ride_Ages));
-      ride->id_driver = strdup (driver);
-      ride->data_creation_driver = get_data_creation_days_driver (catalog_drivers,driver);
-      ride->data_creation_user = get_data_creation_days_user (catalog_users, user);
-      ride->id_user = strdup (user);
-      ride->id_ride = id;
       catalog_rides->array_ages_F [catalog_rides->array_ages_F_length] = ride;
       catalog_rides->array_ages_F_length++;
       if (catalog_rides->array_ages_F_length % 100 == 0) catalog_rides->array_ages_F = realloc(catalog_rides->array_ages_F, sizeof(Ride_Ages*) * (catalog_rides->array_ages_F_length + 100)); 
