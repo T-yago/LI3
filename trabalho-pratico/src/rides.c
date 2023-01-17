@@ -190,7 +190,7 @@ void insert_arrays_genders (Catalog_Users* catalog_users,Catalog_Drivers* catalo
       if (ride1->data_creation_user > ride2->data_creation_user) return 1;
       else if (ride1->data_creation_user < ride2->data_creation_user) return -1;
       else if (ride1->data_creation_user == ride2->data_creation_user) {
-        return ride2->id_ride - ride1->id_ride;
+        return ride1->id_ride - ride2->id_ride;
       }
     }
     return 0;
