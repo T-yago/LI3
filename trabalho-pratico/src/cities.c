@@ -105,8 +105,7 @@ double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* cata
             cont++;
         }
       }
-    
-    distancia_media = distancia_media / cont;   
+    if (cont != 0) distancia_media = distancia_media / cont;   
     return distancia_media;
 }
 
