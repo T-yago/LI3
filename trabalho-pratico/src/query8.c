@@ -13,7 +13,7 @@ void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* 
     char* name_driver;
     char* name_user;
     unsigned int id_ride = 0;
-    unsigned short int age_in_days = convert_to_day ("09/10/2022") - (age * 365) - 3;
+    unsigned short int age_in_days = convert_to_day ("09/10/2022") - (age * 365) - 3; // Calcular o dia a partir do qual a idade é maior à pedida
     unsigned int * array_ids =  check_gender_in_rides (catalog_rides, gender, age_in_days); //recebe o array de ids que correspondem às viagens válidas
 
     for (int i = 0; array_ids[i]!=0; i++) {

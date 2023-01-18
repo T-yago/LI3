@@ -69,16 +69,7 @@ short int calcula_idade(char * birthdate) {
   return age;
 }
 
-void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
-  uint size = get_hash_drivers_size(catalog_drivers);
-  double r = 0;
- gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
-  for (uint i = 0; i < size; i++) {
-    r = (float) getAvaliacaoTotalDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
-    avaliacaoMediaDriver(catalog_drivers, keys[i], r);
-  }
-  free (keys);
-}
+
 
 void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
 
@@ -89,8 +80,8 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
-    double r = (float) getAvaliacaoTotalDriver(catalog_drivers, id) / (float) getNviagensDriver(catalog_drivers, id);
-    avaliacaoMediaDriver(catalog_drivers, id, r);
+    //double r = (float) getAvaliacaoMediaDriver(catalog_drivers, id) / (float) getNviagensDriver(catalog_drivers, id);
+    //avaliacaoMediaDriver(catalog_drivers, id, r);
 
     short int age = get_age_driver(catalog_drivers, id);
     char * name = getNameDriver(catalog_drivers, id);
@@ -136,5 +127,4 @@ void query1_main(char * id, Catalog_Users * catalog_users, Catalog_Drivers * cat
   } else {
     query1_driver(id, catalog_drivers, n);
   }
-  update_avaliacao_media_driver(catalog_drivers);
 }

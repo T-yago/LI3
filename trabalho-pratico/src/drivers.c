@@ -50,23 +50,19 @@ struct driver {
 
 
 
-  Catalog_Drivers * drivers_catalog(char * pathfiles) {
-    Catalog_Drivers * catalog_drivers = malloc (sizeof (struct catalog_drivers));
-    GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); 
-    catalog_drivers -> hash_drivers = hash_drivers;
+Catalog_Drivers * drivers_catalog(char * pathfiles) {
+  Catalog_Drivers * catalog_drivers = malloc (sizeof (struct catalog_drivers));
+  GHashTable * hash_drivers = g_hash_table_new(g_str_hash, g_str_equal); 
+  catalog_drivers -> hash_drivers = hash_drivers;
 
-    char driverfile[256];
-    strcpy(driverfile, pathfiles);
-    char * filename = strcat(driverfile, "/drivers.csv");
-  
+  char driverfile[256];
+  strcpy(driverfile, pathfiles);
+  char * filename = strcat(driverfile, "/drivers.csv");
 
   // Call parse_csv with the create and insert functions
   parse_csv(filename, (create_fn)create_driver, catalog_drivers);
-
-
-
   return catalog_drivers;
-  }
+}
 
 
 //---------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
@@ -78,8 +74,8 @@ void* get_top_N_drivers(Catalog_Drivers* catalog_drivers) {
 }
 
 
-
 //----------------------------------------------------------------------------------------------------------------------
+
 void initHash_drivers(Catalog_Drivers * catalog_drivers) { 
   uint size = g_hash_table_size(catalog_drivers->hash_drivers);
   Driver * d;
@@ -95,6 +91,17 @@ gpointer * keys = g_hash_table_get_keys_as_array(catalog_drivers->hash_drivers, 
   free (keys);
 }
 
+void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
+  uint size = get_hash_drivers_size(catalog_drivers);
+  double r = 0;
+ gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
+  for (uint i = 0; i < size; i++) {
+   // printf ("%f\n", getAvaliacaoMediaDriver(catalog_drivers, keys[i]));
+    r = (float) getAvaliacaoMediaDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
+    avaliacaoMediaDriver(catalog_drivers, keys[i], r);
+  }
+  free (keys);
+}
 
 
 
@@ -145,14 +152,6 @@ char * getNameDriver(Catalog_Drivers * catalog_drivers, char * key){
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   return strdup(d -> name);
 }
-
-
-int getAvaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key){
-  Driver * d;
-  d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
-  return d->avaliacao_total_driver;
-}
-
 
 int getNviagensDriver(Catalog_Drivers * catalog_drivers, char * key){
   Driver * d;
@@ -216,10 +215,11 @@ void totalAuferidoDriver(Catalog_Drivers * catalog_drivers, char * key, double t
 }
 
 
-void avaliacaoTotalDriver(Catalog_Drivers * catalog_drivers, char * key, short int r){
+void inc_avaliacao_media_driver(Catalog_Drivers * catalog_drivers, char * key, short int r){
   Driver * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
-  d -> avaliacao_total_driver += r;
+  d -> avaliacao_media_driver += r;
+  printf ("%f\n",d->avaliacao_media_driver);
 }
 
 

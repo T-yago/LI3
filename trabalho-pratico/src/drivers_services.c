@@ -39,15 +39,11 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   uint size_hash = get_hash_drivers_size(catalog_drivers);
   Driver_Aval_Date * driver_aval_date = malloc (size_hash * (sizeof (Driver_Aval_Date)));
   
-  double aval_total = 0;
-  double num_rides = 0;
   gpointer * keys = get_hash_keys_as_array_drivers(catalog_drivers, size_hash);
   for (uint i = 0; i < size_hash; i++) {
 
-    aval_total = getAvaliacaoTotalDriver (catalog_drivers, keys[i]);
-    num_rides = getNviagensDriver (catalog_drivers,keys[i]);
     (driver_aval_date + i) -> id = getIdDriver(catalog_drivers, keys[i]);
-    (driver_aval_date +i) -> avaliacao_media =  aval_total / num_rides;
+    (driver_aval_date +i) -> avaliacao_media =  getAvaliacaoMediaDriver (catalog_drivers, keys[i]);
     (driver_aval_date + i) -> data = getDateDriver(catalog_drivers, keys[i]);
     (driver_aval_date + i) -> name = getNameDriver(catalog_drivers, keys[i]);
 

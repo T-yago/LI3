@@ -14,7 +14,7 @@ struct catalog_cities {
 struct city {
     double total_gasto;
     unsigned int num_rides;
-    unsigned int* array_rides_city;
+    unsigned int* array_rides_city; //array que contém os ids das rides feitas nessa cidade
     unsigned int array_rides_city_length;
 };
 

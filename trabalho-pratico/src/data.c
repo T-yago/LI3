@@ -12,7 +12,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     double total_gasto = 0;
     double total_gasto_sem_tips = 0;
     double total_auferido = 0;
-    unsigned short int ride_score_driver;
+    float ride_score_driver;
     unsigned short int ride_score_user;
     unsigned short int ride_date;
 
@@ -45,7 +45,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
                
         totalAuferidoDriver(catalog_drivers, driver, total_auferido);
 
-        avaliacaoTotalDriver(catalog_drivers, driver, ride_score_driver);
+        inc_avaliacao_media_driver (catalog_drivers, driver, ride_score_driver);
 
         numeroViagensDriver(catalog_drivers, driver);
 
@@ -61,6 +61,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         free (ride_city);
 
     }
-
+    
+    update_avaliacao_media_driver(catalog_drivers);
     sort_array_genders (catalog_rides);
 }
