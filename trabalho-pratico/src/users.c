@@ -229,16 +229,11 @@ void free_user_data(gpointer key, gpointer value, gpointer user_data) {
 
 
 void free_users_catalog (Catalog_Users * catalog_users) {
- uint size = g_hash_table_size ( catalog_users->hash_users);
-    g_hash_table_foreach(catalog_users->hash_users, (GHFunc)free_user_data, NULL);
-    g_hash_table_destroy (catalog_users->hash_users);
-   // for (uint i = 0; i < size; i++) {
-    //User_Distance_Data aux = catalog_users->top_N_users[i];
-    //free (aux.id);
-    //free (aux.name);
-  // }
+ unsigned int size = g_hash_table_size ( catalog_users->hash_users);
+  g_hash_table_foreach(catalog_users->hash_users, (GHFunc)free_user_data, NULL);
+  g_hash_table_destroy (catalog_users->hash_users);
+  free_users_services (catalog_users, size);
   free (catalog_users->top_N_users);
   free (catalog_users);
 }
 
-// DAR FREE AS STRUCTS AUXILIARES

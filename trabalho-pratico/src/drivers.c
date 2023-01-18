@@ -258,15 +258,7 @@ void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
   
   g_hash_table_foreach(catalog_drivers->hash_drivers, (GHFunc)free_driver_data, NULL);
   g_hash_table_destroy (catalog_drivers->hash_drivers);
-  
-  //Driver_Aval_Date aux;
-  //for (uint i = 0; i < size; i++) 
-  //{
-  //  aux = catalog_drivers->top_N_drivers[i];
-  //free (aux.id);
-  //free (aux.name);
-  //}
-
+  free_drivers_services (catalog_drivers, size);
   free (catalog_drivers->top_N_drivers);
   free (catalog_drivers);
 }

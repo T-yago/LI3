@@ -64,3 +64,12 @@ unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int 
   User_Distance_Data aux = top_n_users[index];  
   return  aux.distance;
 }
+
+void free_users_services (Catalog_Users* catalog_users, unsigned int size) {
+  User_Distance_Data* top_N_users = (User_Distance_Data*) get_top_N_users (catalog_users);
+  for (uint i = 0; i < size; i++) {
+    User_Distance_Data aux = top_N_users[i];
+    free (aux.id);
+    free (aux.name);
+  }
+}

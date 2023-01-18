@@ -77,3 +77,13 @@ double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int index) {
   Driver_Aval_Date aux = top_N_drivers [index]; 
 return aux.avaliacao_media;
 }
+
+void free_drivers_services (Catalog_Drivers* catalog_drivers, unsigned int size) {
+  Driver_Aval_Date* top_N_drivers = (Driver_Aval_Date*) get_top_N_drivers (catalog_drivers);
+  for (uint i = 0; i < size; i++) {
+    Driver_Aval_Date aux = top_N_drivers [i];
+    free (aux.id);
+    free (aux.name);
+  }
+}
+

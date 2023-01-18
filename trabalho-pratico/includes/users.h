@@ -41,5 +41,4 @@ unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, ch
 void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users);
 void* get_top_N_users(Catalog_Users* catalog_users);
 
-
 #endif
