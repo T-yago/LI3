@@ -10,13 +10,20 @@ typedef struct  catalog_users Catalog_Users;
 void free_users_catalog (Catalog_Users * catalog_users);
 Catalog_Users * users_catalog(char* pathfiles);
 uint get_hash_size_users (Catalog_Users * catalog_users);
-gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);
+
+
 void initHash_users(Catalog_Users * catalog_users);
 void incUserNumeroViagens(Catalog_Users * catalog_users, char * id);
 void avaliacaoTotalUser(Catalog_Users * catalog_users, char * id, short int r);
 void totalDistanceUser(Catalog_Users * catalog_users, char * id, int r);
+void avaliacaoMediaUser(Catalog_Users * catalog_users, char * id, double r);
 void dateUser(Catalog_Users * catalog_users, char * id, unsigned short int r);
 void totalGastoUser(Catalog_Users * catalog_users, char * id, double tg);
+
+
+//------------------------------------ getters ---------------------------------------------------//
+
+gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);
 char * getUsernameUser(Catalog_Users * catalog_users, char * id);
 int getDistanceUser(Catalog_Users * catalog_users, char * id);
 unsigned short int getDateUser(Catalog_Users * catalog_users, char * id);
@@ -29,16 +36,10 @@ short int  getNviagensUser(Catalog_Users * catalog_users, char * id);
 double getAvaliacaoMediaUser(Catalog_Users * catalog_users, char * id);
 double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
 unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key);
-void avaliacaoMediaUser(Catalog_Users * catalog_users, char * id, double r);
 
 
-typedef struct user_distance_data User_Distance_Data;
-void top_N_users (Catalog_Users * catalog_users);
-char * get_top_N_users_id (Catalog_Users* catalog_users,int index);
-char * get_top_N_users_name (Catalog_Users* catalog_users, int index);
-unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int index);
-
-
+void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users);
+void* get_top_N_users(Catalog_Users* catalog_users);
 
 
 #endif

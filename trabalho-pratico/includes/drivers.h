@@ -31,11 +31,7 @@ unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drive
 gpointer * get_hash_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size);
 
 
-typedef struct driver_aval_date Driver_Aval_Date;
-void top_N_drivers (Catalog_Drivers * catalog_drivers);
-char * get_name_driver_top_N (Catalog_Drivers * catalog_drivers,int n);
-char * get_id_driver_top_N (Catalog_Drivers * catalog_drivers, int n);
-double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int n);
-
+void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers);
+void* get_top_N_drivers(Catalog_Drivers* catalog_drivers);
 
 #endif
