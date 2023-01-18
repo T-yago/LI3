@@ -127,11 +127,11 @@ fclose(file);
 return catalog_rides;
 }
 
-
+// struct definida para a query8 
 struct ride_ages {
   char* id_driver;
   char* id_user;
-  unsigned short int data_creation_user;
+  unsigned short int data_creation_user; // as datas de criação são convertidas para dias para se poderem comparar
   unsigned short int data_creation_driver;
   unsigned int id_ride;
 };

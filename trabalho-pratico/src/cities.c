@@ -14,8 +14,8 @@ struct catalog_cities {
 struct city {
     double total_gasto;
     unsigned int num_rides;
-    unsigned int* array_dates;
-    unsigned int array_dates_length;
+    unsigned int* array_rides_city;
+    unsigned int array_rides_city_length;
 };
 
 Catalog_Cities * cities_catalog () {
@@ -35,10 +35,10 @@ void fill_cities_catalog (Catalog_Cities * cities_catalog , char * city_to_check
                 city->total_gasto += total_gasto_por_ride;
                 city->num_rides =1;
                 
-                city->array_dates_length = 0;
-                city->array_dates = malloc (100 *sizeof(uint));
-                city->array_dates[city->array_dates_length] = ride_id;
-                city->array_dates_length ++;
+                city->array_rides_city_length = 0;
+                city->array_rides_city = malloc (100 *sizeof(uint));
+                city->array_rides_city[city->array_rides_city_length] = ride_id;
+                city->array_rides_city_length ++;
                 g_hash_table_insert (cities_catalog->cities_hash, key, city); 
 
             }
@@ -47,15 +47,15 @@ void fill_cities_catalog (Catalog_Cities * cities_catalog , char * city_to_check
                 city->num_rides++;
                 city->total_gasto += total_gasto_por_ride;
 
-                city->array_dates[city->array_dates_length] = ride_id;
-                city->array_dates_length++;
-                if (city->array_dates_length % 100 == 0) city->array_dates = realloc(city->array_dates, sizeof(uint) * (city->array_dates_length + 100)); 
+                city->array_rides_city[city->array_rides_city_length] = ride_id;
+                city->array_rides_city_length++;
+                if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
     }     
 }
 
 void free_city_data(gpointer key, gpointer value, gpointer user_data) {
   City *city = (City *)value;
-  free (city->array_dates);
+  free (city->array_rides_city);
   free (city);
   free (key);
   (void)(user_data); /* unused */   // flag que diz ao compilador para ignorar a não utiliação de uma variável.
@@ -93,9 +93,9 @@ double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* cata
       City * aux = g_hash_table_lookup (catalog_cities->cities_hash, city);
 
       unsigned short int date = 0;
-      for (uint i = 0; i < aux->array_dates_length; i++) {
+      for (uint i = 0; i < aux->array_rides_city_length; i++) {
         
-        unsigned int id = aux->array_dates[i];
+        unsigned int id = aux->array_rides_city[i];
         date = get_ride_date (catalog_rides,id);
         
         if (date >= dateInf && date <= dateSup) {
