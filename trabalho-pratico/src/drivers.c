@@ -96,7 +96,6 @@ void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   double r = 0;
  gpointer *  keys = get_hash_keys_as_array_drivers(catalog_drivers, size);
   for (uint i = 0; i < size; i++) {
-   // printf ("%f\n", getAvaliacaoMediaDriver(catalog_drivers, keys[i]));
     r = (float) getAvaliacaoMediaDriver(catalog_drivers, keys[i]) / (float) getNviagensDriver(catalog_drivers, keys[i]);
     avaliacaoMediaDriver(catalog_drivers, keys[i], r);
   }
@@ -219,7 +218,6 @@ void inc_avaliacao_media_driver(Catalog_Drivers * catalog_drivers, char * key, s
   Driver * d;
   d = g_hash_table_lookup(catalog_drivers->hash_drivers, key);
   d -> avaliacao_media_driver += r;
-  printf ("%f\n",d->avaliacao_media_driver);
 }
 
 

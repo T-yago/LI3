@@ -221,7 +221,7 @@ unsigned int * check_gender_in_rides (Catalog_Rides* catalog_rides, char gender,
         array_ids [cont] = ride->id_ride;
         cont++;
         if (cont % 10 == 0) array_ids = realloc (array_ids, sizeof (unsigned int) * (cont + 10));
-      } 
+      }
     }
   }  
   array_ids [cont] = 0; // O último elemento é zero para ser possível iterar sem saber o tamanho
@@ -243,11 +243,13 @@ void free_rides_catalog (Catalog_Rides* catalog_rides) {
    Ride_Ages * aux = catalog_rides->array_ages_F[i];
    free (aux->id_driver);
    free (aux->id_user);
+   free (aux);
   }
   for (uint i = 0; i < catalog_rides->array_ages_M_length;i++) {
     Ride_Ages* aux = catalog_rides->array_ages_M[i];
     free (aux->id_driver);
     free (aux->id_user);
+    free (aux);
   }
   free (catalog_rides->array_ages_F);
   free (catalog_rides->array_ages_M);
