@@ -18,7 +18,6 @@ char * get_ride_driver (Catalog_Rides * catalog_rides, int index);
 char * get_ride_city (Catalog_Rides * catalog_rides, int index);
 void free_rides_catalog (Catalog_Rides * catalog_rides);
 uint get_array_rides_length (Catalog_Rides * catalog_rides);
-unsigned int get_ride_id (Catalog_Rides* catalog_rides,  int index);
 double get_ride_tip (Catalog_Rides* catalog_rides, int index);
 char* get_ride_user (Catalog_Rides* catalog_rides, int index);
 unsigned short int get_score_user_ride (Catalog_Rides* catalog_rides, int index);

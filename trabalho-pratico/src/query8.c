@@ -19,8 +19,8 @@ void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* 
     for (int i = 0; array_ids[i]!=0; i++) {
 
         id_ride = array_ids [i];
-        id_driver = get_ride_driver (catalog_rides, id_ride -1);
-        id_user = get_ride_user (catalog_rides, id_ride -1);
+        id_driver = get_ride_driver (catalog_rides, id_ride);
+        id_user = get_ride_user (catalog_rides, id_ride);
         name_driver = getNameDriver (catalog_drivers, id_driver);
         name_user = getNameUser (catalog_users, id_user);
         if (getAccountStatus (catalog_drivers,id_driver) && getAccountStatusUser(catalog_users,id_user))

@@ -96,11 +96,11 @@ double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* cata
       for (uint i = 0; i < aux->array_dates_length; i++) {
         
         unsigned int id = aux->array_dates[i];
-        date = get_ride_date (catalog_rides,id-1);
+        date = get_ride_date (catalog_rides,id);
         
         if (date >= dateInf && date <= dateSup) {
         
-            distance = get_ride_distance (catalog_rides,id-1);
+            distance = get_ride_distance (catalog_rides,id);
             distancia_media += distance;
             cont++;
         }

@@ -30,7 +30,6 @@ struct catalog_rides {
 
 
 struct ride {
-  unsigned int id;
   unsigned short int date;
   char * driver;
   char * user;
@@ -39,7 +38,7 @@ struct ride {
   unsigned short int score_user;
   unsigned short int score_driver;
   double tip;
-  char * comment;
+  //char * comment;
 };
 
 int compare_rides(const void* a, const void* b) {
@@ -76,7 +75,7 @@ Catalog_Rides* rides_catalog(char * pathfiles) {
       while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
-          ride -> id = atoi (token);
+         // ride -> id = atoi (token);
           break;
         case 1:
           ride -> date = convert_to_day(token);
@@ -122,9 +121,8 @@ Catalog_Rides* rides_catalog(char * pathfiles) {
  catalog_rides->array_rides = array_rides; 
  catalog_rides->array_length = num_rides;
 
- // Ordena o catálogo por datas
- //sort_rides_by_date (catalog_rides->array_rides,catalog_rides->array_length);
-
+  //Ordena o catálogo por datas
+  //sort_rides_by_date (array_rides, catalog_rides->array_length);  
 fclose(file);
 return catalog_rides;
 }
@@ -279,11 +277,6 @@ char * get_ride_driver (Catalog_Rides * catalog_rides, int index) {
 char * get_ride_city (Catalog_Rides * catalog_rides, int index) {
   Ride* aux  = catalog_rides->array_rides[index]; 
   return strdup (aux->city);
-}
-
-unsigned int get_ride_id (Catalog_Rides* catalog_rides, int index) {
-    Ride* aux  = catalog_rides->array_rides[index]; 
-return aux->id;
 }
 
 double get_ride_tip (Catalog_Rides* catalog_rides, int index) {
