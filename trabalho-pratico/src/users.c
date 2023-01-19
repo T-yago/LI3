@@ -63,20 +63,22 @@ Catalog_Users * users_catalog(char * pathfiles) {
 return catalog_users;
 }
 
-void initHash_users(Catalog_Users * hash_users) {
-  uint size = g_hash_table_size ( hash_users->hash_users);
-  Users * u;
-  gpointer * keys = get_hash_keys_as_array_users (hash_users, size);
-  for (uint i = 0; i < size; i++) {
-    u = g_hash_table_lookup(hash_users->hash_users, keys[i]);
+
+static void foreach_init(gpointer key, gpointer value, gpointer user_data) {
+    Users * u = (Users *)value;
     u -> date = 0;
     u -> distance = 0;
     u -> total_gasto = 0;
     u -> numero_viagens_user = 0;
     u -> avaliacao_total_user = 0;
-  }
-  free (keys);
+  (void) key;/*unused*/
+  (void) user_data;/*unused*/
 }
+
+void initHash_users(Catalog_Users * hash_users) {
+  g_hash_table_foreach(hash_users->hash_users, (GHFunc)foreach_init, NULL);
+}
+
 
 
 //--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
