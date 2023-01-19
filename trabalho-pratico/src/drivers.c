@@ -43,6 +43,7 @@ struct driver {
     driver->city = strdup(tokens[6]);
     driver->account_creation = convert_to_day(tokens[7]);
     driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A') == 1;
+    
     Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
     g_hash_table_insert(catalog_drivers->hash_drivers, driver->id, driver);
     return driver;
