@@ -61,7 +61,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         free (ride_city);
 
     }
-    
+    insert_array_dist(catalog_rides);
     update_avaliacao_media_driver(catalog_drivers);
     sort_array_genders (catalog_rides);
 }

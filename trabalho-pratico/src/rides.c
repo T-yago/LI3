@@ -18,6 +18,8 @@
 
 #include "../includes/rides.h"
 
+#include "../includes/rides_services.h"
+
 struct catalog_rides {
   Ride ** array_rides;
   uint array_length;
@@ -25,11 +27,11 @@ struct catalog_rides {
   uint array_ages_M_length;
   Ride_Ages** array_ages_F;
   uint array_ages_F_length;
+  Dist_Array* top_dist;
 };
 
-
-
 struct ride {
+  unsigned int ride_id;
   unsigned short int date;
   char * driver;
   char * user;
@@ -75,7 +77,7 @@ Catalog_Rides* rides_catalog(char * pathfiles) {
       while ((token = strsep( & line_aux, ";\n"))) {
         switch (i) {
         case 0:
-         // ride -> id = atoi (token);
+          ride -> ride_id = atoi(token);
           break;
         case 1:
           ride -> date = convert_to_day(token);
@@ -228,6 +230,14 @@ unsigned int * check_gender_in_rides (Catalog_Rides* catalog_rides, char gender,
   return array_ids;  
 }
 
+void set_top_dist(Catalog_Rides *catalog_rides, void* array_dist) {
+  catalog_rides->top_dist = (Dist_Array*) array_dist;
+}
+
+void* get_top_dist(Catalog_Rides* catalog_rides) {
+  return (void*) catalog_rides->top_dist;
+}
+
 
 void free_rides_catalog (Catalog_Rides* catalog_rides) {
  uint length = catalog_rides->array_length; 
@@ -259,6 +269,11 @@ void free_rides_catalog (Catalog_Rides* catalog_rides) {
 
 uint get_array_rides_length (Catalog_Rides * catalog_rides) {
   return catalog_rides->array_length;
+}
+
+unsigned int get_ride_id (Catalog_Rides * catalog_rides, int index) {
+  Ride* aux  = catalog_rides->array_rides[index]; 
+return aux->ride_id;
 }
 
 unsigned short int get_ride_date (Catalog_Rides * catalog_rides, int index) {
