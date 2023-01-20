@@ -8,7 +8,7 @@ void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* 
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
     FILE * output = fopen(buffer, "w");
     
-    char* id_driver;
+    int id_driver;
     char* id_user;
     char* name_driver;
     char* name_user;
@@ -19,13 +19,12 @@ void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* 
     for (int i = 0; array_ids[i]!=0; i++) {
 
         id_ride = array_ids [i];
-        id_driver = get_ride_driver (catalog_rides, id_ride);
+        id_driver = get_ride_driver (catalog_rides, id_ride); // tem que se subtrair 1 para aceder ao array mas não quando se for imprimir ---> tratar disto
         id_user = get_ride_user (catalog_rides, id_ride);
-        name_driver = getNameDriver (catalog_drivers, id_driver);
+        name_driver = get_driver_name (catalog_drivers, id_driver - 1);
         name_user = getNameUser (catalog_users, id_user);
-        if (getAccountStatus (catalog_drivers,id_driver) && getAccountStatusUser(catalog_users,id_user))
-        fprintf(output, "%s;" "%s;" "%s;" "%s\n", id_driver, name_driver, id_user, name_user);
-        free (id_driver);
+        if (get_driver_acc_Status (catalog_drivers,id_driver) && getAccountStatusUser(catalog_users,id_user))
+        fprintf(output, "%012d;" "%s;" "%s;" "%s\n", id_driver, name_driver, id_user, name_user);
         free (id_user);
         free (name_driver);
         free(name_user);

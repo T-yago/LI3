@@ -1,10 +1,11 @@
 #include "../includes/data.h"
+#include <stdio.h>
 
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
     unsigned int array_rides_length = get_array_rides_length (catalog_rides);
 
     char* user;
-    char* driver;
+    int driver;
     unsigned short int ride_distance = 0;
     double ride_tip = 0;
     char* ride_city;
@@ -24,7 +25,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         ride_distance = get_ride_distance (catalog_rides,i);
         ride_tip = get_ride_tip (catalog_rides,i);
         ride_city = get_ride_city (catalog_rides,i);
-        car_class = getCarClassDriver(catalog_drivers, driver);
+        car_class = get_driver_carclass(catalog_drivers, driver-1);
         total_gasto = calcula_total_gasto (car_class,ride_distance,ride_tip);
         total_gasto_sem_tips = total_gasto - ride_tip;
         total_auferido = calcula_total_gasto(car_class, ride_distance, ride_tip);
@@ -43,20 +44,19 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
         dateUser(catalog_users, user, ride_date);
                
-        totalAuferidoDriver(catalog_drivers, driver, total_auferido);
+        totalAuferidoDriver(catalog_drivers, driver -1 , total_auferido);
 
-        inc_avaliacao_media_driver (catalog_drivers, driver, ride_score_driver);
+        inc_avaliacao_media_driver (catalog_drivers, driver - 1, ride_score_driver);
 
-        numeroViagensDriver(catalog_drivers, driver);
+        numeroViagensDriver(catalog_drivers, driver -1 );
 
-        dateDriver(catalog_drivers, driver, ride_date);
+        dateDriver(catalog_drivers, driver - 1, ride_date);
 
         fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, i);
 
-        insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user,driver,i);
+        insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user,driver - 1,i);
         
         free (user);
-        free (driver);
         free (car_class);
         free (ride_city);
 

@@ -71,20 +71,19 @@ short int calcula_idade(char * birthdate) {
 
 
 
-void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
-
+void query1_driver (int index, Catalog_Drivers * catalog_drivers, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
 
-  if (!getAccountStatus(catalog_drivers, id)) {
+  if (!get_driver_acc_Status(catalog_drivers, index - 1)) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
     //double r = (float) getAvaliacaoMediaDriver(catalog_drivers, id) / (float) getNviagensDriver(catalog_drivers, id);
     //avaliacaoMediaDriver(catalog_drivers, id, r);
 
-    short int age = get_age_driver(catalog_drivers, id);
-    char * name = getNameDriver(catalog_drivers, id);
+    short int age = get_driver_age (catalog_drivers, index - 1);
+    char * name = get_driver_name (catalog_drivers, index -1 );
 
     FILE * output = fopen(buffer, "w");
     fprintf(output, "%s;"
@@ -92,7 +91,7 @@ void query1_driver(char * id, Catalog_Drivers * catalog_drivers, int n) {
       "%d;"
       "%.3f;"
       "%d;"
-      "%.3f\n", name, getGenderDriver(catalog_drivers, id), age, getAvaliacaoMediaDriver(catalog_drivers, id), getNviagensDriver(catalog_drivers, id), getTotalAuferidoDriver(catalog_drivers, id));
+      "%.3f\n", name, get_driver_gender(catalog_drivers, index - 1), age, get_driver_avalMedia(catalog_drivers, index - 1), get_driver_Nviagens (catalog_drivers, index - 1), get_driver_total_auferido (catalog_drivers, index - 1));
     fclose(output);
     free (name);
   }
@@ -122,9 +121,11 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
 }
 
 void query1_main(char * id, Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, int n) {
+  //printf ("%d\n",n);
   if (isdigit(id[0]) == 0) {
     query1_user(id, catalog_users, n);
   } else {
-    query1_driver(id, catalog_drivers, n);
+    int index = atoi(id);
+    query1_driver(index, catalog_drivers, n);
   }
 }
