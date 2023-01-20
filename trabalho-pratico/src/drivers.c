@@ -17,7 +17,6 @@ struct catalog_drivers {
 };
 
 struct driver {
-  //char * id;
   char * name;
   short int age;
   char gender;
@@ -27,15 +26,14 @@ struct driver {
   char * city;
   unsigned short int account_creation;
   bool account_status;
+  
   double total_auferido;
-  int avaliacao_total_driver;
   int numero_viagens_driver;
   double avaliacao_media_driver;
 };
 
   Driver* create_driver(char** tokens, void* catalog) {
     Driver* driver = malloc(sizeof(Driver));
-    //driver->id = strdup(tokens[0]);
     driver->name = strdup(tokens[1]);
     driver->age = calcula_idade (tokens[2]);
     driver->gender = *tokens[3];
@@ -96,7 +94,6 @@ void initHash_drivers(Catalog_Drivers * catalog_drivers) {
   for (uint i = 0; i < size; i++) {
     d = catalog_drivers->array_drivers[i];
     d -> avaliacao_media_driver = 0;
-    d -> avaliacao_total_driver = 0;
     d -> numero_viagens_driver = 0;
     d ->total_auferido = 0;
     d-> date = 0;
@@ -124,13 +121,6 @@ unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drive
   Driver * d = catalog_drivers->array_drivers[index]; 
   return d->account_creation;
 }
-
-/*
-char * get_driver_id (Catalog_Drivers * catalog_drivers, int index){
-  Driver * d = catalog_drivers->array_drivers[index]; 
-  return strdup (d -> id);
-}
-*/
 
 uint get_array_drivers_size (Catalog_Drivers* catalog_drivers) {
   return catalog_drivers->array_length;
@@ -195,20 +185,6 @@ char * get_driver_carclass (Catalog_Drivers * catalog_drivers, int index){
   return strdup (d -> car_class);
 }
 
-/*
-uint get_hash_drivers_size (Catalog_Drivers * catalog_drivers) {
-  uint size = g_hash_table_size (catalog_drivers->hash_drivers);
-  return size;
-}
-*/
-
-/*
-gpointer * get_hash_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size) {
-  gpointer * aux = g_hash_table_get_keys_as_array (catalog_drivers->hash_drivers, &size);
-  return aux;
-}
-*/
-
 //-----------------------Funções que interagem com o catálogo dos drivers---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -229,27 +205,13 @@ void numeroViagensDriver(Catalog_Drivers * catalog_drivers, int index){
   d -> numero_viagens_driver += 1;
 }
 
-
+// Adiciona a viagem mais recente ao driver
 void dateDriver(Catalog_Drivers * catalog_drivers,int index, unsigned short int r){
   Driver * d = catalog_drivers->array_drivers [index]; 
   if (r > d -> date)  d -> date = r;
 }
 
 //--------------------------------------------Função free---------------------------------------------------------//
-
-void free_driver_data(gpointer key, gpointer value, gpointer user_data) {
-  Driver *d = (Driver *)value;
-  //free (d->id);
-  free (d->name);
-  //free (d->birth_day);
-  free (d->car_class);
-  free (d->license_plate);
-  free (d->city);
-  //free (d->account_creation);
-  free (d);
-  (void)key;/*unused*/
-  (void)user_data;/*unused*/
-}
 
 
 void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
@@ -258,16 +220,12 @@ void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
   for (uint i = 0; i < size; i++) {
   Driver *d = catalog_drivers->array_drivers[i];
   free (d->name);
-  //free (d->birth_day);
   free (d->car_class);
   free (d->license_plate);
   free (d->city);
-  //free (d->account_creation);
   free (d);
   }
 
-  //g_hash_table_foreach(catalog_drivers->hash_drivers, (GHFunc)free_driver_data, NULL);
-  //g_hash_table_destroy (catalog_drivers->hash_drivers);
   free_drivers_services (catalog_drivers, size);
   free (catalog_drivers->top_N_drivers);
   free (catalog_drivers);

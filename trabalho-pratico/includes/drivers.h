@@ -17,6 +17,9 @@ void totalAuferidoDriver(Catalog_Drivers * catalog_drivers,  int index, double t
 void inc_avaliacao_media_driver (Catalog_Drivers * catalog_drivers,  int index, short int r);
 void numeroViagensDriver(Catalog_Drivers * catalog_drivers,  int index);
 void dateDriver(Catalog_Drivers * catalog_drivers,  int index, unsigned short int r);
+void avaliacaoMediaDriver(Catalog_Drivers * catalog_drivers,  int index, double r);
+
+
 char * get_driver_id (Catalog_Drivers * catalog_drivers,  int index);
 bool   get_driver_acc_Status(Catalog_Drivers * catalog_drivers,  int index);
 double get_driver_avalMedia (Catalog_Drivers * catalog_drivers,  int index);
@@ -28,10 +31,7 @@ double get_driver_total_auferido (Catalog_Drivers * catalog_drivers,  int index)
 char * get_driver_carclass (Catalog_Drivers * catalog_drivers,  int index);
 uint get_array_drivers_size (Catalog_Drivers* catalog_drivers);
 int get_driver_Nviagens (Catalog_Drivers * catalog_drivers,  int index);
-void avaliacaoMediaDriver(Catalog_Drivers * catalog_drivers,  int index, double r);
-//uint get_hash_drivers_size (Catalog_Drivers * catalog_drivers);
 unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drivers, int index);
-//gpointer * get_hash_keys_as_array_drivers (Catalog_Drivers * catalog_drivers, uint size);
 
 
 void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers);
