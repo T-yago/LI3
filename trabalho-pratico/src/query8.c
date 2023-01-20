@@ -23,7 +23,7 @@ void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* 
         id_user = get_ride_user (catalog_rides, id_ride);
         name_driver = get_driver_name (catalog_drivers, id_driver - 1);
         name_user = getNameUser (catalog_users, id_user);
-        if (get_driver_acc_Status (catalog_drivers,id_driver) && getAccountStatusUser(catalog_users,id_user))
+        if (get_driver_acc_Status (catalog_drivers,id_driver - 1) && getAccountStatusUser(catalog_users,id_user))
         fprintf(output, "%012d;" "%s;" "%s;" "%s\n", id_driver, name_driver, id_user, name_user);
         free (id_user);
         free (name_driver);
