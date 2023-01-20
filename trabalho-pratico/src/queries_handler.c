@@ -34,6 +34,8 @@
 
 #include "../includes/query6.h"
 
+#include "../includes/query7.h"
+
 #include "../includes/query8.h"
 
 #include "../includes/data.h"
@@ -90,6 +92,7 @@ void queries_handler (char * pathfiles, char * input) {
         query6(info_1,info_2,info_3,catalog_cities, catalog_rides,n);
         break;
       case 7:
+        query7(info_1, info_2, catalog_cities, catalog_drivers, n);
         break;
       case 8:
        query8 (info_1[0], atoi(info_2), catalog_rides, catalog_users, catalog_drivers, n);

@@ -3,6 +3,7 @@
 
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
     unsigned int array_rides_length = get_array_rides_length (catalog_rides);
+    uint array_drives_length = get_array_drivers_size (catalog_drivers);
 
     char* user;
     int driver;
@@ -52,9 +53,9 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
         dateDriver(catalog_drivers, driver - 1, ride_date);
 
-        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, i);
+        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, i);
 
-        insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user,driver - 1,i);
+        insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user, driver - 1, i);
         
         free (user);
         free (car_class);
