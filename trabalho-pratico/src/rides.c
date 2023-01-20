@@ -20,6 +20,8 @@
 
 #include "../includes/rides.h"
 
+#include "../includes/rides_services.h"
+
 struct catalog_rides
 {
   Ride **array_rides;
@@ -28,6 +30,8 @@ struct catalog_rides
   uint array_ages_M_length;
   Ride_Ages **array_ages_F;
   uint array_ages_F_length;
+  Dist_Array* top_dist;
+  int top_dist_length;
 };
 
 struct ride
@@ -231,6 +235,15 @@ unsigned int *check_gender_in_rides(Catalog_Rides *catalog_rides, char gender, u
   return array_ids;
 }
 
+void set_top_dist(Catalog_Rides *catalog_rides, void* array_dist, int size) {
+  catalog_rides->top_dist = (Dist_Array*) array_dist;
+  catalog_rides->top_dist_length = size;
+}
+
+void* get_top_dist(Catalog_Rides* catalog_rides) {
+  return (void*) catalog_rides->top_dist;
+}
+
 void free_rides_catalog(Catalog_Rides *catalog_rides)
 {
   uint length = catalog_rides->array_length;
@@ -258,6 +271,10 @@ void free_rides_catalog(Catalog_Rides *catalog_rides)
   free(catalog_rides->array_ages_M);
   free(catalog_rides->array_rides);
   free(catalog_rides);
+}
+
+int get_top_dist_length(Catalog_Rides *catalog_rides) {
+  return catalog_rides->top_dist_length;
 }
 
 uint get_array_rides_length(Catalog_Rides *catalog_rides)

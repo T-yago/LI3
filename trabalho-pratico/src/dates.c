@@ -24,6 +24,59 @@ unsigned short int convert_to_day(char * date) {
   return total_days;
 }
 
+char* convert_to_date(unsigned short int days) {
+  int day = 1;
+  int month = 1;
+  int year = 2000;
+  day += days;
+  while (1) {
+      if (month == 2) {
+          if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+              if (day > 29) {
+                  day -= 29;
+                  month++;
+              } else {
+                  break;
+              }
+          } else {
+              if (day > 28) {
+                  day -= 28;
+                  month++;
+              } else {
+                  break;
+              }
+          }
+      } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+          if (day > 30) {
+              day -= 30;
+              month++;
+          } else {
+              break;
+          }
+      } else {
+          if (month == 12) {
+              if (day > 31) {
+                  day -= 31;
+                  month = 1;
+                  year++;
+              } else {
+                  break;
+              }
+          } else {
+              if (day > 31) {
+                  day -= 31;
+                  month++;
+              } else {
+                  break;
+              }
+          }
+      }
+  }
+  char* buffer = malloc(256);
+  snprintf(buffer, 256, "%d/%d/%d", day, month, year);
+  return buffer;
+}
+
 /*
 char * dataToChar (unsigned short int data) {
     int i;
