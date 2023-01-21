@@ -2,13 +2,12 @@
 #include <stdio.h>
 
 
+// Guardar data ambos em string e int já que é consultada mais que uma vez
 struct dist_array
 {
   int ride_id;
   unsigned short int ride_dateint;
-  char *city;
   unsigned short int distance;
-  double tip;
 };
 
 int compare_dist(const void *a, const void *b)
@@ -42,24 +41,22 @@ int compare_dist(const void *a, const void *b)
 
 void insert_array_dist (Catalog_Rides* catalog_rides) {
     int size_rides = get_array_rides_length (catalog_rides);
-    Dist_Array ** array_dist = malloc (sizeof (Dist_Array*) * 10);
+    Dist_Array ** array_dist = malloc (sizeof (Dist_Array*) * 100);
     int array_length = 0;
 
     for (int i = 0; i < size_rides; i++) {
         Dist_Array * aux = malloc(sizeof(Dist_Array)); 
         double tip = get_ride_tip(catalog_rides, i);
-        if (tip == 0) i++;
+        if (tip == 0); // se o tip for 0 não faz nada (avança no loop apenas)
         else {
-            aux->ride_id = i + 1 ;
+            aux->ride_id = i  ;
             aux->ride_dateint = get_ride_date(catalog_rides, i);
             aux->distance = get_ride_distance(catalog_rides, i);
-            aux->city = get_ride_city(catalog_rides, i);
-            aux->tip = tip;
 
             array_dist[i] = aux;
             array_length++;
         }
-        if (array_length % 10 == 0) array_dist = realloc (array_dist, sizeof(Dist_Array*) * (array_length + 10));
+        if (array_length % 100 == 0) array_dist = realloc (array_dist, sizeof(Dist_Array*) * (array_length + 100));
     }
     
     qsort((void * ) array_dist, array_length, sizeof(Dist_Array*), compare_dist);
@@ -78,11 +75,6 @@ unsigned short int get_ride_dateint_dist(Catalog_Rides* catalog_rides, int index
     return aux->ride_dateint;
 }
 
-char* get_city_dist(Catalog_Rides* catalog_rides, int index) {
-    Dist_Array** top_dist = (Dist_Array**) get_top_dist(catalog_rides);
-    Dist_Array* aux = top_dist[index];
-    return strdup(aux->city);
-}
 
 unsigned short int get_ride_dist_dist(Catalog_Rides* catalog_rides, int index) {
     Dist_Array** top_dist = (Dist_Array**) get_top_dist(catalog_rides);
@@ -90,8 +82,12 @@ unsigned short int get_ride_dist_dist(Catalog_Rides* catalog_rides, int index) {
     return aux->distance;
 }
 
-double get_ride_tip_dist(Catalog_Rides* catalog_rides, int index) {
+void free_array_top_dist (Catalog_Rides* catalog_rides) {
     Dist_Array** top_dist = (Dist_Array**) get_top_dist(catalog_rides);
-    Dist_Array* aux = top_dist[index];
-    return aux->tip;
+    int size = get_top_dist_length (catalog_rides);
+        Dist_Array* aux = NULL;
+        for (int i = 0; i < size; i++) {
+            aux = top_dist[i]; 
+            free (aux);
+        }
 }

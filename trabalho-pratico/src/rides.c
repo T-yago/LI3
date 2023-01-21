@@ -267,15 +267,25 @@ void free_rides_catalog(Catalog_Rides *catalog_rides)
     free(aux->id_user);
     free(aux);
   }
+  // Fazer estes frees aqui ou nas suas próprias funções?
   free(catalog_rides->array_ages_F);
   free(catalog_rides->array_ages_M);
   free(catalog_rides->array_rides);
+
+  free_array_top_dist (catalog_rides);
+  free (catalog_rides->top_dist);
   free(catalog_rides);
 }
 
+//------------------------------------------------------------------------------------------------------------------------//
+
+// Pertence ao array top_dist
 int get_top_dist_length(Catalog_Rides *catalog_rides) {
   return catalog_rides->top_dist_length;
 }
+
+//------------------------------------------------------------------------------------------------------------------------//
+
 
 uint get_array_rides_length(Catalog_Rides *catalog_rides)
 {

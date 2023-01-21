@@ -228,5 +228,6 @@ void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
 
   free_drivers_services (catalog_drivers, size);
   free (catalog_drivers->top_N_drivers);
+  free (catalog_drivers->array_drivers);
   free (catalog_drivers);
 }

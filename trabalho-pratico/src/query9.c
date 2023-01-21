@@ -10,17 +10,28 @@ void query9(Catalog_Rides* catalog_rides, char* datea, char* dateb, int n) {
     unsigned short int dateinf = convert_to_day (datea);
     unsigned short int datesup = convert_to_day (dateb);
 
+    unsigned short int date;
+    int ride_id;
+    unsigned short int distance;
+    char* city;
+    double tip;
+    char* date_string = NULL;
+
     int array_size = get_top_dist_length(catalog_rides);
     int i = 0;
     while(i < array_size) {
-        int ride_id = get_ride_id_dist(catalog_rides, i);
-        unsigned short int dateaux = get_ride_dateint_dist(catalog_rides, i);
-        unsigned short int distance = get_ride_dist_dist(catalog_rides, i);
-        char* city = get_city_dist(catalog_rides, i);
-        double tip = get_ride_tip_dist(catalog_rides, i);
-        if (dateaux >= dateinf && dateaux <= datesup) {
-            char* date = convert_to_date(dateaux);
-             fprintf(output, "%012d;%s;%d;%s;%.3f\n", ride_id, date, distance, city, tip);
+        date = get_ride_dateint_dist (catalog_rides, i);
+        if (date >= dateinf && date <= datesup) {
+
+        ride_id = get_ride_id_dist(catalog_rides, i);
+        distance = get_ride_dist_dist(catalog_rides, i);
+        city = get_ride_city (catalog_rides, ride_id );
+        tip = get_ride_tip(catalog_rides, ride_id);
+        date_string = convert_to_date(date);
+            
+        fprintf(output, "%012d;%s;%d;%s;%.3f\n", ride_id + 1, date_string, distance, city, tip);
+        free (city);
+        free (date_string);
         }
         i++;
     }
