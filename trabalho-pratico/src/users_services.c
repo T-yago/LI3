@@ -42,7 +42,7 @@ void top_N_users (Catalog_Users* catalog_users) {
     (user_distance_data + i) -> name = getNameUser(catalog_users, keys[i]);
   }
   free (keys);
-  qsort((void *) user_distance_data, size_hash, sizeof(struct user_distance_data), compare_users);
+  qsort((void *) user_distance_data, size_hash, sizeof(User_Distance_Data), compare_users);
   set_top_N_users(catalog_users, user_distance_data);
 }
 
