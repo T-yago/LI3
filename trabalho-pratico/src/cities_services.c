@@ -1,7 +1,28 @@
 #include "../includes/cities_services.h"
 
 
-//DEFENIR DE FORMA A NAO QUEBRAR O ENCAPSULAMENTE
+struct catalog_cities {
+    GHashTable * cities_hash;
+};
+
+struct avaliacao_media_driver{
+    uint id_driver;
+    unsigned short int score_driver;
+    unsigned short int num_rides;
+};
+
+struct city {
+    double total_gasto;
+    unsigned int num_rides;
+    unsigned int* array_rides_city; //array que contém os ids das rides feitas nessa cidade
+    unsigned int array_rides_city_length;
+    Avaliacao_media_driver * array_avaliacao;
+    unsigned int array_avaliacao_length;
+};
+
+
+
+
 int compare2(const void * a, const void * b) {
 
    Avaliacao_media_driver *ia = (Avaliacao_media_driver *) a;
@@ -52,3 +73,4 @@ double get_aval_med_from_ordered_array (Catalog_Cities * catalog_cities, char * 
   if(total_rides != 0) r = score_total / total_rides;
 return r;
 }
+

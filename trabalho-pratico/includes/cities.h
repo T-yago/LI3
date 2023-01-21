@@ -14,8 +14,3 @@ void fill_array_rides (Catalog_Cities * catalog_cities, unsigned short int total
 double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* catalog_rides,char * city, unsigned short int dateInf, unsigned short int dateSup);
 
 
-//QUANDO TIVEREM NO OUTRO FICHEIRO REMOVER DAQUI
-int compare2(const void * a, const void * b);
-void sort_array_avaliacoes_city (Catalog_Cities * catalog_cities, char * city_to_check);
-double get_aval_med_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index);
-uint get_id_driver_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index);

@@ -5,6 +5,7 @@
 
 #include "../includes/drivers.h"
 #include "../includes/cities.h"
+#include "../includes/cities_services.h"
 #include "../includes/query7.h"
 
 char* int_to_string(int x) {
