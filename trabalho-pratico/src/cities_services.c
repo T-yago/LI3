@@ -48,6 +48,8 @@ void sort_array_avaliacoes (gpointer key, gpointer value, gpointer user_data) {
   City* city = (City*) value;
   int size = city->array_avaliacao_length;
   qsort((void * ) city->array_avaliacao, size, sizeof(Avaliacao_media_driver), compare2);
+  (void) key;/*unused*/
+  (void) user_data;/*unused*/
 }
 
 void sort_arrays_avaliacoes_cities (Catalog_Cities * catalog_cities){
