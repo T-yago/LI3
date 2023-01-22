@@ -65,4 +65,5 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     insert_array_dist(catalog_rides);
     update_avaliacao_media_driver(catalog_drivers);
     sort_array_genders (catalog_rides);
+    sort_arrays_avaliacoes_cities (catalog_cities);
 }

@@ -23,7 +23,6 @@ void query7 (char * N, char * city, Catalog_Cities * catalog_cities, Catalog_Dri
   if (!is_in_hash_cities (catalog_cities,city)) fclose (output);
   else {
     char* city_query = strdup (city);
-    sort_array_avaliacoes_city(catalog_cities, city_query);
 
     for (int i = 0; i < numb; i++) {
       uint id_driver = get_id_driver_from_ordered_array (catalog_cities, city_query, i);

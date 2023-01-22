@@ -13,5 +13,7 @@ void sort_array_avaliacoes_city (Catalog_Cities * catalog_cities, char * city_to
 uint get_id_driver_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index);
 double get_aval_med_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index);
 
+void sort_arrays_avaliacoes_cities (Catalog_Cities * catalog_cities);
+
 
 #endif

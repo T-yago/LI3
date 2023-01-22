@@ -44,13 +44,14 @@ int compare2(const void * a, const void * b) {
 }
 
 
+void sort_array_avaliacoes (gpointer key, gpointer value, gpointer user_data) {
+  City* city = (City*) value;
+  int size = city->array_avaliacao_length;
+  qsort((void * ) city->array_avaliacao, size, sizeof(Avaliacao_media_driver), compare2);
+}
 
-void sort_array_avaliacoes_city (Catalog_Cities * catalog_cities, char * city_to_check){
-  City *city = g_hash_table_lookup (catalog_cities->cities_hash, city_to_check);
-  uint size = city -> array_avaliacao_length;
-  Avaliacao_media_driver * array_avaliacao = city -> array_avaliacao;
-  
-  qsort((void * ) array_avaliacao, size, sizeof(Avaliacao_media_driver), compare2);
+void sort_arrays_avaliacoes_cities (Catalog_Cities * catalog_cities){
+  g_hash_table_foreach (catalog_cities->cities_hash, (GHFunc)sort_array_avaliacoes, NULL);  
 }
 
 
