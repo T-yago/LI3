@@ -73,7 +73,7 @@ char* convert_to_date(unsigned short int days) {
       }
   }
   char* buffer = malloc(256);
-  snprintf(buffer, 256, "%d/%d/%d", day, month, year);
+  snprintf(buffer, 256, "%02d/%02d/%02d", day, month, year);
   return buffer;
 }
 
