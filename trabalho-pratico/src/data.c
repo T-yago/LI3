@@ -6,6 +6,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     unsigned int array_rides_length = get_array_rides_length (catalog_rides);
     uint array_drives_length = get_array_drivers_size (catalog_drivers);
 
+    int ride_id;
     char* user;
     int driver;
     unsigned short int ride_distance = 0;
@@ -18,10 +19,11 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     float ride_score_driver;
     unsigned short int ride_score_user;
     unsigned short int ride_date;
-
+    bool driver_acc_status;
 
     for (unsigned int i = 0; i < array_rides_length; i++) {
-        if (get_ride_id (catalog_rides,i) != -1) {
+        ride_id = get_ride_id (catalog_rides,i);
+        if (ride_id != -1) {
         user = get_ride_user (catalog_rides,i);
         driver = get_ride_driver (catalog_rides,i);
         ride_distance = get_ride_distance (catalog_rides,i);
@@ -34,6 +36,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         ride_score_driver = get_score_driver_ride (catalog_rides,i);     
         ride_score_user = get_score_user_ride (catalog_rides, i);
         ride_date = get_ride_date (catalog_rides,i);
+        driver_acc_status = get_driver_acc_Status (catalog_drivers,driver-1);
         
         totalGastoUser(catalog_users,user,total_gasto);
 
@@ -53,7 +56,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
         dateDriver(catalog_drivers, driver - 1, ride_date);
 
-        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, i);
+        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, driver_acc_status, i);
 
         insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user, driver - 1, i);
         

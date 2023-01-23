@@ -34,7 +34,7 @@ Catalog_Cities * cities_catalog () {
 }
 
 // função que é chamada aquando da primeira leitura das rides e que insere a city na sua hashtable
-void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, unsigned int ride_id) {
+void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, bool driver_acc_status, int index_array_rides) {
     
     // A cidade ainda não se encontrar na hashtable
     if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
@@ -49,10 +49,11 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         city->array_avaliacao[driver_id].score_driver = score_driver;
         city->array_avaliacao[driver_id].num_rides = 1;
         city->array_avaliacao_length = size_drivers;
+        
 
         city->array_rides_city_length = 0;
         city->array_rides_city = malloc (100 *sizeof(uint));
-        city->array_rides_city[city->array_rides_city_length] = ride_id;
+        city->array_rides_city[city->array_rides_city_length] = index_array_rides;
         city->array_rides_city_length ++;
         g_hash_table_insert (catalog_cities->cities_hash, key, city); 
     }
@@ -62,12 +63,13 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         City *city = g_hash_table_lookup (catalog_cities->cities_hash,city_to_check);
         city->num_rides++;
         city->total_gasto += total_gasto_por_ride;
-
+        
         city->array_avaliacao[driver_id].id_driver = driver_id + 1; 
         city->array_avaliacao[driver_id].score_driver += score_driver;
         city->array_avaliacao[driver_id].num_rides ++;
+        
 
-        city->array_rides_city[city->array_rides_city_length] = ride_id;
+        city->array_rides_city[city->array_rides_city_length] = index_array_rides;
         city->array_rides_city_length++;
         if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
     }    

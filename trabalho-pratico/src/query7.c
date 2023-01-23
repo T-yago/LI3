@@ -26,10 +26,14 @@ void query7 (char * N, char * city, Catalog_Cities * catalog_cities, Catalog_Dri
 
     for (int i = 0; i < numb; i++) {
       uint id_driver = get_id_driver_from_ordered_array (catalog_cities, city_query, i);
-      char * name = get_driver_name(catalog_drivers, id_driver - 1);
-      double avaliacao_media = get_aval_med_from_ordered_array(catalog_cities, city_query, i);
-      fprintf(output, "%012d;""%s;""%.3f\n", id_driver, name, avaliacao_media);
-      free (name);
+      
+      if (get_driver_acc_Status (catalog_drivers, id_driver -1) == true) 
+      {
+        char * name = get_driver_name(catalog_drivers, id_driver - 1);
+        double avaliacao_media = get_aval_med_from_ordered_array(catalog_cities, city_query, i);
+        fprintf(output, "%012d;""%s;""%.3f\n", id_driver, name, avaliacao_media);
+        free (name);
+      }
     }
 
     fclose(output);

@@ -35,7 +35,7 @@ void parse_csv(const char* filename, create_fn create_fn, void* catalog) {
     }
   // Checks if entry is valid
   int is_valid = 0;
-  for (int j = 0; j < num_colunas -2; j++) {
+  for (int j = 0; j < num_colunas -2; j++) { //para alcançar todos os tokens bastaria iterar até num_colunas-1 mas há muitos comentários vazios e os status
     if (strlen(tokens[j]) == 0 || tokens[j][0] == '<' || tokens [j][0] == '/' || tokens [j][0] == '?') {
       //printf ("Invalid: j = %d\n",j);
     is_valid = 1;

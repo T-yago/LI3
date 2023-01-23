@@ -142,7 +142,7 @@ void init_array_genders(Catalog_Rides *catalog_rides)
   catalog_rides->array_ages_F_length = 0;
 }
 
-void insert_arrays_genders(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, Catalog_Rides *catalog_rides, char *user, int driver, unsigned int id)
+void insert_arrays_genders(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, Catalog_Rides *catalog_rides, char *user, int driver, int id)
 {
   char gender_user = getGenderUser(catalog_users, user);
   char gender_driver = get_driver_gender (catalog_drivers, driver);
