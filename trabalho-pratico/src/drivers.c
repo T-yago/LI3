@@ -14,6 +14,7 @@ struct catalog_drivers {
   Driver ** array_drivers;
   uint array_length;
   Driver_Aval_Date * top_N_drivers;
+  int array_top_N_drivers_length;
 };
 
 struct driver {
@@ -32,31 +33,37 @@ struct driver {
   double avaliacao_media_driver;
 };
 
-  Driver* create_driver(char** tokens, void* catalog) {
-    Driver* driver = malloc(sizeof(Driver));
-    driver->name = strdup(tokens[1]);
-    driver->age = calcula_idade (tokens[2]);
-    driver->gender = *tokens[3];
-    driver->car_class = strdup(tokens[4]);
-    driver->license_plate = strdup(tokens[5]);
-    driver->city = strdup(tokens[6]);
-    driver->account_creation = convert_to_day(tokens[7]);
-    driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A') == 1;
-    
-    Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
-
+  Driver* create_driver(char** tokens, void* catalog, int is_valid) {
+  
+  // Desreferencia apontador
+  Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
+  
   // Fetch das informações do catálogo
   uint num_drivers = catalog_drivers->array_length;
-  Driver** array_drivers = catalog_drivers->array_drivers;
+  Driver** array_drivers = catalog_drivers->array_drivers;  
 
-  // Adiciona a ride ao catálogo
-  array_drivers[num_drivers] = driver;
-  catalog_drivers->array_length++;
-  num_drivers++; 
-  if (num_drivers % 100 == 0) catalog_drivers->array_drivers = realloc(array_drivers, sizeof(Driver*) * (num_drivers + 100));
+  // Cria espaço para o driver e adiciona a posição ao array
+  Driver* driver = malloc(sizeof(Driver));
+  
 
-  return driver; 
-  }
+  // Alterar de forma a que não se perca a posição mas não seja preciso encher o array se (is_valid == 1)
+  driver->name = strdup(tokens[1]);
+  driver->age = calcula_idade (tokens[2]);
+  driver->gender = *tokens[3];
+  driver->car_class = strdup(tokens[4]);
+  driver->license_plate = strdup(tokens[5]);
+  driver->city = strdup(tokens[6]);
+  driver->account_creation = convert_to_day(tokens[7]);
+  driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A');  //se for ("missing" oh "???" retorna false)
+  
+  if (driver->account_creation == 65535 || is_valid == 1) driver->account_status = false;
+    array_drivers[num_drivers] = driver;
+    catalog_drivers->array_length++;
+    num_drivers++; 
+    if (num_drivers % 100 == 0) catalog_drivers->array_drivers = realloc(array_drivers, sizeof(Driver*) * (num_drivers + 100));
+
+return driver; 
+}
 
 
 
@@ -78,13 +85,17 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
 
 
 //---------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
-void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers) {
+void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers, int array_length) {
     catalog_drivers->top_N_drivers = (Driver_Aval_Date*) top_N_drivers;
+    catalog_drivers->array_top_N_drivers_length = array_length;
 }
 void* get_top_N_drivers(Catalog_Drivers* catalog_drivers) {
     return (void*) catalog_drivers->top_N_drivers;
 }
 
+int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
+    return catalog_drivers->array_top_N_drivers_length;
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -215,9 +226,10 @@ void dateDriver(Catalog_Drivers * catalog_drivers,int index, unsigned short int 
 
 
 void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
-  uint size = catalog_drivers->array_length;
+  uint size_array_drivers = catalog_drivers->array_length;
+  int array_top_N_drivers_length = catalog_drivers->array_top_N_drivers_length;
   
-  for (uint i = 0; i < size; i++) {
+  for (uint i = 0; i < size_array_drivers; i++) {
   Driver *d = catalog_drivers->array_drivers[i];
   free (d->name);
   free (d->car_class);
@@ -226,7 +238,7 @@ void free_drivers_catalog (Catalog_Drivers * catalog_drivers) {
   free (d);
   }
 
-  free_drivers_services (catalog_drivers, size);
+  free_top_N_drivers (catalog_drivers, array_top_N_drivers_length);
   free (catalog_drivers->top_N_drivers);
   free (catalog_drivers->array_drivers);
   free (catalog_drivers);

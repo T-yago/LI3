@@ -16,6 +16,7 @@ void query9(Catalog_Rides* catalog_rides, char* datea, char* dateb, int n) {
     char* city;
     double tip;
     char* date_string = NULL;
+    int array_rides_index;
 
     int array_size = get_top_dist_length(catalog_rides);
     int i = 0;
@@ -24,9 +25,10 @@ void query9(Catalog_Rides* catalog_rides, char* datea, char* dateb, int n) {
         if (date >= dateinf && date <= datesup) {
 
         ride_id = get_ride_id_dist(catalog_rides, i);
+        array_rides_index = get_array_rides_index_dist (catalog_rides, i);
         distance = get_ride_dist_dist(catalog_rides, i);
-        city = get_ride_city (catalog_rides, ride_id );
-        tip = get_ride_tip(catalog_rides, ride_id);
+        city = get_ride_city (catalog_rides, array_rides_index );
+        tip = get_ride_tip(catalog_rides, array_rides_index);
         date_string = convert_to_date(date);
             
         fprintf(output, "%012d;%s;%d;%s;%.3f\n", ride_id + 1, date_string, distance, city, tip);

@@ -26,22 +26,24 @@ void parse_csv(const char* filename, create_fn create_fn, void* catalog) {
     // Tokenized by ';'
     char* token;
     char* line_aux = line;
-    char** tokens = malloc(sizeof(char*));
-    int i = 0;
+    char** tokens = malloc(5 * sizeof(char*));
+    int num_colunas = 0;
     while ((token = strsep(&line_aux, ";\n"))) {
-      tokens[i++] = token;
-      tokens = realloc(tokens, (i + 1) * sizeof(char*));
+      tokens[num_colunas] = token;
+      num_colunas++;
+      if (num_colunas % 5 == 0) tokens = realloc(tokens, (num_colunas + 5) * sizeof(char*));
     }
   // Checks if entry is valid
-  int is_valid = 1;
-  for (int j = 0; j < i; j++) {
-    if (strlen(tokens[j]) == 0) {
-    is_valid = 0;
+  int is_valid = 0;
+  for (int j = 0; j < num_colunas -2; j++) {
+    if (strlen(tokens[j]) == 0 || tokens[j][0] == '<' || tokens [j][0] == '/' || tokens [j][0] == '?') {
+      //printf ("Invalid: j = %d\n",j);
+    is_valid = 1;
     }
   }
 
 // If the entry is valid, call the function that creates the desired structure and inserts it into the hashtable
- if (is_valid == 0) create_fn(tokens, catalog);
+create_fn(tokens, catalog, is_valid);
 
     free(tokens);
   }

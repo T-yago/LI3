@@ -8,6 +8,7 @@ struct dist_array
   int ride_id;
   unsigned short int ride_dateint;
   unsigned short int distance;
+  int array_rides_index;
 };
 
 int compare_dist(const void *a, const void *b)
@@ -49,11 +50,14 @@ void insert_array_dist (Catalog_Rides* catalog_rides) {
         double tip = get_ride_tip(catalog_rides, i);
         if (tip == 0); // se o tip for 0 não faz nada (avança no loop apenas)
         else {
-            aux->ride_id = i  ;
+            aux->ride_id = get_ride_id (catalog_rides, i) - 1;
+            //printf ("ride_id: %d\n",aux->ride_id);
             aux->ride_dateint = get_ride_date(catalog_rides, i);
             aux->distance = get_ride_distance(catalog_rides, i);
+            aux->array_rides_index = i;
+            //printf ("ride_distance: %d\n",aux->distance);
 
-            array_dist[i] = aux;
+            array_dist[array_length] = aux;
             array_length++;
         }
         if (array_length % 100 == 0) array_dist = realloc (array_dist, sizeof(Dist_Array*) * (array_length + 100));
@@ -67,6 +71,12 @@ int get_ride_id_dist(Catalog_Rides* catalog_rides, int index) {
     Dist_Array** top_dist = (Dist_Array**) get_top_dist(catalog_rides);
     Dist_Array* aux = top_dist[index];
     return aux->ride_id;
+}
+
+int get_array_rides_index_dist (Catalog_Rides* catalog_rides, int index) {
+    Dist_Array** top_dist = (Dist_Array**) get_top_dist(catalog_rides);
+    Dist_Array* aux = top_dist[index];
+    return aux->array_rides_index;
 }
 
 unsigned short int get_ride_dateint_dist(Catalog_Rides* catalog_rides, int index) {

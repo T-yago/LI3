@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
+    
     unsigned int array_rides_length = get_array_rides_length (catalog_rides);
     uint array_drives_length = get_array_drivers_size (catalog_drivers);
 
@@ -20,7 +21,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
 
     for (unsigned int i = 0; i < array_rides_length; i++) {
-        
+        if (get_ride_id (catalog_rides,i) != -1) {
         user = get_ride_user (catalog_rides,i);
         driver = get_ride_driver (catalog_rides,i);
         ride_distance = get_ride_distance (catalog_rides,i);
@@ -33,8 +34,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         ride_score_driver = get_score_driver_ride (catalog_rides,i);     
         ride_score_user = get_score_user_ride (catalog_rides, i);
         ride_date = get_ride_date (catalog_rides,i);
-
-
+        
         totalGastoUser(catalog_users,user,total_gasto);
 
         avaliacaoTotalUser(catalog_users, user, ride_score_user);
@@ -60,8 +60,9 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         free (user);
         free (car_class);
         free (ride_city);
-
+        }
     }
+   
     insert_array_dist(catalog_rides);
     update_avaliacao_media_driver(catalog_drivers);
     sort_array_genders (catalog_rides);

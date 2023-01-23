@@ -12,6 +12,8 @@ typedef struct catalog_rides Catalog_Rides;
 typedef struct ride_ages Ride_Ages;
 
 Catalog_Rides* rides_catalog(char * pathfiles);
+
+int get_ride_id (Catalog_Rides* catalog_rides, int index);
 unsigned short int get_ride_date (Catalog_Rides * catalog_rides, int index);
 unsigned short int get_ride_distance (Catalog_Rides * catalog_rides,  int index);
 int get_ride_driver (Catalog_Rides * catalog_rides, int index);
@@ -30,6 +32,7 @@ unsigned int * check_gender_in_rides (Catalog_Rides* catalog_rides, char gender,
 
 void set_top_dist(Catalog_Rides *catalog_rides, void* array_dist, int size);
 void* get_top_dist(Catalog_Rides* catalog_rides);
+
 
 int get_top_dist_length(Catalog_Rides *catalog_rides);
 

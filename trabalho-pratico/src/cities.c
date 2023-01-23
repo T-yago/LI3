@@ -36,6 +36,7 @@ Catalog_Cities * cities_catalog () {
 // função que é chamada aquando da primeira leitura das rides e que insere a city na sua hashtable
 void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, unsigned int ride_id) {
     
+    // A cidade ainda não se encontrar na hashtable
     if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
         char* key = strdup (city_to_check);
         City* city = malloc (sizeof (City));
@@ -55,6 +56,8 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         city->array_rides_city_length ++;
         g_hash_table_insert (catalog_cities->cities_hash, key, city); 
     }
+
+    // A cidade já se encontra na hashtable
     else {
         City *city = g_hash_table_lookup (catalog_cities->cities_hash,city_to_check);
         city->num_rides++;

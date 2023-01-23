@@ -13,13 +13,9 @@ void query2(Catalog_Drivers * catalog_drivers, char * info, int n) {
     int id = get_id_driver_top_N (catalog_drivers,i);
     char * name = get_name_driver_top_N (catalog_drivers,i);
     double avaliacao_media = get_aval_med_top_N (catalog_drivers,i);
-    if (get_driver_acc_Status(catalog_drivers, id - 1)) { //(!d->account_status)
       fprintf(output, "%012d;"
         "%s;"
         "%.3f\n", id, name, avaliacao_media);
-    } else {
-      numb++;
-    }
     free (name);
   }
 

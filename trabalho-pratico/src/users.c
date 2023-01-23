@@ -32,19 +32,29 @@ struct users {
 };
 
 
-Users* create_user (char** tokens, void* catalog) {
+Users* create_user (char** tokens, void* catalog, int is_valid) {
+
+  if (is_valid == 1) return NULL;
+  
+  else{
   Users* user = malloc(sizeof(Users));
+
+  // se algum outro campo for inválido, o status é modificado
   user->username = strdup (tokens[0]);
   user->name = strdup (tokens[1]);
   user->gender = *tokens[2];
   user->age = calcula_idade (tokens[3]);
   user->account_creation = convert_to_day (tokens[4]); 
   user->pay_method = strdup (tokens[5]);
-  user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')) == 1;
+  user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')); //se for ("missing" oh "???" retorna false)
+
+  // Se a data não for válida
+  if (user->account_creation == 65535) user->account_status = false;
   
   Catalog_Users* catalog_users = (Catalog_Users*)catalog;
   g_hash_table_insert(catalog_users->hash_users, user->username, user);
   return user;
+  }
 }
 
 Catalog_Users * users_catalog(char * pathfiles) {

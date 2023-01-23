@@ -36,6 +36,7 @@ struct catalog_rides
 
 struct ride
 {
+  int id;
   unsigned short int date;
   int driver;
   char *user;
@@ -59,9 +60,20 @@ void sort_rides_by_date(Ride **rides, size_t num_rides)
   qsort((void *)rides, num_rides, sizeof(Ride *), compare_rides);
 }
 
-Ride *create_ride(char **tokens, void *catalog)
+Ride *create_ride(char **tokens, void *catalog, int is_valid)
 {
+  if (is_valid == 1) return NULL; 
+   // Desreferencia apontador
+  Catalog_Rides *catalog_rides = (Catalog_Rides *)catalog;
+
+  // Fetch das informações do catálogo
+  uint num_rides = catalog_rides->array_length;
+  Ride **array_rides = catalog_rides->array_rides;
+
+
   Ride *ride = malloc(sizeof(struct ride));
+  
+  ride->id = atoi (tokens[0]);
   ride->date = convert_to_day(tokens[1]);
   ride->driver = atoi(tokens[2]);
   ride->user = strdup(tokens[3]);
@@ -70,14 +82,11 @@ Ride *create_ride(char **tokens, void *catalog)
   ride->score_user = atoi(tokens[6]);
   ride->score_driver = atoi(tokens[7]);
   ride->tip = atof(tokens[8]);
+  if (is_valid == 1) ride->id = -1; // maneira de ver se ride é inválido
 
-  // Desreferencia apontador
-  Catalog_Rides *catalog_rides = (Catalog_Rides *)catalog;
 
-  // Fetch das informações do catálogo
-  uint num_rides = catalog_rides->array_length;
-  Ride **array_rides = catalog_rides->array_rides;
-
+ // Para ver se uma ride é válida, verificar se a cidade na qual foi feita é diferente de NULL
+  if (ride->date == 65535) ride->id = -1; 
   // Adiciona a ride ao catálogo
   array_rides[num_rides] = ride;
   catalog_rides->array_length++;
@@ -290,6 +299,11 @@ int get_top_dist_length(Catalog_Rides *catalog_rides) {
 uint get_array_rides_length(Catalog_Rides *catalog_rides)
 {
   return catalog_rides->array_length;
+}
+
+int get_ride_id (Catalog_Rides* catalog_rides, int index) {
+  Ride* aux = catalog_rides->array_rides [index];
+  return aux->id;
 }
 
 unsigned short int get_ride_date(Catalog_Rides *catalog_rides, int index)

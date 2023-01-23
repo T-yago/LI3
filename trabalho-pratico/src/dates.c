@@ -7,7 +7,9 @@ unsigned short int convert_to_day(char * date) {
   unsigned short int month;
   unsigned short int year;
   unsigned short int total_days = 0;
-  sscanf(date, "%hu/%hu/%hu", & day, & month, & year);
+  int fields = sscanf(date, "%hu/%hu/%hu", & day, & month, & year);
+  if (fields != 3) return 65535; // returns USHRT_MAX    
+  
   int meses [12] = {0,31,59,90,120,151,181,212,243,273,304,334};
   total_days += meses [month-1];
 

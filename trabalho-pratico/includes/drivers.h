@@ -34,7 +34,9 @@ int get_driver_Nviagens (Catalog_Drivers * catalog_drivers,  int index);
 unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drivers, int index);
 
 
-void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers);
+void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers, int array_length);
 void* get_top_N_drivers(Catalog_Drivers* catalog_drivers);
+int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers);
+
 
 #endif
