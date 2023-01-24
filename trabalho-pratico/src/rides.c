@@ -64,24 +64,28 @@ void sort_rides_by_date(Ride **rides, size_t num_rides)
 int is_valid_ride (char** tokens) {
 
     // se os campos id, driver, user ou city forem vazios
-    if (strlen (tokens[0]) == 0 || strlen (tokens [2]) == 0 || strlen (tokens [3]) == 0 || strlen (tokens [4]) == 0) return -1;
+    for (int i=0; i <= 8;i++) {
+      if (strlen (tokens[i]) == 0) return -1;
+    }
+
+    //if (strlen (tokens[0]) == 0 || strlen (tokens [2]) == 0 || strlen (tokens [3]) == 0 || strlen (tokens [4]) == 0) return -1;
 
     if (convert_to_day (tokens[1]) == 65535) return -1;
     
     // se a distância não for um inteiro  >= 0
+    if (tokens[5][0] == '0' && strlen(tokens[5]) == 1) return -1;
     for (int i = 0; tokens[5][i] != '\0'; i++) if (!isdigit(tokens[5][i])) return -1;
+
+    // se o score_user não for um valor inteiro > 0
+    if (tokens[6][0] == '0' && strlen(tokens[6]) == 1) return -1;
+    for (int i = 0; tokens[6][i] != '\0'; i++) if (!isdigit(tokens[6][i])) return -1;
     
-    // se o score_user não for um valor (inteiro ou double) >= 0
+    // se o score_user não for um valor inteiro > 0
+    if (tokens[7][0] == '0' && strlen(tokens[7]) == 1) return -1;
+    for (int i = 0; tokens[7][i] != '\0'; i++) if (!isdigit(tokens[7][i])) return -1;
+
+    // se a tip não for um valor (inteiro ou float) >= 0
     char* end = NULL;
-    double score_user = strtod (tokens[6],&end);
-    if (*end != '\0' || score_user <= 0 || isnan (score_user)) return -1; 
-
-    // se o score_driver não for um valor >= 0
-    end = NULL;
-    double score_driver = strtod (tokens[7],&end);
-    if (*end != '\0' || score_driver <= 0 || isnan (score_driver)) return -1; 
-
-    end = NULL;
     double ride_tip = strtod (tokens[8],&end);
     if (*end != '\0' || ride_tip < 0 || isnan (ride_tip)) return -1; 
 
@@ -90,8 +94,10 @@ return 0;
 
 Ride *create_ride(char **tokens, void *catalog)
 {
-  if (is_valid_ride (tokens) == -1) return NULL; 
-  
+  if (is_valid_ride (tokens) == -1){
+//if (!strcmp (tokens[2], "000000004215")) printf ("ola\n"), printf ("%s\n",tokens[8]);
+return NULL; 
+  } 
    // Desreferencia apontador
   Catalog_Rides *catalog_rides = (Catalog_Rides *)catalog;
 

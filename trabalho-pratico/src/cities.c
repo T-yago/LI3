@@ -44,17 +44,26 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         city->total_gasto += total_gasto_por_ride;
         city->num_rides = 1;
         
+        //inicializa o array de avaliações para esta nova cidade
         city->array_avaliacao = malloc (size_drivers * sizeof(Avaliacao_media_driver));
         city->array_avaliacao[driver_id].id_driver = driver_id + 1;
+        for (uint i = 0; i < size_drivers; i++) {
+            city->array_avaliacao[i].num_rides = 0;
+            city->array_avaliacao[i].score_driver = 0;
+
+        }
+        //Preenche o campo do 1º user desta cidade
         city->array_avaliacao[driver_id].score_driver = score_driver;
         city->array_avaliacao[driver_id].num_rides = 1;
         city->array_avaliacao_length = size_drivers;
-        
 
+        // inicializa o array de rides para a nova cidade e preenche com o 1º id
         city->array_rides_city_length = 0;
         city->array_rides_city = malloc (100 *sizeof(uint));
         city->array_rides_city[city->array_rides_city_length] = index_array_rides;
         city->array_rides_city_length ++;
+
+        // insere a nova struct cidade na hashtable
         g_hash_table_insert (catalog_cities->cities_hash, key, city); 
     }
 
@@ -72,6 +81,7 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         city->array_rides_city[city->array_rides_city_length] = index_array_rides;
         city->array_rides_city_length++;
         if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
+       // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
     }    
 }
 

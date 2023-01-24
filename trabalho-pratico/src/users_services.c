@@ -1,5 +1,5 @@
 #include "../includes/users_services.h"
-
+#include <stdio.h>
 //--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
 
 struct user_distance_data{
@@ -40,6 +40,7 @@ void top_N_users (Catalog_Users* catalog_users) {
     (user_distance_data + i) -> distance = getDistanceUser(catalog_users, keys[i]);
     (user_distance_data + i) -> data = getDateUser(catalog_users, keys[i]);
     (user_distance_data + i) -> name = getNameUser(catalog_users, keys[i]);
+
   }
   free (keys);
   qsort((void *) user_distance_data, size_hash, sizeof(User_Distance_Data), compare_users);

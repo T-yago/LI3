@@ -1,5 +1,6 @@
 #include "../includes/drivers_services.h"
 #include <stdio.h>
+#include <math.h>
 //---------------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
 
 struct driver_aval_date {
@@ -44,6 +45,7 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
     aux -> data = get_driver_date (catalog_drivers, i);
     aux -> name = get_driver_name (catalog_drivers, i);
 
+
     driver_aval_date[array_length] = aux;
     array_length++;
     if (array_length % 100 == 0) driver_aval_date = realloc (driver_aval_date, sizeof (Driver_Aval_Date*) * (array_length + 100));
@@ -51,6 +53,15 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
     }
   }
   qsort((void * ) driver_aval_date, array_length, sizeof(Driver_Aval_Date*), compare);
+/*
+  for (uint i = 0; i < size; i++) {
+    if (get_driver_acc_Status(catalog_drivers, i) == true) {
+      Driver_Aval_Date* aux = driver_aval_date[i];
+      printf ("%f",aux->avaliacao_media);
+    
+    }
+  }
+  */
   set_top_N_drivers (catalog_drivers, driver_aval_date, array_length);
   
 }

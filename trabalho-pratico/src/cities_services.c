@@ -37,10 +37,8 @@ int compare2(const void * a, const void * b) {
    if (score_medio_a == score_medio_b) {
     if (ia -> id_driver < ib -> id_driver) return 1; 
     if (ia -> id_driver > ib -> id_driver) return -1;
-    return -1; 
-  } else {
-    return 0;
   }
+  return 0;
 }
 
 
@@ -56,7 +54,17 @@ void sort_arrays_avaliacoes_cities (Catalog_Cities * catalog_cities){
   g_hash_table_foreach (catalog_cities->cities_hash, (GHFunc)sort_array_avaliacoes, NULL);  
 }
 
+/*
+void update_avaliacoes_medias_array_city (gpointer key, gpointer value, gpointer user_data) {
+  City* city = (City*) value;
+  int size = city->array_avaliacao_length;
+  
+}
 
+void update_avaliacoes_medias_arrays_cities (Catalog_Cities* catalog_cities) {
+    g_hash_table_foreach (catalog_cities->cities_hash, (GHFunc)update_avaliacoes_medias_array_city, NULL);  
+}
+*/
 
 uint get_id_driver_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index) {
   City *city = g_hash_table_lookup (catalog_cities->cities_hash, city_to_check);

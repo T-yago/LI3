@@ -33,20 +33,13 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         total_gasto = calcula_total_gasto (car_class,ride_distance,ride_tip);
         total_gasto_sem_tips = total_gasto - ride_tip;
         total_auferido = calcula_total_gasto(car_class, ride_distance, ride_tip);
-        if (total_auferido == 16.48) {
-           if (driver == 3079){
-            printf ("Index: %d\n",i);
-            printf ("%d\n",driver);
-            printf ("tip: %f\n",ride_tip);
-            printf ("car_class: %s\n",car_class);
-            printf ("distance: %d\n\n",ride_distance);
-           } 
-
-        }
         ride_score_driver = get_score_driver_ride (catalog_rides,i);     
         ride_score_user = get_score_user_ride (catalog_rides, i);
         ride_date = get_ride_date (catalog_rides,i);
         
+
+       // if (driver == 4215)   printf ("Score: %f.......",ride_score_driver),printf ("%f\n",get_driver_avalMedia (catalog_drivers,4214)), printf ("%d",get_driver_Nviagens (catalog_drivers,4214));
+
         totalGastoUser(catalog_users,user,total_gasto);
 
         avaliacaoTotalUser(catalog_users, user, ride_score_user);

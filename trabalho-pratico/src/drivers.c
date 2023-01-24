@@ -43,7 +43,6 @@ int is_valid_driver (char** tokens) {
 
   // se acc_creation for inválido
   if (!strcasecmp(tokens[8], "active") == 0 && !strcasecmp(tokens[8], "inactive") == 0 )  return -1;
- 
   // se car_class for inválido
   if (!strcasecmp(tokens[4], "basic") == 0 &&  !strcasecmp(tokens[4], "premium") == 0 && !strcasecmp(tokens[4], "green") == 0 )  return -1;
 
@@ -72,7 +71,10 @@ Driver* create_driver(char** tokens, void* catalog) {
   driver->account_creation = convert_to_day(tokens[7]);
   driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A');  //se for ("missing" oh "???" retorna false)
 
-  if (is_valid_driver (tokens) == -1) driver->account_status = false;  
+  if (is_valid_driver (tokens) == -1) {
+    if (!strcmp (tokens[0] ,"000000004215")) printf ("Nome: %s\n",tokens [1]);
+    driver->account_status = false;
+  }  
     array_drivers[num_drivers] = driver;
     catalog_drivers->array_length++;
     num_drivers++; 
@@ -130,8 +132,12 @@ void init_array_drivers(Catalog_Drivers * catalog_drivers) {
 void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   uint size = catalog_drivers->array_length;
   double r = 0;
+  double aval_media;
+  int N_viagens;
   for (uint i = 0; i < size; i++) {
-    r = (float) get_driver_avalMedia(catalog_drivers, i) / (float) get_driver_Nviagens(catalog_drivers, i);
+    aval_media = get_driver_avalMedia(catalog_drivers, i);
+    N_viagens = get_driver_Nviagens(catalog_drivers, i);
+    if (N_viagens != 0) r = (float) aval_media / (float) N_viagens;
     avaliacaoMediaDriver(catalog_drivers,i, r);
   }
 }
