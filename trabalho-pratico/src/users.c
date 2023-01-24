@@ -32,11 +32,24 @@ struct users {
 };
 
 
-Users* create_user (char** tokens, void* catalog, int is_valid) {
+int is_valid_user (char** tokens) {
+  // se username, name, gender, pay_method forem vazioss
+  if (strlen (tokens[0]) == 0 || strlen (tokens [1]) == 0 || strlen (tokens [2]) == 0 || strlen (tokens [5]) == 0) return -1;
 
-  if (is_valid == 1) return NULL;
+  // se datsas for inválidas
+  if (convert_to_day (tokens[4]) == 65535 || convert_to_day (tokens[3]) == 65535)  return -1;
+
+  // se o acc_status for inválido
+  if (!strcasecmp(tokens[6], "active") == 0 && !strcasecmp(tokens[6], "inactive") == 0 )  return -1;
+  return 0;
+}
+
+Users* create_user (char** tokens, void* catalog) {
   
+  if (is_valid_user (tokens)== -1) return NULL;
   else{
+
+
   Users* user = malloc(sizeof(Users));
 
   // se algum outro campo for inválido, o status é modificado
@@ -48,8 +61,6 @@ Users* create_user (char** tokens, void* catalog, int is_valid) {
   user->pay_method = strdup (tokens[5]);
   user->account_status = ((tokens[6][0] == 'a') || (tokens[6][0] == 'A')); //se for ("missing" oh "???" retorna false)
 
-  // Se a data não for válida
-  if (user->account_creation == 65535) user->account_status = false;
   
   Catalog_Users* catalog_users = (Catalog_Users*)catalog;
   g_hash_table_insert(catalog_users->hash_users, user->username, user);

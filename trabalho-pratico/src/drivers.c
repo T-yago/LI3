@@ -33,8 +33,24 @@ struct driver {
   double avaliacao_media_driver;
 };
 
-  Driver* create_driver(char** tokens, void* catalog, int is_valid) {
+int is_valid_driver (char** tokens) {
   
+  // se id, name, gender, license_plate ou city forem vazios
+  if (strlen (tokens[0]) == 0 || strlen (tokens [1]) == 0 || strlen (tokens [3]) == 0 || strlen (tokens [5]) == 0 || strlen (tokens [6]) == 0) return -1;
+
+  // se as datas forem inválidas
+  if (convert_to_day (tokens [2]) == 65535 || convert_to_day (tokens [7]) == 65535 ) return -1;
+
+  // se acc_creation for inválido
+  if (!strcasecmp(tokens[8], "active") == 0 && !strcasecmp(tokens[8], "inactive") == 0 )  return -1;
+ 
+  // se car_class for inválido
+  if (!strcasecmp(tokens[4], "basic") == 0 &&  !strcasecmp(tokens[4], "premium") == 0 && !strcasecmp(tokens[4], "green") == 0 )  return -1;
+
+  return 0;
+}
+
+Driver* create_driver(char** tokens, void* catalog) {
   // Desreferencia apontador
   Catalog_Drivers* catalog_drivers = (Catalog_Drivers*)catalog;
   
@@ -55,8 +71,8 @@ struct driver {
   driver->city = strdup(tokens[6]);
   driver->account_creation = convert_to_day(tokens[7]);
   driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A');  //se for ("missing" oh "???" retorna false)
-  
-  if (driver->account_creation == 65535 || is_valid == 1) driver->account_status = false;
+
+  if (is_valid_driver (tokens) == -1) driver->account_status = false;  
     array_drivers[num_drivers] = driver;
     catalog_drivers->array_length++;
     num_drivers++; 
@@ -99,7 +115,7 @@ int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void initHash_drivers(Catalog_Drivers * catalog_drivers) { 
+void init_array_drivers(Catalog_Drivers * catalog_drivers) { 
   uint size = catalog_drivers->array_length;
   Driver * d;
   for (uint i = 0; i < size; i++) {

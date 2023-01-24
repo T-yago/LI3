@@ -47,11 +47,14 @@ void queries_handler (char * pathfiles, char * input) {
   // criação dos catálogos
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
+  
   Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
-  initHash_drivers(catalog_drivers);
+  init_array_drivers(catalog_drivers);
+  
   Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
-  Catalog_Cities * catalog_cities = cities_catalog ();
   init_array_genders (catalog_rides);
+  
+  Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
   // criação das estruturas auxiliares para as queries

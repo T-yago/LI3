@@ -8,7 +8,7 @@ typedef struct driver Driver;
 typedef struct catalog_drivers Catalog_Drivers;
 
 Catalog_Drivers * drivers_catalog(char * pathfiles);
-void initHash_drivers(Catalog_Drivers * catalog_drivers);
+void init_array_drivers(Catalog_Drivers * catalog_drivers);
 void update_avaliacao_media_driver(Catalog_Drivers * catalog_drivers);
 void free_drivers_catalog (Catalog_Drivers * catalog_drivers);
 

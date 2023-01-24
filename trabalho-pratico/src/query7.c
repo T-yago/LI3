@@ -34,6 +34,7 @@ void query7 (char * N, char * city, Catalog_Cities * catalog_cities, Catalog_Dri
         fprintf(output, "%012d;""%s;""%.3f\n", id_driver, name, avaliacao_media);
         free (name);
       }
+      else numb++;
     }
 
     fclose(output);

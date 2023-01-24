@@ -8,7 +8,8 @@ unsigned short int convert_to_day(char * date) {
   unsigned short int year;
   unsigned short int total_days = 0;
   int fields = sscanf(date, "%hu/%hu/%hu", & day, & month, & year);
-  if (fields != 3) return 65535; // returns USHRT_MAX    
+  if (fields != 3 || day > 31 || month > 12) return 65535; // returns USHRT_MAX    
+  if (year<2000) return 0; // para não devolver falso no caso de averiguarmos a validade de datas de nascimento
   
   int meses [12] = {0,31,59,90,120,151,181,212,243,273,304,334};
   total_days += meses [month-1];

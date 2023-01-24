@@ -31,43 +31,18 @@ double calcula_total_gasto(char* car_class, unsigned short int distance, double 
 
 
 short int calcula_idade(char * birthdate) {
-  short int aux[4];
-  short int age, birth_year, birth_month, birth_day, i = 0;
-  char * tmp;
-  tmp = strtok(birthdate, "/");
-
-  while (tmp != NULL) {
-    aux[i] = atoi(tmp);
-    tmp = strtok(NULL, "/");
-    i++;
-  }
-
-  birth_day = aux[0];
-  birth_month = aux[1];
-  birth_year = aux[2];
-
-  short int aux2[3];
-  short int year, month, day, m = 0;
-  char * tmp2;
-  char dateaux[15] = DATE;
-  tmp2 = strtok(dateaux, "/");
-
-  while (tmp2 != NULL) {
-    aux2[m] = atoi(tmp2);
-    tmp2 = strtok(NULL, "/");
-    m++;
-  }
-
-  day = aux2[0];
-  month = aux2[1];
-  year = aux2[2];
+  short int birth_year, birth_month, birth_day;
+  short int year, month, day;
+  sscanf(birthdate, "%hd/%hd/%hd", &birth_day, &birth_month, &birth_year);
+  sscanf(DATE, "%hd/%hd/%hd", &day, &month, &year);
 
   if (month > birth_month || (month == birth_month && day >= birth_day)) {
-    age = year - birth_year;
-  } else age = year - birth_year - 1;
-
-  return age;
+    return year - birth_year;
+  } else {
+    return year - birth_year - 1;
+  }
 }
+
 
 
 

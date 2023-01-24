@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-typedef void* (*create_fn)(char** tokens, void* catalog, int is_valid);
+typedef void* (*create_fn)(char** tokens, void* catalog);
 
 void parse_csv(const char* filename, create_fn create_fn, void* catalog);
 

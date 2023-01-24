@@ -5,7 +5,7 @@ typedef struct avaliacao_media_driver Avaliacao_media_driver;
 typedef struct city City;
 
 Catalog_Cities * cities_catalog ();
-void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride,uint size_drivers, uint driver_id, unsigned short int score_driver, bool driver_acc_status,  int ride_id);
+void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride,uint size_drivers, uint driver_id, unsigned short int score_driver,  int ride_id);
 void free_cities_catalog (Catalog_Cities * catalog_cities);
 unsigned int get_num_rides_city (Catalog_Cities * catalog_cities, char * city);
 double get_total_gasto_city (Catalog_Cities* catalog_cities, char * city);

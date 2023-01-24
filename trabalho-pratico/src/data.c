@@ -1,5 +1,6 @@
 #include "../includes/data.h"
 #include <stdio.h>
+#include <math.h>
 
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
     
@@ -19,7 +20,6 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     float ride_score_driver;
     unsigned short int ride_score_user;
     unsigned short int ride_date;
-    bool driver_acc_status;
 
     for (unsigned int i = 0; i < array_rides_length; i++) {
         ride_id = get_ride_id (catalog_rides,i);
@@ -33,10 +33,19 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         total_gasto = calcula_total_gasto (car_class,ride_distance,ride_tip);
         total_gasto_sem_tips = total_gasto - ride_tip;
         total_auferido = calcula_total_gasto(car_class, ride_distance, ride_tip);
+        if (total_auferido == 16.48) {
+           if (driver == 3079){
+            printf ("Index: %d\n",i);
+            printf ("%d\n",driver);
+            printf ("tip: %f\n",ride_tip);
+            printf ("car_class: %s\n",car_class);
+            printf ("distance: %d\n\n",ride_distance);
+           } 
+
+        }
         ride_score_driver = get_score_driver_ride (catalog_rides,i);     
         ride_score_user = get_score_user_ride (catalog_rides, i);
         ride_date = get_ride_date (catalog_rides,i);
-        driver_acc_status = get_driver_acc_Status (catalog_drivers,driver-1);
         
         totalGastoUser(catalog_users,user,total_gasto);
 
@@ -47,7 +56,8 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         totalDistanceUser(catalog_users, user, ride_distance);
 
         dateUser(catalog_users, user, ride_date);
-               
+
+        //if (driver -1 == 9242) printf ("Ride:%d\n",i);   
         totalAuferidoDriver(catalog_drivers, driver -1 , total_auferido);
 
         inc_avaliacao_media_driver (catalog_drivers, driver - 1, ride_score_driver);
@@ -56,7 +66,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
         dateDriver(catalog_drivers, driver - 1, ride_date);
 
-        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, driver_acc_status, i);
+        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, i);
 
         insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user, driver - 1, i);
         
