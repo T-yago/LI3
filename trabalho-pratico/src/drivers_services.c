@@ -78,6 +78,7 @@ void free_top_N_drivers (Catalog_Drivers* catalog_drivers, int size) {
   for (int i = 0; i < size; i++) {
     Driver_Aval_Date* aux = top_N_drivers [i];
     free (aux->name);
+    free (aux);
   }
 }
 
