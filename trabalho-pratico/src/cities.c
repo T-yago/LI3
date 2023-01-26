@@ -33,8 +33,11 @@ Catalog_Cities * cities_catalog () {
     return catalog_cities;
 }
 
-// função que é chamada aquando da primeira leitura das rides e que insere a city na sua hashtable
+// função que é chamada aquando da primeira leitura das rides e que insere a city (já preenchida) na sua hashtable
 void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, int index_array_rides) {
+
+    // índice onde está o driver cujo id é "driver_id" no array dos drivers
+    int array_driver_index = driver_id -1;
     
     // A cidade ainda não se encontrar na hashtable
     if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
@@ -46,15 +49,16 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         
         //inicializa o array de avaliações para esta nova cidade
         city->array_avaliacao = malloc (size_drivers * sizeof(Avaliacao_media_driver));
-        city->array_avaliacao[driver_id].id_driver = driver_id + 1;
         for (uint i = 0; i < size_drivers; i++) {
             city->array_avaliacao[i].num_rides = 0;
             city->array_avaliacao[i].score_driver = 0;
+            city->array_avaliacao[i].id_driver = 0;
 
         }
         //Preenche o campo do 1º user desta cidade
-        city->array_avaliacao[driver_id].score_driver = score_driver;
-        city->array_avaliacao[driver_id].num_rides = 1;
+        city->array_avaliacao[array_driver_index].id_driver = driver_id;
+        city->array_avaliacao[array_driver_index].score_driver = score_driver;
+        city->array_avaliacao[array_driver_index].num_rides = 1;
         city->array_avaliacao_length = size_drivers;
 
         // inicializa o array de rides para a nova cidade e preenche com o 1º id
@@ -73,9 +77,9 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
         city->num_rides++;
         city->total_gasto += total_gasto_por_ride;
         
-        city->array_avaliacao[driver_id].id_driver = driver_id + 1; 
-        city->array_avaliacao[driver_id].score_driver += score_driver;
-        city->array_avaliacao[driver_id].num_rides ++;
+        city->array_avaliacao[array_driver_index].id_driver = driver_id; 
+        city->array_avaliacao[array_driver_index].score_driver += score_driver;
+        city->array_avaliacao[array_driver_index].num_rides ++;
         
 
         city->array_rides_city[city->array_rides_city_length] = index_array_rides;

@@ -71,10 +71,9 @@ Driver* create_driver(char** tokens, void* catalog) {
   driver->account_creation = convert_to_day(tokens[7]);
   driver->account_status = (tokens[8][0] == 'a' || tokens[8][0] == 'A');  //se for ("missing" oh "???" retorna false)
 
-  if (is_valid_driver (tokens) == -1) {
-    if (!strcmp (tokens[0] ,"000000004215")) printf ("Nome: %s\n",tokens [1]);
-    driver->account_status = false;
-  }  
+// Se o driver for válido, ele permanece no array para preservar as propriedades do índice mas o seu status passa para inválido
+  if (is_valid_driver (tokens) == -1)  driver->account_status = false;
+
     array_drivers[num_drivers] = driver;
     catalog_drivers->array_length++;
     num_drivers++; 

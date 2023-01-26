@@ -211,20 +211,17 @@ int compare_rides_ages(const void *a, const void *b)
   const Ride_Ages *ride1 = *(Ride_Ages **)a;
   const Ride_Ages *ride2 = *(Ride_Ages **)b;
 
-  if (ride1->data_creation_driver < ride2->data_creation_driver)
-    return -1;
-  else if (ride1->data_creation_driver > ride2->data_creation_driver)
-    return 1;
-  else if (ride1->data_creation_driver == ride2->data_creation_driver)
+  if (ride1->data_creation_driver < ride2->data_creation_driver) return -1;
+
+  else if (ride1->data_creation_driver > ride2->data_creation_driver) return 1;
+
+  else 
   {
-    if (ride1->data_creation_user > ride2->data_creation_user)
-      return 1;
-    else if (ride1->data_creation_user < ride2->data_creation_user)
-      return -1;
-    else if (ride1->data_creation_user == ride2->data_creation_user)
-    {
-      return ride1->id_ride - ride2->id_ride;
-    }
+    if (ride1->data_creation_user > ride2->data_creation_user) return 1;
+    
+    else if (ride1->data_creation_user < ride2->data_creation_user) return -1;
+    
+    else return ride1->id_ride - ride2->id_ride;
   }
   return 0;
 }

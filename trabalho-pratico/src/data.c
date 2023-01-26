@@ -59,7 +59,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
 
         dateDriver(catalog_drivers, driver - 1, ride_date);
 
-        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver - 1, ride_score_driver, i);
+        fill_cities_catalog (catalog_cities, ride_city, total_gasto_sem_tips, array_drives_length, driver, ride_score_driver, i);
 
         insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides, user, driver - 1, i);
         
