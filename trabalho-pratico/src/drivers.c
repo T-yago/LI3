@@ -136,8 +136,13 @@ void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   for (uint i = 0; i < size; i++) {
     aval_media = get_driver_avalMedia(catalog_drivers, i);
     N_viagens = get_driver_Nviagens(catalog_drivers, i);
-    if (N_viagens != 0) r = (float) aval_media / (float) N_viagens;
-    avaliacaoMediaDriver(catalog_drivers,i, r);
+
+    if (N_viagens != 0) 
+    {
+      r = (float) aval_media / (float) N_viagens;
+      avaliacaoMediaDriver(catalog_drivers,i, r);
+    }
+  
   }
 }
 
@@ -190,6 +195,7 @@ int get_driver_Nviagens (Catalog_Drivers * catalog_drivers, int index){
 
 void avaliacaoMediaDriver(Catalog_Drivers * catalog_drivers, int index, double r){
   Driver * d = catalog_drivers->array_drivers[index]; 
+  if (index == 86913) printf ("Valor a adicionar: %f\n",r);
   d -> avaliacao_media_driver = r;
 }
 
@@ -228,6 +234,7 @@ void totalAuferidoDriver(Catalog_Drivers * catalog_drivers, int index, double ta
 
 void inc_avaliacao_media_driver(Catalog_Drivers * catalog_drivers, int index, short int r){
   Driver * d = catalog_drivers->array_drivers [index]; 
+  if (index == 86913) printf ("r = %d",r);
   d -> avaliacao_media_driver += r;
 }
 
