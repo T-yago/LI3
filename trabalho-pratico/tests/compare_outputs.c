@@ -59,7 +59,7 @@ struct dirent** organize_dir(char* path_to_folder){
 
 
 //O primeiro é o caminho para o ficheiro com os inputs, no segundo argumento o caminho para a pasta com os valores de referencia e no 3 argumento o caminho para a pasta Resultados
-void compare_outputs(char* path_to_input_file, char* path_to_reference_folder, char* path_to_results_folder){
+void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_reference_folder, char* path_to_results_folder, double* times_query){
 
     struct dirent** reference_files_array = organize_dir(path_to_reference_folder);
 
@@ -108,32 +108,31 @@ void compare_outputs(char* path_to_input_file, char* path_to_reference_folder, c
                     if (strcmp(reference_line, results_line) == 0) {
                         identical_lines_query[numb_query]++;
                     }
+                    else{
+                        printf("\033[0;31mError in Command%d_output.txt, line %d:\033[0;31m\n", n_instruction, total_lines_query[numb_query]);
+                        printf("\033[0;33m %s\033[0;33m\n", results_line);
+                        printf("\033[0;32m %s\033[0;32m", reference_line);
+                    }
                 }
             }
             if (total_lines[numb_query] == total_lines_query[numb_query] && total_lines_query[numb_query] == identical_lines_query[numb_query]) identical_files_query[numb_query]++;
-            else{
-                printf("\033[0;31mError: Error in Command%d_output.\033[0;31m\n", n_instruction);
-            }
+            fclose(reference_file);
+            fclose(results_file);
         }
+
         if(feof(input_file)) break;
         n_instruction++;
     }
+    	
+    fclose(input_file);
 
-
+    printf("\n");
     for (uint i = 0; i < 9; i++) {
-        double identical_line_percentage = ((double) identical_lines_query[i] / total_lines_query[i]) * 100;
         double identical_file_percentage = ((double) identical_files_query[i] / total_files_query[i]) * 100;
-        printf("\033[0;36mPercentagem de linhas identicas Query%d : %.2f%%\nPercentagem de ficheiros identicos Query%d : %.2f%%\033[0;36m\n", i+1, identical_line_percentage, i+1, identical_file_percentage);
+        printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.3fs\n", i+1, identical_file_percentage, times_query[i]);
     }
-
-    printf("\033[0;32mTests_1 done.\033[0m\n");
 
     //free
-    uint i = 0;
-    while (reference_files_array[i] != NULL) {
-        free(reference_files_array[i]);
-        i++;
-    }
     free(reference_files_array);    
 }
 
