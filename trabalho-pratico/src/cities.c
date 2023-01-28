@@ -140,7 +140,7 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalo
                 if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
 
                 // Copia-se o valor da chave (string cidade) e inicializam-se os valores total_gasto e num_rides;
-                char* key = strdup (city_to_check);
+                char* key =  strdup (city_to_check);
                 City* city = malloc (sizeof (City));
                 city->total_gasto = 0;
                 city->total_gasto += total_gasto_sem_tips;
@@ -188,7 +188,8 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalo
                 city->array_rides_city_length++;
                 if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
             // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
-            }    
+            }   
+        free (city_to_check);
         }
     }
 }

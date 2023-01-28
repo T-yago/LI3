@@ -20,6 +20,6 @@ void insert_arrays_genders (Catalog_Users* catalog_users,Catalog_Drivers* catalo
 void sort_array_genders (Catalog_Rides* catalog_rides);
 
 void free_array_top_dist (Catalog_Rides* catalog_rides);
-
+void free_array_ages_rides (Catalog_Rides* catalog_rides);
 
 #endif 

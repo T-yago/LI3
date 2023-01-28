@@ -78,7 +78,7 @@ void insert_arrays_genders(Catalog_Users *catalog_users, Catalog_Drivers *catalo
                 array_ages_F = realloc(array_ages_F, sizeof(Ride_Ages *) * (array_ages_F_length + 100));
             }
         }
-
+    free (user);
     }
         
     set_arrays_genders (catalog_rides, array_ages_M, array_ages_M_length, array_ages_F, array_ages_F_length);
@@ -240,4 +240,28 @@ void free_array_top_dist (Catalog_Rides* catalog_rides) {
             aux = top_dist[i]; 
             free (aux);
         }
+}
+
+
+void free_array_ages_rides (Catalog_Rides* catalog_rides) {
+ 
+  Ride_Ages** array_ages_F = (Ride_Ages**) get_array_genders_F (catalog_rides);
+  uint array_ages_F_length = get_array_genders_F_length (catalog_rides);
+
+  Ride_Ages** array_ages_M = (Ride_Ages**) get_array_genders_M (catalog_rides);
+  uint array_ages_M_length = get_array_genders_M_length (catalog_rides);
+
+
+for (uint i = 0; i < array_ages_F_length; i++)
+  {
+    Ride_Ages *aux = array_ages_F[i];
+    free(aux->id_user);
+    free(aux);
+  }
+  for (uint i = 0; i < array_ages_M_length; i++)
+  {
+    Ride_Ages *aux = array_ages_M[i];
+    free(aux->id_user);
+    free(aux);
+  }
 }

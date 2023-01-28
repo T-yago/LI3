@@ -150,20 +150,6 @@ Catalog_Rides *rides_catalog(char *pathfiles)
   return catalog_rides;
 }
 
-// struct definida para a query8
-/*
-void init_array_genders(Catalog_Rides *catalog_rides)
-{
-  Ride_Ages **array_ages_M = malloc(100 * sizeof(Ride_Ages *));
-  catalog_rides->array_ages_M = array_ages_M;
-  catalog_rides->array_ages_M_length = 0;
-
-  Ride_Ages **array_ages_F = malloc(100 * (sizeof(Ride_Ages *)));
-  catalog_rides->array_ages_F = array_ages_F;
-  catalog_rides->array_ages_F_length = 0;
-}
-*/
-
 
 void set_arrays_genders(Catalog_Rides* catalog_rides, void* array_ages_M, uint array_ages_M_length, void* array_ages_F, uint array_ages_F_length)
 {
@@ -204,27 +190,11 @@ void free_rides_catalog(Catalog_Rides *catalog_rides)
     free(aux->user);
     free(aux);
   }
+  free_array_ages_rides (catalog_rides);  
 
-/*
-  for (uint i = 0; i < catalog_rides->array_ages_F_length; i++)
-  {
-    Ride_Ages *aux = catalog_rides->array_ages_F[i];
-    //free(aux->id_user);
-    //free(aux);
-  }
-  for (uint i = 0; i < catalog_rides->array_ages_M_length; i++)
-  {
-    Ride_Ages *aux = catalog_rides->array_ages_M[i];
-    //free(aux->id_user);
-    //free(aux);
-  }
-
-
-
-  // Fazer estes frees aqui ou nas suas próprias funções?
   free(catalog_rides->array_ages_F);
   free(catalog_rides->array_ages_M);
-*/
+
 
 
   free(catalog_rides->array_rides);

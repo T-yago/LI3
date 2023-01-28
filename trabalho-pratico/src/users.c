@@ -139,6 +139,7 @@ void fill_users_hash (Catalog_Users* catalog_users, Catalog_Rides* catalog_rides
       u -> distance += ride_distance;
       if (ride_date > u -> date) u->date = ride_date;
 
+    free (user);
    }
   }
 }
