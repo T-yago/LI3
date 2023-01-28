@@ -29,7 +29,7 @@ int main(int argc, char ** argv) {
   
     end = clock();
     cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC; 
-    printf("Total time: %f", cpu_time_used);
+    printf("\nTotal time: %f", cpu_time_used);
     printf("\033[0;32m\nDone✅\033[0m\n");
   }
   return 0;

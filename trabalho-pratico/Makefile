@@ -3,7 +3,7 @@ OBJECT_FILES2 = tests/main_testes.o tests/compare_outputs.o tests/queries_handle
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g -Iinclude/ $(shell pkg-config --cflags glib-2.0) 
+CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0) 
 LIBS = -lm $(shell pkg-config --libs glib-2.0)
 TARGET = programa-principal
 TARGET2 = programa-testes
