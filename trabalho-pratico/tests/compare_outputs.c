@@ -16,11 +16,10 @@
 //O primeiro é o caminho para o ficheiro com os inputs, no segundo argumento o caminho para a pasta com os valores de referencia e no 3 argumento o caminho para a pasta Resultados
 void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_reference_folder, char* path_to_results_folder, double* times_query){
 
-    uint identical_lines_query[9] = {0};
-    uint total_lines_results[9] = {0}; 
-    uint total_lines_reference[9] = {0};
     uint identical_files_query[9] = {0};
     uint total_files_query[9] = {0};
+    uint total_lines = 0;
+    uint total_identical_lines = 0;
     uint numb_query = 0;
     uint n_command = 0; //number of instruction that is equal to the command number
     char input_line[SIZE_ARRAY];
@@ -62,28 +61,26 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
 
         char reference_line[SIZE_ARRAY];
         char results_line[SIZE_ARRAY];
-        total_lines_reference[numb_query] = 0;
-        total_lines_results[numb_query] = 0;
-        identical_lines_query[numb_query] = 0;
+        total_lines = 0;
+        total_identical_lines = 0;
 
 
-        while (fgets(reference_line, SIZE_ARRAY, reference_file) != NULL) {
-            total_lines_reference[numb_query]++;
-            if (fgets(results_line, SIZE_ARRAY, results_file) != NULL) {
-                total_lines_results[numb_query]++;
-                if (strcmp(reference_line, results_line) == 0) {
-                    identical_lines_query[numb_query]++;
-                }
-                else{
-                    printf("\033[0;31mError in Command%d_output.txt, line %d:\n", i, total_lines_results[numb_query]);
-                    printf("\033[0;33m %s\n", results_line);
-                    printf("\033[0;32m %s", reference_line);
-                }
+        while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file)) {
+            total_lines++;
+            if (strcmp(reference_line, results_line) != 0) {
+                printf("\033[0;31m\nError in Command%d_output.txt, line %d::\n", i, total_lines);
+                printf("\033[0;33m %s", results_line);
+                printf("\033[0;32m %s", reference_line);
             }
+            else total_identical_lines++;
         }
 
-        if (total_lines_reference[numb_query] == total_lines_results[numb_query] && total_lines_results[numb_query] == identical_lines_query[numb_query]) identical_files_query[numb_query]++;
-        
+        if (fgets(reference_line, sizeof(reference_line), reference_file) || fgets(results_line, sizeof(results_line), results_file)) {
+            printf("\033[0;31m%s and %s sizes don`t match.\n", reference_path, results_path);
+        }
+        else if (total_lines == total_identical_lines) identical_files_query[numb_query] ++;
+
+
         fclose(reference_file);
         fclose(results_file);
     }
