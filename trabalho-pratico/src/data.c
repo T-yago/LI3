@@ -44,9 +44,9 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
         free (ride_city);
         }
     }
-
-    update_aval_medias_users (catalog_users);
+    
     fill_drivers_array (catalog_drivers, catalog_rides);
+    update_avaliacao_media_driver (catalog_drivers);
     
     fill_users_hash (catalog_users, catalog_rides, catalog_drivers);
     update_aval_medias_users (catalog_users);
