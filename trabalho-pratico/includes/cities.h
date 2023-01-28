@@ -1,11 +1,14 @@
 #include "../includes/rides.h"
+#include "../includes/drivers.h"
+#include "../includes/query1.h"
+
 
 typedef struct catalog_cities Catalog_Cities;
 typedef struct avaliacao_media_driver Avaliacao_media_driver;
 typedef struct city City;
 
 Catalog_Cities * cities_catalog ();
-void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride,uint size_drivers, uint driver_id, unsigned short int score_driver,  int ride_id);
+void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers);
 void free_cities_catalog (Catalog_Cities * catalog_cities);
 unsigned int get_num_rides_city (Catalog_Cities * catalog_cities, char * city);
 double get_total_gasto_city (Catalog_Cities* catalog_cities, char * city);

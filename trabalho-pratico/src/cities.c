@@ -103,66 +103,96 @@ Catalog_Cities * cities_catalog () {
  * @param index_array_rides índice na qual se pode encontrar a ride no array das rides
  */
 
-void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, int index_array_rides) {
+void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers) {
 
+    int ride_id;
+    char* city_to_check;
+    char car_class;
+    double total_gasto_por_ride = 0;
+    double total_gasto_sem_tips = 0;
+    double ride_tip = 0;
+    int driver_id;
+    unsigned short int ride_distance = 0;
+    float ride_score_driver;
+     
     // índice onde está o driver cujo id é "driver_id" no array dos drivers
-    int array_driver_index = driver_id -1;
-    
-    // A cidade ainda não se encontra na hashtable
-    if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
+    int array_driver_index;
 
-        // Copia-se o valor da chave (string cidade) e inicializam-se os valores total_gasto e num_rides;
-        char* key = strdup (city_to_check);
-        City* city = malloc (sizeof (City));
-        city->total_gasto = 0;
-        city->total_gasto += total_gasto_por_ride;
-        city->num_rides = 1;
+    unsigned int array_rides_length = get_array_rides_length (catalog_rides);
+    uint array_drives_length = get_array_drivers_size (catalog_drivers);
+
+    for (uint i = 0; i < array_rides_length; i++) {
         
-        //inicializa o array de avaliações para esta nova cidade
-        city->array_avaliacao = malloc (size_drivers * sizeof(Avaliacao_media_driver));
-        for (uint i = 0; i < size_drivers; i++) {
-            city->array_avaliacao[i].num_rides = 0;
-            city->array_avaliacao[i].score_driver = 0;
-            city->array_avaliacao[i].id_driver = 0;
+        ride_id = get_ride_id (catalog_rides,i);
+        if (ride_id != -1) {
+            
+            driver_id = get_ride_driver (catalog_rides,i);
+            array_driver_index = driver_id - 1;
 
+            ride_distance = get_ride_distance (catalog_rides,i);
+            car_class = get_driver_carclass(catalog_drivers, array_driver_index);
+            city_to_check = get_ride_city (catalog_rides, i);
+            ride_tip = get_ride_tip (catalog_rides,i);
+            total_gasto_por_ride = calcula_total_gasto (car_class,ride_distance,ride_tip);
+            total_gasto_sem_tips = total_gasto_por_ride - ride_tip;
+            ride_score_driver = get_score_driver_ride (catalog_rides,i);  
+
+                if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
+
+                // Copia-se o valor da chave (string cidade) e inicializam-se os valores total_gasto e num_rides;
+                char* key = strdup (city_to_check);
+                City* city = malloc (sizeof (City));
+                city->total_gasto = 0;
+                city->total_gasto += total_gasto_sem_tips;
+                city->num_rides = 1;
+                
+                //inicializa o array de avaliações para esta nova cidade
+                city->array_avaliacao = malloc (array_drives_length * sizeof(Avaliacao_media_driver));
+                for (uint i = 0; i < array_drives_length; i++) {
+                    city->array_avaliacao[i].num_rides = 0;
+                    city->array_avaliacao[i].score_driver = 0;
+                    city->array_avaliacao[i].id_driver = 0;
+
+                }
+                //Preenche o campo do 1º user desta cidade
+                city->array_avaliacao[array_driver_index].id_driver = driver_id;
+                city->array_avaliacao[array_driver_index].score_driver = ride_score_driver;
+                city->array_avaliacao[array_driver_index].num_rides = 1;
+                city->array_avaliacao_length = array_drives_length;
+
+                // inicializa o array de rides para a nova cidade e preenche com o 1º id
+                city->array_rides_city_length = 0;
+                city->array_rides_city = malloc (100 *sizeof(uint));
+                city->array_rides_city[city->array_rides_city_length] = i;
+                city->array_rides_city_length ++;
+
+                // insere a nova struct cidade na hashtable
+                g_hash_table_insert (catalog_cities->cities_hash, key, city); 
+            }
+
+            // A cidade já se encontra na hashtable
+            else {
+
+                // Procura a cidade na hashtable e incrementa os valores num_rides e total_gasto
+                City *city = g_hash_table_lookup (catalog_cities->cities_hash,city_to_check);
+                city->num_rides++;
+                city->total_gasto += total_gasto_sem_tips;
+                
+                // Preenche o array das avaliações médias para o driver encontrado
+                city->array_avaliacao[array_driver_index].id_driver = driver_id; 
+                city->array_avaliacao[array_driver_index].score_driver += ride_score_driver;
+                city->array_avaliacao[array_driver_index].num_rides ++;
+                
+                // Preenche o array dos ids das rides para o driver encontrado
+                city->array_rides_city[city->array_rides_city_length] = i;
+                city->array_rides_city_length++;
+                if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
+            // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
+            }    
         }
-        //Preenche o campo do 1º user desta cidade
-        city->array_avaliacao[array_driver_index].id_driver = driver_id;
-        city->array_avaliacao[array_driver_index].score_driver = score_driver;
-        city->array_avaliacao[array_driver_index].num_rides = 1;
-        city->array_avaliacao_length = size_drivers;
-
-        // inicializa o array de rides para a nova cidade e preenche com o 1º id
-        city->array_rides_city_length = 0;
-        city->array_rides_city = malloc (100 *sizeof(uint));
-        city->array_rides_city[city->array_rides_city_length] = index_array_rides;
-        city->array_rides_city_length ++;
-
-        // insere a nova struct cidade na hashtable
-        g_hash_table_insert (catalog_cities->cities_hash, key, city); 
     }
-
-    // A cidade já se encontra na hashtable
-    else {
-
-        // Procura a cidade na hashtable e incrementa os valores num_rides e total_gasto
-        City *city = g_hash_table_lookup (catalog_cities->cities_hash,city_to_check);
-        city->num_rides++;
-        city->total_gasto += total_gasto_por_ride;
-        
-        // Preenche o array das avaliações médias para o driver encontrado
-        city->array_avaliacao[array_driver_index].id_driver = driver_id; 
-        city->array_avaliacao[array_driver_index].score_driver += score_driver;
-        city->array_avaliacao[array_driver_index].num_rides ++;
-        
-        // Preenche o array dos ids das rides para o driver encontrado
-        city->array_rides_city[city->array_rides_city_length] = index_array_rides;
-        city->array_rides_city_length++;
-        if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
-       // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
-    }    
 }
-
+ 
 
 /**
  * @brief Liberta a memória associada a cada cidade (value) da hashtable
