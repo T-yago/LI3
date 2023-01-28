@@ -1,6 +1,30 @@
 #include <stdio.h>
+#define DATE "09/10/2022"
 
 #include "../includes/dates.h"
+
+
+short int calcula_idade(char * birthdate) {
+  short int birth_year, birth_month, birth_day;
+  short int year, month, day;
+  sscanf(birthdate, "%hd/%hd/%hd", &birth_day, &birth_month, &birth_year);
+  sscanf(DATE, "%hd/%hd/%hd", &day, &month, &year);
+
+  if (month > birth_month || (month == birth_month && day >= birth_day)) {
+    return year - birth_year;
+  } else {
+    return year - birth_year - 1;
+  }
+}
+
+/**
+ * @brief Converte uma string contendo uma data válida "XX/XX/XX" num unsigned short int
+ * 
+ * @param date string com a data a converter
+ * @return número de dias que passaram desde 2000 até essa data se for válida
+ * @return 65535 caso a data seja inválida
+ * @return 0 se a data a tentar converter seja antes de 2000
+ */
 
 unsigned short int convert_to_day(char * date) {
   unsigned short int day;
@@ -27,6 +51,12 @@ unsigned short int convert_to_day(char * date) {
   return total_days;
 }
 
+/**
+ * @brief Converte uma data de unsigned short int para string 
+ * 
+ * @param days data convertida em dias
+ * @return data em formato de string
+ */
 char* convert_to_date(unsigned short int days) {
   int day = 1;
   int month = 1;
@@ -80,20 +110,3 @@ char* convert_to_date(unsigned short int days) {
   return buffer;
 }
 
-/*
-char * dataToChar (unsigned short int data) {
-    int i;
-    for (i=1;data > 365) {
-        if (i % 4 == 0) {
-            data -= 366;
-        }
-        else {
-            data -= 365;
-        }
-    }
-    for (i=0; data >31) {
-
-
-    }
-}
-*/

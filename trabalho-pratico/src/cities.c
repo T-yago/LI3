@@ -6,25 +6,83 @@
 #include <glib.h>
 #include "../includes/cities.h"
 
-
+/**
+ * @brief Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * 
+ */
 struct catalog_cities {
+        /**
+     * @brief Hashtable das cidades
+     * 
+     */
     GHashTable * cities_hash;
 };
 
+/**
+ * @brief Struct que constitui o array a ser ordenado por avaliações médias e ids 
+ */
 struct avaliacao_media_driver{
+    /**
+     * @brief id do driver
+     * 
+     */
     uint id_driver;
+    /**
+     * @brief avaliação (total) do driver naquela cidade
+     * 
+     */
     unsigned short int score_driver;
+    /**
+     * @brief número de rides efetuadas por aquele driver naquela cidade
+     * 
+     */
     unsigned short int num_rides;
 };
 
+
+/**
+ * @brief Struct que corresponde ao valor para cada chave da hashtable (cidade)
+ * 
+ */
 struct city {
+    /**
+     * @brief total gasto na cidade
+     * 
+     */
     double total_gasto;
+    /**
+     * @brief número de rides feitas na cidade
+     * 
+     */
     unsigned int num_rides;
-    unsigned int* array_rides_city; //array que contém os ids das rides feitas nessa cidade
+    /**
+     * @brief array que contém os ids das rides feitas nessa cidade
+     * 
+     */
+    unsigned int* array_rides_city;
+    /**
+     * @brief tamanho do array dos ids das rides por cidade
+     * 
+     */
     unsigned int array_rides_city_length;
+    /**
+     * @brief array de structs Aval_média ordenado por avaliação média e id
+     * 
+     */
     Avaliacao_media_driver * array_avaliacao;
+    /**
+     * @brief tamanho do array de Aval_média
+     * 
+     */
     unsigned int array_avaliacao_length;
 };
+
+
+/**
+ * @brief Inicializa o catálogo das cidades
+ * 
+ * @return apontador para o catálogo
+ */
 
 Catalog_Cities * cities_catalog () {
     GHashTable * cities_hash = g_hash_table_new (g_str_hash, g_str_equal);
@@ -33,14 +91,27 @@ Catalog_Cities * cities_catalog () {
     return catalog_cities;
 }
 
-// função que é chamada aquando da primeira leitura das rides e que insere a city (já preenchida) na sua hashtable
+/**
+ * @brief Insere para cada ride válida e que insere a struct city (já preenchida) na sua hashtable
+ * 
+ * @param catalog_cities Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * @param city_to_check Cidade na qual queremos preencher (key)
+ * @param total_gasto_por_ride Total gasto na ride
+ * @param size_drivers Tamanho do array dos drivers
+ * @param driver_id Id do driver que efetuou a ride
+ * @param score_driver Avaliação do driver para aquela ride
+ * @param index_array_rides índice na qual se pode encontrar a ride no array das rides
+ */
+
 void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check, double total_gasto_por_ride, uint size_drivers, uint driver_id, unsigned short int score_driver, int index_array_rides) {
 
     // índice onde está o driver cujo id é "driver_id" no array dos drivers
     int array_driver_index = driver_id -1;
     
-    // A cidade ainda não se encontrar na hashtable
+    // A cidade ainda não se encontra na hashtable
     if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
+
+        // Copia-se o valor da chave (string cidade) e inicializam-se os valores total_gasto e num_rides;
         char* key = strdup (city_to_check);
         City* city = malloc (sizeof (City));
         city->total_gasto = 0;
@@ -73,21 +144,33 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, char * city_to_check,
 
     // A cidade já se encontra na hashtable
     else {
+
+        // Procura a cidade na hashtable e incrementa os valores num_rides e total_gasto
         City *city = g_hash_table_lookup (catalog_cities->cities_hash,city_to_check);
         city->num_rides++;
         city->total_gasto += total_gasto_por_ride;
         
+        // Preenche o array das avaliações médias para o driver encontrado
         city->array_avaliacao[array_driver_index].id_driver = driver_id; 
         city->array_avaliacao[array_driver_index].score_driver += score_driver;
         city->array_avaliacao[array_driver_index].num_rides ++;
         
-
+        // Preenche o array dos ids das rides para o driver encontrado
         city->array_rides_city[city->array_rides_city_length] = index_array_rides;
         city->array_rides_city_length++;
         if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
        // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
     }    
 }
+
+
+/**
+ * @brief Liberta a memória associada a cada cidade (value) da hashtable
+ * 
+ * @param key chave (string cidade)
+ * @param value struct city
+ * @param user_data (não utilizado)
+ */
 
 void free_city_data(gpointer key, gpointer value, gpointer user_data) {
   City *city = (City *)value;
@@ -98,6 +181,11 @@ void free_city_data(gpointer key, gpointer value, gpointer user_data) {
   (void)(user_data); /* unused */   // flag que diz ao compilador para ignorar a não utiliação de uma variável.
 }
 
+/**
+ * @brief Liberta toda a memória associada ao catálogo das cidades
+ * 
+ * @param catalog_cities Catálogo das cidades, que contém a referência para a hashtable das cidades
+ */
 
 void free_cities_catalog (Catalog_Cities * catalog_cities) {
     g_hash_table_foreach(catalog_cities->cities_hash, (GHFunc)free_city_data, NULL);
@@ -105,16 +193,41 @@ void free_cities_catalog (Catalog_Cities * catalog_cities) {
     free (catalog_cities);
 }
 
+/**
+ * @brief Devolve o número de rides feitas por um driver na cidade
+ * 
+ * @param catalog_cities  Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * @param city Cidade na qual queremos procurar (key)
+ * @return Nnúmero de rides feitas por um driver na cidade 
+ */
 
 uint get_num_rides_city (Catalog_Cities * catalog_cities, char * city) {
     City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
      return aux->num_rides;
 }
 
+
+/**
+ * @brief Devolve total gasto por um driver na cidade
+ * 
+ * @param catalog_cities Catálogo das cidades, que contém a referência para a hashtable das cidades 
+ * @param city Cidade na qual queremos procurar (key)
+ * @return double 
+ */
+
 double get_total_gasto_city (Catalog_Cities* catalog_cities, char * city) {
     City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
     return aux->total_gasto;
 }
+
+/**
+ * @brief Verifica se uma string cidade é uma chave da hashtable das cidades
+ * 
+ * @param catalog_cities  Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * @param city Cidade na qual queremos procurar (key)
+ * @return true Se a cidade for uma chave válida
+ * @return false Se não for
+ */
 
 bool is_in_hash_cities (Catalog_Cities * catalog_cities, char* city) {
     City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
@@ -122,6 +235,16 @@ bool is_in_hash_cities (Catalog_Cities * catalog_cities, char* city) {
     else return true;
 }
 
+/**
+ * @brief Calcula a distância média percorrida numa cidade entre duas datas
+ * 
+ * @param catalog_cities  Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * @param catalog_rides Catálogo das rides 
+ * @param city Cidade na qual queremos procurar (chave)
+ * @param dateInf Data limite inferior
+ * @param dateSup Data limite superior
+ * @return distância média percorrida numa cidade entre duas datas 
+ */
 
 double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* catalog_rides,char * city, unsigned short int dateInf, unsigned short int dateSup) {
       unsigned int cont=0;

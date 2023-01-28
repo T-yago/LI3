@@ -3,8 +3,9 @@
 
 #include <glib.h>
 #include <stdbool.h>
+#include "../includes/drivers.h"
 
-typedef struct users Users;
+typedef struct user User;
 typedef struct  catalog_users Catalog_Users;
 
 void free_users_catalog (Catalog_Users * catalog_users);
@@ -13,14 +14,8 @@ uint get_hash_size_users (Catalog_Users * catalog_users);
 
 
 void initHash_users(Catalog_Users * catalog_users);
-void incUserNumeroViagens(Catalog_Users * catalog_users, char * id);
-void avaliacaoTotalUser(Catalog_Users * catalog_users, char * id, short int r);
-void totalDistanceUser(Catalog_Users * catalog_users, char * id, int r);
-void avaliacaoMediaUser(Catalog_Users * catalog_users, char * id, double r);
-void dateUser(Catalog_Users * catalog_users, char * id, unsigned short int r);
-void totalGastoUser(Catalog_Users * catalog_users, char * id, double tg);
-
-
+void update_aval_medias_users (Catalog_Users* catalog_users);
+void fill_users_hash (Catalog_Users* catalog_users, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers);
 //------------------------------------ getters ---------------------------------------------------//
 
 gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);
@@ -31,9 +26,8 @@ char * getNameUser(Catalog_Users * catalog_users, char * id);
 bool getAccountStatusUser(Catalog_Users * catalog_users, char * id);
 short int get_age_user(Catalog_Users * users_hash, char* id);
 char  getGenderUser(Catalog_Users * catalog_users, char * id);
-short int  getAvaliacaoTotalUser(Catalog_Users * catalog_users, char * id);
+double  get_aval_media_user(Catalog_Users * catalog_users, char * id);
 short int  getNviagensUser(Catalog_Users * catalog_users, char * id);
-double getAvaliacaoMediaUser(Catalog_Users * catalog_users, char * id);
 double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
 unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key);
 

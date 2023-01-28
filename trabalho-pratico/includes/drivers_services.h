@@ -2,6 +2,9 @@
 #define DRIVERS_SERVICES_H
 
 #include "../includes/drivers.h"
+#include <stdio.h>
+#include <math.h>
+
 
 typedef struct driver_aval_date Driver_Aval_Date;
 void top_N_drivers (Catalog_Drivers * catalog_drivers);

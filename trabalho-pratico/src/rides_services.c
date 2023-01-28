@@ -2,6 +2,146 @@
 #include <stdio.h>
 
 
+struct ride_ages
+{
+  int id_driver;
+  char *id_user;
+  unsigned short int data_creation_user; // as datas de criação são convertidas para dias para se poderem comparar
+  unsigned short int data_creation_driver;
+  unsigned int id_ride;
+};
+
+
+ 
+int compare_rides_ages(const void *a, const void *b)
+{
+  const Ride_Ages *ride1 = *(Ride_Ages **)a;
+  const Ride_Ages *ride2 = *(Ride_Ages **)b;
+
+  if (ride1->data_creation_driver < ride2->data_creation_driver) return -1;
+
+  else if (ride1->data_creation_driver > ride2->data_creation_driver) return 1;
+
+  else 
+  {
+    if (ride1->data_creation_user > ride2->data_creation_user) return 1;
+    
+    else if (ride1->data_creation_user < ride2->data_creation_user) return -1;
+    
+    else return ride1->id_ride - ride2->id_ride;
+  }
+  return 0;
+}
+
+
+void insert_arrays_genders(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, Catalog_Rides *catalog_rides)
+{
+    uint size = get_array_rides_length (catalog_rides);
+    
+    char gender_user;
+    char gender_driver;
+    char* user;
+    int driver; 
+            
+    Ride_Ages** array_ages_M = malloc(100 * sizeof(Ride_Ages *));
+    Ride_Ages** array_ages_F = malloc (100 * sizeof (Ride_Ages*));
+    uint array_ages_M_length = 0;
+    uint array_ages_F_length = 0;
+
+    for (uint i = 0; i < size; i++) {
+        driver = get_ride_driver (catalog_rides,i);
+        user = get_ride_user (catalog_rides,i);
+        gender_driver = get_driver_gender (catalog_drivers,driver-1);
+        gender_user = getGenderUser (catalog_users, user);
+
+        if (gender_driver == gender_user) {
+            
+            Ride_Ages *ride = malloc(sizeof(Ride_Ages));
+            ride->id_driver = driver-1;
+            ride->data_creation_driver = get_data_creation_days_driver(catalog_drivers, driver - 1);
+            ride->data_creation_user = get_data_creation_days_user(catalog_users, user);
+            ride->id_user = strdup(user);
+            ride->id_ride = i;
+        
+            if (gender_driver == 'M')
+            { 
+            array_ages_M[array_ages_M_length] = ride;
+            array_ages_M_length++;
+            if (array_ages_M_length % 100 == 0)
+                array_ages_M = realloc(array_ages_M, sizeof(Ride_Ages *) * (array_ages_M_length + 100));
+            }
+            else
+            {
+            array_ages_F[array_ages_F_length] = ride;
+            array_ages_F_length++;
+            if (array_ages_F_length % 100 == 0)
+                array_ages_F = realloc(array_ages_F, sizeof(Ride_Ages *) * (array_ages_F_length + 100));
+            }
+        }
+
+    }
+        
+    set_arrays_genders (catalog_rides, array_ages_M, array_ages_M_length, array_ages_F, array_ages_F_length);
+}
+  
+
+
+
+
+void sort_array_genders(Catalog_Rides *catalog_rides)
+{
+  Ride_Ages **aux = (Ride_Ages**) get_array_genders_F (catalog_rides);
+  uint length = get_array_genders_F_length (catalog_rides);
+  qsort((void *)aux, length, sizeof(Ride_Ages *), compare_rides_ages);
+
+  aux = (Ride_Ages**) get_array_genders_M (catalog_rides);
+  length = get_array_genders_M_length (catalog_rides);
+  qsort((void *)aux, length, sizeof(Ride_Ages *), compare_rides_ages);
+}
+
+unsigned int *check_gender_in_rides(Catalog_Rides *catalog_rides, char gender, unsigned short int age_in_days)
+{
+
+  Ride_Ages** array_ages_F = (Ride_Ages**) get_array_genders_F (catalog_rides);
+  Ride_Ages** array_ages_M = (Ride_Ages**) get_array_genders_M (catalog_rides);
+  uint array_ages_F_length = get_array_genders_F_length (catalog_rides);
+  uint array_ages_M_length = get_array_genders_M_length (catalog_rides);
+
+  unsigned int *array_ids = malloc(10 * sizeof(unsigned int));
+  unsigned int cont = 0;
+  if (gender == 'M')
+  {
+    for (unsigned int i = 0; i <array_ages_M_length; i++)
+    {
+      Ride_Ages *ride =array_ages_M[i];
+      if (ride->data_creation_driver <= age_in_days && ride->data_creation_user <= age_in_days)
+      {
+        array_ids[cont] = ride->id_ride;
+        cont++;
+        if (cont % 10 == 0)
+          array_ids = realloc(array_ids, sizeof(unsigned int) * (cont + 10));
+      }
+    }
+  }
+  else
+  {
+    for (unsigned int i = 0; i <array_ages_F_length; i++)
+    {
+      Ride_Ages *ride =array_ages_F[i];
+      if (ride->data_creation_driver <= age_in_days && ride->data_creation_user <= age_in_days)
+      {
+        array_ids[cont] = ride->id_ride;
+        cont++;
+        if (cont % 10 == 0)
+          array_ids = realloc(array_ids, sizeof(unsigned int) * (cont + 10));
+      }
+    }
+  }
+  array_ids[cont] = 0; // O último elemento é zero para ser possível iterar sem saber o tamanho
+  return array_ids;
+}
+
+
 // Guardar data ambos em string e int já que é consultada mais que uma vez
 struct dist_array
 {

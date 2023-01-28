@@ -10,13 +10,14 @@
 #include "../includes/parser.h"
 #include "../includes/query1.h"
 #include "../includes/dates.h"
+#include "../includes/drivers.h"
 
 struct catalog_users {
   GHashTable * hash_users;
   User_Distance_Data* top_N_users;
 };
 
-struct users {
+struct user {
   char * username;
   char * name;
   char gender;
@@ -28,7 +29,7 @@ struct users {
   bool account_status;
   double total_gasto;
   unsigned short int numero_viagens_user;
-  unsigned short int avaliacao_total_user;
+  double avaliacao_media_user;
 };
 
 
@@ -44,13 +45,13 @@ int is_valid_user (char** tokens) {
   return 0;
 }
 
-Users* create_user (char** tokens, void* catalog) {
+User* create_user (char** tokens, void* catalog) {
   
   if (is_valid_user (tokens)== -1) return NULL;
   else{
 
 
-  Users* user = malloc(sizeof(Users));
+  User* user = malloc(sizeof(User));
 
   // se algum outro campo for inválido, o status é modificado
   user->username = strdup (tokens[0]);
@@ -86,20 +87,81 @@ return catalog_users;
 
 
 static void foreach_init(gpointer key, gpointer value, gpointer user_data) {
-    Users * u = (Users *)value;
+    User * u = (User*)value;
     u -> date = 0;
     u -> distance = 0;
     u -> total_gasto = 0;
     u -> numero_viagens_user = 0;
-    u -> avaliacao_total_user = 0;
+    u -> avaliacao_media_user = 0;
   (void) key;/*unused*/
   (void) user_data;/*unused*/
 }
 
-void initHash_users(Catalog_Users * hash_users) {
-  g_hash_table_foreach(hash_users->hash_users, (GHFunc)foreach_init, NULL);
+void initHash_users(Catalog_Users * catalog_users) {
+  g_hash_table_foreach(catalog_users->hash_users, (GHFunc)foreach_init, NULL);
 }
 
+void fill_users_hash (Catalog_Users* catalog_users, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers) {
+
+  double total_gasto = 0;
+  int ride_id;
+  int driver;
+  unsigned short int ride_distance = 0;
+  char car_class;
+  double ride_tip = 0;
+  char* user;
+  unsigned short int ride_date;
+  User* u;
+  float ride_score_user;
+
+
+
+  unsigned int array_rides_length = get_array_rides_length (catalog_rides);
+  for (uint i=0; i < array_rides_length; i++) {
+    
+    ride_id = get_ride_id (catalog_rides,i);
+    if (ride_id != -1) {
+      
+      driver = get_ride_driver (catalog_rides,i);
+      car_class = get_driver_carclass(catalog_drivers, driver-1);
+      ride_distance = get_ride_distance (catalog_rides,i);
+      ride_tip = get_ride_tip (catalog_rides,i);
+      total_gasto = calcula_total_gasto (car_class,ride_distance,ride_tip);
+      user = get_ride_user (catalog_rides,i);
+      ride_score_user = get_score_user_ride (catalog_rides, i);
+      ride_date = get_ride_date (catalog_rides,i);
+
+      
+      u = g_hash_table_lookup (catalog_users->hash_users,user);
+      u -> total_gasto += total_gasto;
+      u -> avaliacao_media_user += ride_score_user;
+      u -> numero_viagens_user++;
+      u -> distance += ride_distance;
+      if (ride_date > u -> date) u->date = ride_date;
+
+   }
+  }
+}
+
+static void update_aval_media_user (gpointer key, gpointer value, gpointer user_data) {
+    
+    User * u = (User*)value;
+    double r = 0;
+    double aval_media = u -> avaliacao_media_user;
+    unsigned short int N_viagens = u -> numero_viagens_user;
+
+    if (N_viagens != 0) {
+      r = (float) aval_media / (float) N_viagens;
+      u -> avaliacao_media_user = r;
+    }
+  (void) key;/*unused*/
+  (void) user_data;/*unused*/
+}
+
+
+void update_aval_medias_users (Catalog_Users* catalog_users) {
+  g_hash_table_foreach (catalog_users->hash_users, (GHFunc)update_aval_media_user, NULL);
+}
 
 
 //--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
@@ -114,7 +176,7 @@ void* get_top_N_users(Catalog_Users* catalog_users) {
     
 
 unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key) {
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(catalog_users->hash_users, key);
   return u->account_creation;
 }    
@@ -131,27 +193,27 @@ gpointer * get_hash_keys_as_array_users (Catalog_Users * users_hash, uint size) 
 
 
 char * getUsernameUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return strdup(u -> username);
 }
 
 
 int getDistanceUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> distance;
 }
 
 
 unsigned short int getDateUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> date;
 }
 
 short int get_age_user(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return  u -> age;
 }
@@ -159,21 +221,21 @@ short int get_age_user(Catalog_Users * users_hash, char* id){
 
 
 char * getNameUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return strdup(u -> name);
 }
 
 
 char  getGenderUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> gender;
 }
 
 
 short int  getNviagensUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> numero_viagens_user;
 }
@@ -181,19 +243,19 @@ short int  getNviagensUser(Catalog_Users * users_hash, char* id){
 
 
 double getTotalGastoUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
   return u -> total_gasto;
 }
 
-short int  getAvaliacaoTotalUser(Catalog_Users * users_hash, char* id){
-  Users * u;
+double get_aval_media_user(Catalog_Users * users_hash, char* id){
+  User * u;
   u = g_hash_table_lookup(users_hash->hash_users, id);
-  return u -> avaliacao_total_user;
+  return u -> avaliacao_media_user;
 }
 
 bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
-  Users * u; // incluir opcao para o caso de nao haver na hash
+  User * u; // incluir opcao para o caso de nao haver na hash
   u = g_hash_table_lookup(users_hash->hash_users, id);
   if (u== NULL) return false;
   return u -> account_status;
@@ -203,43 +265,11 @@ bool getAccountStatusUser(Catalog_Users * users_hash, char* id){
 //--------------------------Funções que interagem com o catálogo dos users-----------------------------------------------------------------------------------------------------------------
 
 
-void incUserNumeroViagens(Catalog_Users * users_hash, char* id){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  u -> numero_viagens_user = u-> numero_viagens_user + 1;
-}
-
-
-void avaliacaoTotalUser(Catalog_Users * users_hash, char* id, short int r){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  u -> avaliacao_total_user = u-> avaliacao_total_user + r;
-}
-
-
-void totalDistanceUser(Catalog_Users * users_hash, char* id, int r){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  u -> distance = u-> distance + r;
-}
-
-void dateUser(Catalog_Users * users_hash, char* id, unsigned short int r){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  if (r > u -> date)  u -> date = r;
-}
-
-
-void totalGastoUser(Catalog_Users * users_hash, char* id, double tg){
-  Users * u;
-  u = g_hash_table_lookup(users_hash->hash_users, id);
-  u->total_gasto =u-> total_gasto + tg;
-}
 
 //----------------------------------------------Função free--------------------------------------------------//
 
 void free_user_data(gpointer key, gpointer value, gpointer user_data) {
-  Users *u = (Users *)value;
+  User *u = (User *)value;
   free (u->username);
   free (u->name);
   //free (u->birth_date);

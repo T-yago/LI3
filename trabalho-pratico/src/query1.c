@@ -1,46 +1,23 @@
-#include <stdio.h>
-
-#include <string.h>
-
-#include <stdbool.h>
-
-#include <ctype.h>
-
-#include <glib.h>
-
-#include "../includes/drivers.h"
-
-#include "../includes/users.h"
-
 #include "../includes/query1.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <glib.h>
+#include  "../includes/drivers.h"
+#include  "../includes/users.h"
 
-#define DATE "09/10/2022"
 
-
-double calcula_total_gasto(char* car_class, unsigned short int distance, double tip) {
+double calcula_total_gasto(char car_class, unsigned short int distance, double tip) {
   double total = 0.000;
-  if (car_class[0] =='b' || car_class[0] == 'B') {
+  if (car_class =='b' || car_class == 'B') {
     total = total + 3.250 + (0.620 * distance) + tip;
-  } else if (car_class[0] == 'g'|| car_class[0] == 'G') {
+  } else if (car_class == 'g'|| car_class == 'G') {
     total = total + 4.000 + (0.790 * distance) + tip;
-  } else if (car_class[0] == 'p' || car_class [0] == 'P') {
+  } else if (car_class == 'p' || car_class  == 'P') {
     total = total + 5.200 + (0.94 * distance) + tip;
     }
   return total;
-}
-
-
-short int calcula_idade(char * birthdate) {
-  short int birth_year, birth_month, birth_day;
-  short int year, month, day;
-  sscanf(birthdate, "%hd/%hd/%hd", &birth_day, &birth_month, &birth_year);
-  sscanf(DATE, "%hd/%hd/%hd", &day, &month, &year);
-
-  if (month > birth_month || (month == birth_month && day >= birth_day)) {
-    return year - birth_year;
-  } else {
-    return year - birth_year - 1;
-  }
 }
 
 
@@ -79,7 +56,7 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
     FILE * output = fopen(buffer, "w");
     fclose(output);
   } else {
-    double avaliacao_media = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) getNviagensUser(catalog_users, id);
+    double avaliacao_media = get_aval_media_user (catalog_users, id);
 
     char * name = getNameUser(catalog_users, id);
     short int age = get_age_user(catalog_users,id);

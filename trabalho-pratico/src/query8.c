@@ -1,8 +1,7 @@
-#include <stdio.h>
+#include "../includes/query8.h"
 #define DATE_REFERENCE "09/10/2022"
 
-#include "../includes/rides.h"
-#include "../includes/dates.h"
+
 
 void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, int n) {
     

@@ -52,7 +52,7 @@ void queries_handler (char * pathfiles, char * input) {
   init_array_drivers(catalog_drivers);
   
   Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
-  init_array_genders (catalog_rides);
+  //init_array_genders (catalog_rides);
   
   Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);

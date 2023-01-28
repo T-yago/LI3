@@ -1,16 +1,30 @@
 #include "../includes/cities_services.h"
 
-
+/**
+ * @brief Catálogo das cidades, que contém a referência para a hashtable das cidades
+ * 
+ */
   struct catalog_cities {
       GHashTable * cities_hash;
   };
 
+
+
+/**
+ * @brief Struct que constitui o array a ser ordenado por avaliações médias e ids 
+ */
   struct avaliacao_media_driver{
-      uint id_driver;
+      uint id_driver; 
       unsigned short int score_driver;
       unsigned short int num_rides;
   };
 
+
+
+/**
+ * @brief Struct que corresponde ao valor para cada chave da hashtable (cidade)
+ * 
+ */
   struct city {
       double total_gasto;
       unsigned int num_rides;
@@ -22,7 +36,13 @@
 
 
 
-
+/**
+ * @brief Função de comparação para o array ordenado por avalições médias (decrescente) e IDs de drivers (decrescente)
+ * 
+ * @param a void pointer para um elemento do array a ser convertido para comparar
+ * @param b void pointer para um elemento do array a ser convertido para comparar
+ * @return int 
+ */
   int compare2(const void * a, const void * b) {
 
     Avaliacao_media_driver *ia = (Avaliacao_media_driver *) a;
@@ -42,6 +62,13 @@
   }
 
 
+/**
+ * @brief Compara o array de avaliações de uma cidade
+ * 
+ * @param key chave da hashtable -> string com o nome da cidade (não utilizado)
+ * @param value valor da hashtable -> struct city 
+ * @param user_data informação adicional (não utilizado)
+ */
   void sort_array_avaliacoes (gpointer key, gpointer value, gpointer user_data) {
     City* city = (City*) value;
     int size = city->array_avaliacao_length;
@@ -50,6 +77,12 @@
     (void) user_data;/*unused*/
   }
 
+
+/**
+ * @brief Ordena os array de todas as cidades precentes na hashtable das cidades
+ * 
+ * @param catalog_cities catálogo onde está contida a referência para a hashtable das cities
+ */
   void sort_arrays_avaliacoes_cities (Catalog_Cities * catalog_cities){
     g_hash_table_foreach (catalog_cities->cities_hash, (GHFunc)sort_array_avaliacoes, NULL);  
   }
@@ -66,6 +99,15 @@
   }
   */
 
+
+/**
+ * @brief Devolve o id do driver na posição index do array ordenado por aval_medias
+ * 
+ * @param catalog_cities catálogo onde está contida a referência para a hashtable das cities
+ * @param city_to_check cidade na qual queremos procurar (key)
+ * @param index índice a procurar no array ordenado dessa cidade
+ * @return uint id do driver na posição index do array ordenado por aval_medias
+ */
   uint get_id_driver_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index) {
     City *city = g_hash_table_lookup (catalog_cities->cities_hash, city_to_check);
     Avaliacao_media_driver * array = city -> array_avaliacao;  
@@ -74,6 +116,14 @@
   }
 
 
+/**
+ * @brief Devolve a avaliação média do driver na posição index do array ordenado por aval_medias
+ * 
+ * @param catalog_cities catálogo onde está contida a referência para a hashtable das cities
+ * @param city_to_check  cidade na qual queremos procurar (key)
+ * @param index índice a procurar no array ordenado dessa cidade
+ * @return avaliação média do driver na posição index do array ordenado por aval_medias 
+ */
   double get_aval_med_from_ordered_array (Catalog_Cities * catalog_cities, char * city_to_check, int index) {
     City *city = g_hash_table_lookup (catalog_cities->cities_hash, city_to_check);
     Avaliacao_media_driver * array = city -> array_avaliacao;   
