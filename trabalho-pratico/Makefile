@@ -28,11 +28,8 @@ tests/%.o: tests/%.c
 # $@ nome correspondente
 
 
-run:
-	./programa-principal
-
-#run-programa-principal: $(TARGET) 
-#	@./programa-principal $(arg1) $(arg2) 
+run-programa-principal: $(TARGET) 
+	@./programa-principal $(arg1) $(arg2) 
 
 
 run-programa-testes: $(TARGET) $(TARGET2) 
@@ -41,7 +38,6 @@ run-programa-testes: $(TARGET) $(TARGET2)
 #	--tool=massif --> ms_print <ficheiro> | less
 #	massif-visualizer massif.out.pid
 #	Para ver leaks:  --tool=memcheck --leak-check=yes
-
 
 
 clean:
