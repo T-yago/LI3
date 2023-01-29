@@ -19,11 +19,6 @@ struct user_distance_data{
    */
   int distance;
   /**
-   * @brief Nome do user
-   * 
-   */
-  char* name;
-  /**
    * @brief Data da última viagem percorrida pelo user
    * 
    */
@@ -73,8 +68,6 @@ void top_N_users (Catalog_Users* catalog_users) {
     (user_distance_data + i) -> id = getUsernameUser(catalog_users, keys[i]);
     (user_distance_data + i) -> distance = getDistanceUser(catalog_users, keys[i]);
     (user_distance_data + i) -> data = getDateUser(catalog_users, keys[i]);
-    (user_distance_data + i) -> name = getNameUser(catalog_users, keys[i]);
-
   }
   free (keys);
   qsort((void *) user_distance_data, size_hash, sizeof(User_Distance_Data), compare_users);
@@ -95,18 +88,6 @@ char * get_top_N_users_id (Catalog_Users* catalog_users,int index) {
   return strdup (aux.id);
 }
 
-/**
- * @brief Devolve o nome do user na posição index do array ordenado dos users
- * 
- * @param catalog_users Catálogo dos users
- * @param index Index no array ordenado dos users
- * @return Nome do user
- */
-char * get_top_N_users_name (Catalog_Users* catalog_users, int index) {
-  User_Distance_Data* top_n_users = (User_Distance_Data*) get_top_N_users(catalog_users);
-  User_Distance_Data aux = top_n_users[index];  
-  return strdup (aux.name);
-}
 
 /**
  * @brief Devolve a distância total percorrida por um user na posição index do array ordenado dos users
@@ -132,6 +113,5 @@ void free_users_services (Catalog_Users* catalog_users, unsigned int size) {
   for (uint i = 0; i < size; i++) {
     User_Distance_Data aux = top_N_users[i];
     free (aux.id);
-    free (aux.name);
   }
 }
