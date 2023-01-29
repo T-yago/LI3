@@ -41,7 +41,7 @@
  * 
  * @param a void pointer para um elemento do array a ser convertido para comparar
  * @param b void pointer para um elemento do array a ser convertido para comparar
- * @return int 
+ * @return escolha para ordenação 
  */
   int compare2(const void * a, const void * b) {
 

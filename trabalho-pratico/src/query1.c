@@ -7,7 +7,14 @@
 #include  "../includes/drivers.h"
 #include  "../includes/users.h"
 
-
+/**
+ * @brief Calcula o total gasto numa viagem
+ * 
+ * @param car_class Classe do carro 
+ * @param distance Distância perorrida
+ * @param tip Gorjeta dada pelo user
+ * @return total gasto numa viagem
+ */
 double calcula_total_gasto(char car_class, unsigned short int distance, double tip) {
   double total = 0.000;
   if (car_class =='b' || car_class == 'B') {
@@ -22,6 +29,13 @@ double calcula_total_gasto(char car_class, unsigned short int distance, double t
 
 
 
+/**
+ * @brief Devolve um driver 
+ * 
+ * @param index Driver pedido
+ * @param catalog_drivers Catálogo dos drivers
+ * @param n número do ficheiro de output a gerar
+ */
 
 void query1_driver (int index, Catalog_Drivers * catalog_drivers, int n) {
   char buffer[256];
@@ -49,6 +63,13 @@ void query1_driver (int index, Catalog_Drivers * catalog_drivers, int n) {
   }
 }
 
+/**
+ * @brief Devolve um driver 
+ * 
+ * @param  id id do user pedido
+ * @param catalog_users Catálogo dos users
+ * @param n Número do ficheiro de output a gerar
+ */
 void query1_user(char * id, Catalog_Users * catalog_users, int n) {
   char buffer[256];
   snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
@@ -71,6 +92,15 @@ void query1_user(char * id, Catalog_Users * catalog_users, int n) {
     free (name);
   }
 }
+
+/**
+ * @brief Chama a query1 para user ou para drivers dependendo do input
+ * 
+ * @param id id do user pedido
+ * @param catalog_users Catálogo dos users
+ * @param catalog_drivers Catálogo dos drivers
+ * @param n Número do ficheiro de output a gerar 
+ */
 
 void query1_main(char * id, Catalog_Users * catalog_users, Catalog_Drivers * catalog_drivers, int n) {
   //printf ("%d\n",n);

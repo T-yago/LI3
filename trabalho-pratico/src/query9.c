@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include "../includes/query9.h"
 
+/**
+ * @brief Listar as viagens nas quais o passageiro deu gorjeta, num intervalo de tempo
+ * 
+ * @param catalog_rides Catálogo das rides
+ * @param datea Data inferior a considerar
+ * @param dateb Data superior a considerar
+ * @param n Número do ficheiro de output a gerar
+ */
+
 void query9(Catalog_Rides* catalog_rides, char* datea, char* dateb, int n) {
 
     char buffer[256];

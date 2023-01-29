@@ -3,8 +3,7 @@
 #include <math.h>
 
 /**
- * @brief Itera sobre cada ride e faz fetch de informações que são depois enviadas para os outros módulos de forma a preenchê-los
- * 
+ * @brief Chama as funções que preenchem as estruturas auxiliares dos seus respetivos catálogos
  * @param catalog_users Catálogo dos users
  * @param catalog_drivers Catálogo dos drivers
  * @param catalog_rides Catálogo das rides
@@ -21,6 +20,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
     update_aval_medias_users (catalog_users);
     
     insert_arrays_genders (catalog_users,catalog_drivers,catalog_rides);
+    
     insert_array_dist(catalog_rides);
    
     sort_array_genders (catalog_rides);

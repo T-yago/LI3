@@ -3,7 +3,13 @@
 
 #include "../includes/dates.h"
 
-
+/**
+ * @brief Calcula a idade baseado numa string da data de nascimento
+ * 
+ * @param birthdate string da data de nascimento 
+ * @return idade em dias
+ * 
+ */
 short int calcula_idade(char * birthdate) {
   short int birth_year, birth_month, birth_day;
   short int year, month, day;

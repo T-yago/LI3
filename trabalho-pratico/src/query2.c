@@ -1,5 +1,12 @@
 #include "../includes/query2.h"
 
+/**
+ * @brief Lista os N condutores com maior avaliação médias
+ * 
+ * @param catalog_drivers Catálogo dos drivers
+ * @param info string com o número de drivers a apresentar
+ * @param n Número do ficheiro de output a gerar
+ */
 
 void query2(Catalog_Drivers * catalog_drivers, char * info, int n) {
   int numb = atoi(info);
