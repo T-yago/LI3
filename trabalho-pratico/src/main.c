@@ -14,12 +14,13 @@
 
 
 /**
- * @brief Função principal que comanda o programa
+ * @brief Função principal que comanda o programa-principal
  * 
  * @param argc número de argumentos do programa
  * @param argv argumentos em string 
  * @return 0 se funcionar corretamente 
  */
+//1ºarg = Dataset, 2ºarg = input
 int main(int argc, char ** argv) {
   if (argc == 3) {
     queries_handler(argv[1], argv[2]);

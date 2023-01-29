@@ -44,9 +44,16 @@
 
 #include "../includes/data.h"
 
+/**
+ * @brief Gere os catálogos e envia as suas referências para as queries e para além disso calcula os tempos das queries e armazena no array times_query
+ * 
+ * @param pathfiles String com o caminho dos ficheiros que são lidos
+ * @param input Ficheiro com input para as queries
+ * @param times_query array que armazena o tempo de execução de cada query
+ */
 void queries_handler_testes(char * pathfiles, char * input, double* times_query) {
   
-  // criação dos catálogos
+  //criação dos catálogos
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
   
@@ -59,11 +66,11 @@ void queries_handler_testes(char * pathfiles, char * input, double* times_query)
   Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
-  // criação das estruturas auxiliares para as queries
+  //criação das estruturas auxiliares para as queries
   top_N_drivers (catalog_drivers);  // talvez mudar de sítio
   top_N_users (catalog_users);
 
-  // lê o ficheiro de input das queries
+  //lê o ficheiro de input das queries
   FILE * file;
   char * info_1;
   char * info_2;
@@ -142,7 +149,7 @@ void queries_handler_testes(char * pathfiles, char * input, double* times_query)
     }
   } while (!feof(file));
  
-  // liberta a memória associada aos catálogos
+  //liberta a memória associada aos catálogos
   free (line);
   fclose (file);
   free_users_catalog (catalog_users);

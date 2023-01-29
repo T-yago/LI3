@@ -13,8 +13,15 @@
 #define SIZE_ARRAY 1024 
 
 
-//O primeiro é o caminho para o ficheiro com os inputs, no segundo argumento o caminho para a pasta com os valores de referencia e no 3 argumento o caminho para a pasta Resultados
-void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_reference_folder, char* path_to_results_folder, double* times_query){
+/**
+ * @brief Compara os valores de referência com os resultados obtidos e por fim imprime a percentagem de ficheiros idênticos e o tempo de execução por Query
+ * 
+ * @param path_to_input_file Caminho para o ficheiro input.txt
+ * @param path_to_reference_folder Caminho para a pasta com os valores de referência
+ * @param path_to_results_folder Caminho para a pasta com os resultados calculados pelo programa
+ * @param times_query Array com os tempos de cada query
+ */
+ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_reference_folder, char* path_to_results_folder, double* times_query){
 
     uint identical_files_query[9] = {0};
     uint total_files_query[9] = {0};
@@ -35,9 +42,9 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
                 n_command++;
             }
         }
-        fclose(input_file);
     }
-    FILE* input_file2 = fopen(path_to_input_file, "r");
+    
+    rewind(input_file);
 
     for (uint i = 1; i <= n_command; i++) {
         char reference_path[SIZE_ARRAY];
@@ -54,7 +61,7 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
             continue;
         }
 
-        if (fgets(input_line, SIZE_ARRAY, input_file2) != NULL){
+        if (fgets(input_line, SIZE_ARRAY, input_file) != NULL){
             numb_query = input_line[0] - '0' - 1;
             total_files_query[numb_query]++;
         }
@@ -64,7 +71,7 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
         char results_line[SIZE_ARRAY];
         total_lines = 0;
         total_identical_lines = 0;
-
+        
 
         while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file)) {
             total_lines++;
@@ -86,7 +93,7 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
         fclose(results_file);
     }
     	
-    fclose(input_file2);
+    fclose(input_file);
 
     printf("\n");
     for (uint i = 0; i < 9; i++) {
@@ -94,5 +101,3 @@ void compare_outputs_and_print_times(char* path_to_input_file, char* path_to_ref
         printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.4fs\n", i+1, identical_file_percentage, times_query[i]);
     } 
 }
-
-

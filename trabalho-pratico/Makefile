@@ -28,21 +28,18 @@ tests/%.o: tests/%.c
 # $@ nome correspondente
 
 
-run:
-	./programa-principal
-
-#run-programa-principal: $(TARGET) 
-#	@./programa-principal $(arg1) $(arg2) 
+run-programa-principal: $(TARGET) 
+	@./programa-principal $(arg1) $(arg2) 
 
 
 run-programa-testes: $(TARGET) $(TARGET2) 
 	@/usr/bin/time -f "%M" ./programa-testes $(arg1) $(arg2) $(arg3)
-	@cowsay Done! 
+#	@cowsay Done! 
+
 #	@valgrind --tool=massif ./programa-testes $(arg1) $(arg2) $(arg3)
 #	--tool=massif --> ms_print <ficheiro> | less
 #	massif-visualizer massif.out.pid
 #	Para ver leaks:  --tool=memcheck --leak-check=yes
-
 
 
 clean:
