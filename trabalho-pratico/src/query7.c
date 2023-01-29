@@ -14,6 +14,15 @@ char* int_to_string(int x) {
   return str;
 }
 
+/**
+ * @brief Top N condutores numa determinada cidade
+ * 
+ * @param N Número de condutores a apresentar
+ * @param city Cidade em questão
+ * @param catalog_cities Catálogo das cidades
+ * @param catalog_drivers Catálogo dos drivers
+ * @param n Número do ficheiro de output a gerar
+ */
 void query7 (char * N, char * city, Catalog_Cities * catalog_cities, Catalog_Drivers * catalog_drivers, int n){
   int numb = atoi(N);
   

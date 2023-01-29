@@ -10,7 +10,13 @@
 
 // Parses a csv file using the provided function pointer to create objects from the data
 
-
+/**
+ * @brief Realiza o parsing de um ficheiro ".csv" e chama uma para cada linha uma função "create_fn" que cria uma estrutura
+ * 
+ * @param filename Ficheiro a fazer parsing
+ * @param create_fn Função que cria uma estrutura para cada linha parsed
+ * @param catalog Catálogo onde se adiciona a estrutura criada
+ */
 void parse_csv(const char* filename, create_fn create_fn, void* catalog) {
   FILE* file = fopen(filename, "r");
   if (!file) {

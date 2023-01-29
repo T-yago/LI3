@@ -32,7 +32,7 @@ struct driver_aval_date {
  * 
  * @param a posição arbitrária "a" do array a comparar
  * @param b posição arbitrária "b" do array a comparar
- * @return escolha para ordenaçãp
+ * @return escolha para ordenação
  */
 int compare(const void * a, const void * b) {
    Driver_Aval_Date *ia = *(Driver_Aval_Date**) a;

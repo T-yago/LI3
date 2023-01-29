@@ -95,12 +95,8 @@ Catalog_Cities * cities_catalog () {
  * @brief Insere para cada ride válida e que insere a struct city (já preenchida) na sua hashtable
  * 
  * @param catalog_cities Catálogo das cidades, que contém a referência para a hashtable das cidades
- * @param city_to_check Cidade na qual queremos preencher (key)
- * @param total_gasto_por_ride Total gasto na ride
- * @param size_drivers Tamanho do array dos drivers
- * @param driver_id Id do driver que efetuou a ride
- * @param score_driver Avaliação do driver para aquela ride
- * @param index_array_rides índice na qual se pode encontrar a ride no array das rides
+ * @param catalog_rides Catálogo das rides
+ * @param catalog_drivers Catálogo dos drivers
  */
 
 void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers) {

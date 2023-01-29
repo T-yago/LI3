@@ -6,7 +6,17 @@
 
 #include "../includes/query6.h"
 
-// quer-se a distancia media por cidade logo recorrer ao array que tem as rides apenas daquela cidade
+
+/**
+ * @brief Distância média percorrida, numa determinada cidade
+ * 
+ * @param city Cidade a considerar
+ * @param dateA Data inferior a considerar
+ * @param dateB Data superior a considerar
+ * @param catalog_cities Catálogo das cities
+ * @param catalog_rides Catálogo das rides
+ * @param n Número do ficheiro de output a gerar
+ */
 void query6 (char * city, char * dateA, char * dateB, Catalog_Cities* catalog_cities, Catalog_Rides * catalog_rides, int n) {
     char buffer[256];
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);

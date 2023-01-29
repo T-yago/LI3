@@ -42,6 +42,12 @@
 
 #include "../includes/data.h"
 
+/**
+ * @brief Gere os catálogos e envia as suas referências para as queries
+ * 
+ * @param pathfiles String com o caminho dos ficheiros que são lidos
+ * @param input Ficheiro com input para as queries
+ */
 void queries_handler (char * pathfiles, char * input) {
   
   // criação dos catálogos

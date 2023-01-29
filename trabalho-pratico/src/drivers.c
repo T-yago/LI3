@@ -204,7 +204,7 @@ void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers, in
  * @brief Devolve o array ordenado dos drivers
  * 
  * @param catalog_drivers Catálogo dos drivers
- * @return void pointer para o array ordenado dos drivers
+ * @return Void pointer para o array ordenado dos drivers
  */
 void* get_top_N_drivers(Catalog_Drivers* catalog_drivers) {
     return (void*) catalog_drivers->top_N_drivers;
@@ -214,7 +214,7 @@ void* get_top_N_drivers(Catalog_Drivers* catalog_drivers) {
  * @brief Devolve o tamanho do array ordenado dos drivers
  * 
  * @param catalog_drivers Catálogo dos drivers
- * @return tamanho do array ordenado dos drivers
+ * @return Tamanho do array ordenado dos drivers
  */
 int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
     return catalog_drivers->array_top_N_drivers_length;
@@ -265,6 +265,12 @@ void update_avaliacao_media_driver (Catalog_Drivers * catalog_drivers) {
   }
 }
 
+/**
+ * @brief Preenche o catálogo dos drivers com as informações calculadas pelas rides
+ * 
+ * @param catalog_drivers Catálogo dos drivers
+ * @param catalog_rides Catálogo das rides
+ */
 void fill_drivers_array (Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides) {
   
   double total_auferido = 0;
@@ -425,7 +431,7 @@ short int get_driver_age (Catalog_Drivers * catalog_drivers, int index){
 }
 
 /**
- * @brief Get the driver total auferido object
+ * @brief Devolve o total auferido do driver na posição index do array dos drivers
  * 
  * @param catalog_drivers Catálogo dos drivers
  * @param index Índice do array dos drivers
@@ -438,7 +444,7 @@ double get_driver_total_auferido (Catalog_Drivers * catalog_drivers, int index){
 }
 
 /**
- * @brief Get the driver carclass object
+ * @brief Devolve a classe do carro do driver na posição index do array dos drivers
  * 
  * @param catalog_drivers Catálogo dos drivers
  * @param index Índice do array dos drivers
@@ -453,7 +459,7 @@ char get_driver_carclass (Catalog_Drivers * catalog_drivers, int index){
 //--------------------------------------------Função free---------------------------------------------------------//
 
 /**
- * @brief 
+ * @brief Liberta a memória associada ao catálogo dos drivers
  * 
  * @param catalog_drivers Catálogo dos drivers
  */

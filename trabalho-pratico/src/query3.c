@@ -13,6 +13,13 @@
 #include "../includes/drivers.h"
 
 
+/**
+ * @brief Lista os N users com maior distância viajada
+ * 
+ * @param catalog_users Catálogo dos users
+ * @param info String com o número de users pedidos
+ * @param n Número do ficheiro de output a gerar
+ */
 void query3(Catalog_Users * catalog_users, char * info, int n) {
   int numb = atoi(info);
   char* id = NULL;

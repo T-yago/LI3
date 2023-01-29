@@ -1,6 +1,14 @@
 #include "../includes/query5.h"
 
 
+/**
+ * @brief Preço médio das viagens (sem considerar gorjetas) num dado intervalo de tempo
+ * @param dateA Data inferior a considerar
+ * @param dateB Data superior a considerar
+ * @param catalog_drivers Catálogo dos drivers
+ * @param catalog_rides Catálogo dos rides
+ * @param n Número do ficheiro de output a gerar
+ */
 void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Catalog_Rides * catalog_rides, int n) {
    unsigned short int date = 0; 
    double total_gasto_sem_tips = 0;

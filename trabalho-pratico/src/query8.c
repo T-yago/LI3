@@ -1,7 +1,17 @@
 #include "../includes/query8.h"
 #define DATE_REFERENCE "09/10/2022"
 
-
+/**
+ * @brief Listar todas as viagens nas quais o utilizador e o condutor são do género passado como pa-
+râmetro
+ * 
+ * @param gender Género a apresentar 
+ * @param age Idade
+ * @param catalog_rides Catálogo das rides
+ * @param catalog_users Catálogo dos users
+ * @param catalog_drivers Catálogo dos drivers
+ * @param n Número do ficheiro de output a gerar
+ */
 
 void query8 (char gender, int age, Catalog_Rides* catalog_rides, Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, int n) {
     

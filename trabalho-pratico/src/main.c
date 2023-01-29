@@ -1,8 +1,3 @@
-//usar static functions para ocultar funções
-//fazer a declaração da main na stack
-//No .h colocar apenas declaraçoes de structs e de funções
-//gcc main.c -Wall -o main `pkg-config --cflags --libs glib-2.0`
-
 #include <stdio.h>
 
 #include <stdlib.h>
@@ -18,7 +13,13 @@
 #include "../includes/queries_handler.h"
 
 
-
+/**
+ * @brief Função principal que comanda o programa
+ * 
+ * @param argc número de argumentos do programa
+ * @param argv argumentos em string 
+ * @return 0 se funcionar corretamente 
+ */
 int main(int argc, char ** argv) {
   if (argc == 3) {
     queries_handler(argv[1], argv[2]);
