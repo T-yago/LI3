@@ -5,14 +5,8 @@
 
 #include "../includes/drivers.h"
 #include "../includes/cities.h"
-#include "../includes/cities_services.h"
 #include "../includes/query7.h"
 
-char* int_to_string(int x) {
-  char* str = malloc(13);
-  snprintf(str, 13, "%012d", x);
-  return str;
-}
 
 /**
  * @brief Top N condutores numa determinada cidade
