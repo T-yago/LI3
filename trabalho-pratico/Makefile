@@ -33,7 +33,7 @@ run-programa-principal: $(TARGET)
 
 
 run-programa-testes: $(TARGET) $(TARGET2) 
-	@/usr/bin/time -f "%M" ./programa-testes $(arg1) $(arg2) $(arg3)
+	@valgrind /usr/bin/time -f "%M" ./programa-testes $(arg1) $(arg2) $(arg3)
 #	@cowsay Done! 
 
 #	@valgrind --tool=massif ./programa-testes $(arg1) $(arg2) $(arg3)
