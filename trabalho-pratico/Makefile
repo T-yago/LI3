@@ -36,16 +36,7 @@ run-programa-testes: $(TARGET) $(TARGET2)
 	@valgrind /usr/bin/time -f "%M" ./programa-testes $(arg1) $(arg2) $(arg3)
 #	@cowsay Done! 
 
-#	@valgrind --tool=massif ./programa-testes $(arg1) $(arg2) $(arg3)
-#	--tool=massif --> ms_print <ficheiro> | less
-#	massif-visualizer massif.out.pid
-#	Para ver leaks:  --tool=memcheck --leak-check=yes
 
 
 clean:
 	@rm -rf programa-principal programa-testes src/*.o tests/*.o Resultados 
-
-
-#IDEIAS:
-#No futuro talvez fazer um BUILDDIR
-#.PHONY: yh   Usa-se para dizer que yh não é um ficheiro
