@@ -27,6 +27,11 @@ struct catalog_users {
    * 
    */
   User_Distance_Data* top_N_users;
+  /**
+   * @brief Tamanho do array com as cópias dos users ordenados por distâncias, datas e ids
+   * 
+   */
+  int top_N_users_length;
 };
 
 /**
@@ -292,8 +297,9 @@ void update_aval_medias_users (Catalog_Users* catalog_users) {
  * @param top_N_users Array ordenado dos users
  */
 
-void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users) {
+void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length) {
     catalog_users->top_N_users = (User_Distance_Data*) top_N_users;
+    catalog_users->top_N_users_length = array_length;
 }
 
 /**
@@ -512,7 +518,7 @@ void free_user_data(gpointer key, gpointer value, gpointer user_data) {
  * @param catalog_users Catálogo dos users
  */
 void free_users_catalog (Catalog_Users * catalog_users) {
- unsigned int size = g_hash_table_size ( catalog_users->hash_users);
+ unsigned int size = catalog_users->top_N_users_length;
   g_hash_table_foreach(catalog_users->hash_users, (GHFunc)free_user_data, NULL);
   g_hash_table_destroy (catalog_users->hash_users);
   free_users_services (catalog_users, size);

@@ -60,18 +60,23 @@ int compare_users(const void * a, const void * b) {
  * @param catalog_users Catálogo dos users
  */
 void top_N_users (Catalog_Users* catalog_users) {
-  uint size_hash = get_hash_size_users (catalog_users);
-  User_Distance_Data * user_distance_data = malloc (size_hash * sizeof (User_Distance_Data));
-  gpointer * keys = get_hash_keys_as_array_users (catalog_users,size_hash);
+uint size_hash = get_hash_size_users (catalog_users);
+User_Distance_Data * user_distance_data = malloc (size_hash * sizeof (User_Distance_Data));
+gpointer * keys = get_hash_keys_as_array_users (catalog_users,size_hash);
+uint array_length = 0;
 
-  for (uint i=0; i < size_hash;i++) {
-    (user_distance_data + i) -> id = getUsernameUser(catalog_users, keys[i]);
-    (user_distance_data + i) -> distance = getDistanceUser(catalog_users, keys[i]);
-    (user_distance_data + i) -> data = getDateUser(catalog_users, keys[i]);
-  }
-  free (keys);
-  qsort((void *) user_distance_data, size_hash, sizeof(User_Distance_Data), compare_users);
-  set_top_N_users(catalog_users, user_distance_data);
+for (uint i=0; i < size_hash;i++) {
+if (getAccountStatusUser (catalog_users, keys[i]) == true) {
+(user_distance_data + array_length) -> id = getUsernameUser(catalog_users, keys[i]);
+(user_distance_data + array_length) -> distance = getDistanceUser(catalog_users, keys[i]);
+(user_distance_data + array_length) -> data = getDateUser(catalog_users, keys[i]);
+array_length++;
+}
+}
+user_distance_data = realloc (user_distance_data, sizeof (User_Distance_Data) * array_length);
+free (keys);
+qsort((void *) user_distance_data, array_length, sizeof(User_Distance_Data), compare_users);
+set_top_N_users(catalog_users, user_distance_data, array_length);
 }
 
 

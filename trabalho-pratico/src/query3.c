@@ -32,16 +32,14 @@ void query3(Catalog_Users * catalog_users, char * info, int n) {
   FILE * output = fopen(buffer, "w");
   for (int i = 0; i < numb; i++) {
     id = get_top_N_users_id (catalog_users,i);
-    if (getAccountStatusUser(catalog_users, id)) {
-        name = getNameUser (catalog_users,id);
-        distance = get_top_N_users_distance (catalog_users,i);
-        fprintf(output, "%s;"
-        "%s;"
-        "%d\n", id, name, distance);
-        free (name);
-    } 
-    else numb++;
-    free (id);
+    name = getNameUser (catalog_users,id);
+    distance = get_top_N_users_distance (catalog_users,i);
+        
+      fprintf(output, "%s;"
+      "%s;"
+      "%d\n", id, name, distance);
+      free (name);
+      free (id);
   }
   fclose(output);
 }

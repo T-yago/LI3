@@ -125,24 +125,6 @@ struct ride
   double tip;
 };
 
-
-/*
-int compare_rides(const void *a, const void *b)
-{
-  const Ride *ride1 = *(Ride **)a;
-  const Ride *ride2 = *(Ride **)b;
-
-  return ride1->date - ride2->date;
-  }
-
-
-
-void sort_rides_by_date(Ride **rides, uint num_rides)
-{
-  qsort((void *)rides, num_rides, sizeof(Ride *), compare_rides);
-}
-*/
-
 /**
  * @brief Verifica se uma linha corresponde a uma potencial ride válida
  * 

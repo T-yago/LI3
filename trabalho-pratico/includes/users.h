@@ -32,7 +32,7 @@ double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
 unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key);
 
 
-void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users);
+void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length);
 void* get_top_N_users(Catalog_Users* catalog_users);
 
 #endif

@@ -30,8 +30,7 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
         total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
         preco_medio += total_gasto_sem_tips;
         num_rides++;
-        //free (car_class);
-        }
+        } 
     }
     if (num_rides != 0) preco_medio = preco_medio / num_rides;
     char buffer[256];
