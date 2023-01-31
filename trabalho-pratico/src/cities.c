@@ -119,19 +119,19 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalo
 
     for (uint i = 0; i < array_rides_length; i++) {
         
-        ride_id = get_ride_id (catalog_rides,i);
+        ride_id = get_ride_index_sorted_date (catalog_rides,i);
         if (ride_id != -1) {
             
-            driver_id = get_ride_driver (catalog_rides,i);
+            driver_id = get_ride_driver (catalog_rides,ride_id);
             array_driver_index = driver_id - 1;
 
-            ride_distance = get_ride_distance (catalog_rides,i);
+            ride_distance = get_ride_distance (catalog_rides,ride_id);
             car_class = get_driver_carclass(catalog_drivers, array_driver_index);
-            city_to_check = get_ride_city (catalog_rides, i);
-            ride_tip = get_ride_tip (catalog_rides,i);
+            city_to_check = get_ride_city (catalog_rides, ride_id);
+            ride_tip = get_ride_tip (catalog_rides,ride_id);
             total_gasto_por_ride = calcula_total_gasto (car_class,ride_distance,ride_tip);
             total_gasto_sem_tips = total_gasto_por_ride - ride_tip;
-            ride_score_driver = get_score_driver_ride (catalog_rides,i);  
+            ride_score_driver = get_score_driver_ride (catalog_rides,ride_id);  
 
                 if (g_hash_table_lookup (catalog_cities->cities_hash,city_to_check) == NULL) {
 
@@ -159,7 +159,7 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalo
                 // inicializa o array de rides para a nova cidade e preenche com o 1º id
                 city->array_rides_city_length = 0;
                 city->array_rides_city = malloc (100 *sizeof(uint));
-                city->array_rides_city[city->array_rides_city_length] = i;
+                city->array_rides_city[city->array_rides_city_length] = ride_id;
                 city->array_rides_city_length ++;
 
                 // insere a nova struct cidade na hashtable
@@ -180,7 +180,7 @@ void fill_cities_catalog (Catalog_Cities * catalog_cities, Catalog_Rides* catalo
                 city->array_avaliacao[array_driver_index].num_rides ++;
                 
                 // Preenche o array dos ids das rides para o driver encontrado
-                city->array_rides_city[city->array_rides_city_length] = i;
+                city->array_rides_city[city->array_rides_city_length] = ride_id;
                 city->array_rides_city_length++;
                 if (city->array_rides_city_length % 100 == 0) city->array_rides_city = realloc(city->array_rides_city, sizeof(uint) * (city->array_rides_city_length + 100)); 
             // if (driver_id == 4214) printf ("%d",city->array_avaliacao[driver_id].score_driver), printf ("Score_added: %d\n",score_driver);
@@ -290,6 +290,10 @@ double get_average_distance (Catalog_Cities* catalog_cities, Catalog_Rides* cata
             distance = get_ride_distance (catalog_rides,id);
             distancia_media += distance;
             cont++;
+        }
+        else if (date > dateSup) {
+        //printf ("%d",i);
+         break;
         }
       }
     if (cont != 0) distancia_media = distancia_media / cont;   

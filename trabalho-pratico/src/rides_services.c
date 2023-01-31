@@ -1,5 +1,48 @@
 #include "../includes/rides_services.h"
 #include <stdio.h>
+#include <time.h>
+
+
+struct ride_date {
+  int ride_index;
+  unsigned short int date; 
+};
+
+int compare_dates (const void * a, const void * b) {
+  Ride_Date* ia = (Ride_Date*) a;
+  Ride_Date* ib = (Ride_Date*) b;
+
+  if (ia->date < ib->date) return -1;
+  else return 1;
+}
+
+
+void create_array_rides_sorted (Catalog_Rides* catalog_rides) {
+  clock_t begin = clock();
+  uint size = get_array_rides_length (catalog_rides);
+  Ride_Date* array = malloc (sizeof (Ride_Date) * size);
+  
+  unsigned short int date;
+
+  for (uint i = 0; i < size; i++) {
+
+    date = get_ride_date (catalog_rides, i);
+    array[i].date = date;
+    array[i].ride_index = i;
+  }
+  qsort ((void*)array, size, sizeof (Ride_Date),compare_dates );
+  set_array_rides_dates (catalog_rides, array, size);
+  clock_t end = clock();
+double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+printf ("%f",time_spent);
+}
+
+
+int get_ride_index_sorted_date (Catalog_Rides* catalog_rides, int index) {
+  Ride_Date* ride = get_array_rides_ids (catalog_rides);
+  return ride[index].ride_index; 
+}
+
 
 /**
  * @brief Struct usada para ordenar os drivers e os users agrupados em género em função da data de criação da conta e do id

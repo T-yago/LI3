@@ -11,6 +11,11 @@
  */
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
 
+
+    //sort_rides_by_date (catalog_rides);
+
+    create_array_rides_sorted (catalog_rides);
+
     fill_cities_catalog (catalog_cities, catalog_rides, catalog_drivers);
     
     fill_drivers_array (catalog_drivers, catalog_rides);

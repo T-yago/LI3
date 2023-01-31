@@ -6,6 +6,7 @@
 #include "../includes/users.h"
 
 typedef struct dist_array Dist_Array;
+typedef struct ride_date Ride_Date;
 
 void insert_array_dist (Catalog_Rides* catalog_rides);
 
@@ -16,6 +17,8 @@ double get_ride_tip_dist(Catalog_Rides* catalog_rides, int index);
 int get_array_rides_index_dist (Catalog_Rides* catalog_rides, int index);
 void insert_arrays_genders (Catalog_Users* catalog_users,Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides);
 
+void create_array_rides_sorted (Catalog_Rides* catalog_rides);
+int get_ride_index_sorted_date (Catalog_Rides* catalog_rides, int index);
 
 void sort_array_genders (Catalog_Rides* catalog_rides);
 

@@ -37,7 +37,10 @@ void* get_array_genders_M (Catalog_Rides* catalog_rides);
 uint get_array_genders_F_length (Catalog_Rides* catalog_rides);
 uint get_array_genders_M_length (Catalog_Rides* catalog_rides);
 
-
+void sort_rides_by_date(Catalog_Rides* catalog_rides);
 int get_top_dist_length(Catalog_Rides *catalog_rides);
+
+void* get_array_rides_ids (Catalog_Rides* catalog_rides);
+void set_array_rides_dates (Catalog_Rides* catalog_rides, void* array_ids, int size);
 
 #endif
