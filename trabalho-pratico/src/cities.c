@@ -228,9 +228,9 @@ void free_cities_catalog (Catalog_Cities * catalog_cities) {
  * @return Nnúmero de rides feitas por um driver na cidade 
  */
 
-uint get_num_rides_city (Catalog_Cities * catalog_cities, char * city) {
-    City* aux = g_hash_table_lookup (catalog_cities->cities_hash,city);
-     return aux->num_rides;
+int get_array_ids_city_length (Catalog_Cities* catalog_cities, char* city) {
+ City* aux = g_hash_table_lookup (catalog_cities->cities_hash, city);
+ return aux->array_rides_city_length; 
 }
 
 
