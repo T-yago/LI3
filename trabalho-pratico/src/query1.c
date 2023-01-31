@@ -32,7 +32,7 @@ double calcula_total_gasto(char car_class, unsigned short int distance, double t
 /**
  * @brief Devolve um driver 
  * 
- * @param index Driver pedido
+ * @param driver Driver pedido
  * @param catalog_drivers Catálogo dos drivers
  * @param n número do ficheiro de output a gerar
  */
