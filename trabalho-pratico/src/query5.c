@@ -11,7 +11,6 @@
  * @param n Número do ficheiro de output a gerar
  */
 void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Catalog_Rides * catalog_rides, int n) {
-     clock_t begin = clock();
    unsigned short int date = 0; 
    double total_gasto_sem_tips = 0;
    double preco_medio = 0;
@@ -46,8 +45,5 @@ break;        }
     FILE * output = fopen(buffer, "w");
      if (preco_medio != 0) fprintf(output, "%.3f\n", preco_medio);
     fclose(output);
-      clock_t end = clock();
 
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-printf ("Query5: %f\n",time_spent);
 }

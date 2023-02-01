@@ -12,13 +12,11 @@ int compare_dates (const void * a, const void * b) {
   Ride_Date* ia = (Ride_Date*) a;
   Ride_Date* ib = (Ride_Date*) b;
 
-  if (ia->date < ib->date) return -1;
-  else return 1;
+  return ia->date - ib->date;
 }
 
 
 void create_array_rides_sorted (Catalog_Rides* catalog_rides) {
-  clock_t begin = clock();
   uint size = get_array_rides_length (catalog_rides);
   Ride_Date* array = malloc (sizeof (Ride_Date) * size);
   
@@ -32,9 +30,6 @@ void create_array_rides_sorted (Catalog_Rides* catalog_rides) {
   }
   qsort ((void*)array, size, sizeof (Ride_Date),compare_dates );
   set_array_rides_dates (catalog_rides, array, size);
-  clock_t end = clock();
-double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-printf ("%f",time_spent);
 }
 
 
@@ -305,16 +300,18 @@ void insert_array_dist (Catalog_Rides* catalog_rides) {
     int size_rides = get_array_rides_length (catalog_rides);
     Dist_Array ** array_dist = malloc (sizeof (Dist_Array*) * 100);
     int array_length = 0;
+    int ride_id;
 
     for (int i = 0; i < size_rides; i++) {
         Dist_Array * aux = malloc(sizeof(Dist_Array)); 
         double tip = get_ride_tip(catalog_rides, i);
         if (tip == 0); // se o tip for 0 não faz nada (avança no loop apenas)
         else {
-            aux->ride_id = get_ride_id (catalog_rides, i) - 1;
-            aux->ride_dateint = get_ride_date(catalog_rides, i);
-            aux->distance = get_ride_distance(catalog_rides, i);
-            aux->array_rides_index = i;
+            ride_id = get_ride_index_sorted_date (catalog_rides,i);
+            aux->ride_id =  ride_id;
+            aux->ride_dateint = get_ride_date(catalog_rides, ride_id);
+            aux->distance = get_ride_distance(catalog_rides, ride_id);
+            aux->array_rides_index = ride_id;
 
             array_dist[array_length] = aux;
             array_length++;
