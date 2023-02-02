@@ -27,7 +27,7 @@ void query9(Catalog_Rides* catalog_rides, char* datea, char* dateb, int n) {
         ride_id = get_ride_id_dist(catalog_rides, i);
         array_rides_index = get_array_rides_index_dist (catalog_rides, i);
         distance = get_ride_dist_dist(catalog_rides, i);
-        city = get_ride_city (catalog_rides, array_rides_index );
+        city = get_ride_city (catalog_rides, array_rides_index);
         tip = get_ride_tip(catalog_rides, array_rides_index);
         date_string = convert_to_date(date);
             

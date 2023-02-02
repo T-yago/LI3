@@ -43,16 +43,30 @@
 #include "../includes/data.h"
 
 void queries_handler (char * pathfiles, char * input) {
-  
-  // criação dos catálogos
-  Catalog_Users * catalog_users = users_catalog(pathfiles);
-  initHash_users(catalog_users);
-  
-  Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
-  init_array_drivers(catalog_drivers);
-  
-  Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
-  init_array_genders (catalog_rides);
+    clock_t start, end;
+    double cpu_time;
+    
+    // criação dos catálogos
+    start = clock();
+    Catalog_Users * catalog_users = users_catalog(pathfiles);
+    initHash_users(catalog_users);
+    end = clock();
+    cpu_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Catalog Users created in %gs\n", cpu_time);
+    
+    start = clock();
+    Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
+    init_array_drivers(catalog_drivers);
+    end = clock();
+    cpu_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Catalog Drivers created in %gs\n", cpu_time);
+    
+    start = clock();
+    Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
+    init_array_genders (catalog_rides);
+    end = clock();
+    cpu_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Catalog Rides created in %gs\n", cpu_time);
   
   Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);

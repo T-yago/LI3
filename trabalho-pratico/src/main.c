@@ -17,11 +17,14 @@
 
 #include "../includes/queries_handler.h"
 
+#include "../includes/interactmode.h"
+
 
 
 int main(int argc, char ** argv) {
   if (argc == 3) {
     queries_handler(argv[1], argv[2]);
   }
+  if (argc == 1) interactmode();
  return 0;
 }
