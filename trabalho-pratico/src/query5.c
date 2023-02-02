@@ -21,23 +21,26 @@ void query5 (char * dateA, char * dateB, Catalog_Drivers * catalog_drivers, Cata
     //para cada ride,
     uint length = get_array_rides_length (catalog_rides);
     int flag = 0;
-    for (uint i=0; i < length ; i++) 
-    {
+    
+    int i = 0;
     index = get_ride_index_sorted_date (catalog_rides,i);
     date = get_ride_date (catalog_rides,index);
-        if (date >= dateinf && date <= datesup) {
-        int driver =  (get_ride_driver (catalog_rides,index));
-        char car_class =  (get_driver_carclass (catalog_drivers,driver - 1));
-        unsigned short int distance = get_ride_distance(catalog_rides,index); // talvz trocar para long?
-        total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
-        preco_medio += total_gasto_sem_tips;
-        num_rides++;
-        //free (car_class);
+    while (date <= datesup && i < length) {
+        if (date >= dateinf) {
+            int driver =  (get_ride_driver (catalog_rides,index));
+            char car_class =  (get_driver_carclass (catalog_drivers,driver - 1));
+            unsigned short int distance = get_ride_distance(catalog_rides,index); // talvz trocar para long?
+            total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
+            preco_medio += total_gasto_sem_tips;
+            num_rides++;
+           
+            //free (car_class);
         }
-       else if (date > datesup ) {
-//rintf ("%d\n",i);
-break;        } 
+         i++;
+         index = get_ride_index_sorted_date (catalog_rides,i);
+            date = get_ride_date (catalog_rides,index);
     }
+    
     if (num_rides != 0) preco_medio = preco_medio / num_rides;
     char buffer[256];
     snprintf(buffer, 256, "Resultados/command%d_output.txt", n);
