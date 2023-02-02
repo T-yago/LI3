@@ -9,6 +9,8 @@
 
 #include "../includes/cities.h"
 
-void queries_handler(char* pathfiles, Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities);
+#include "../includes/catalogs.h"
+
+void queries_handler(char* input, Catalogs* catalogs);
 
 #endif

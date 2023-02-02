@@ -10,7 +10,7 @@
 
 #include "../includes/queries_handler.h"
 
-
+#include "../includes/catalogs.h"
 
 #include "../includes/query1.h"
 
@@ -38,8 +38,13 @@
  * @param pathfiles String com o caminho dos ficheiros que são lidos
  * @param input Ficheiro com input para as queries
  */
-void queries_handler (char * input, Catalog_Users* catalog_users,Catalog_Drivers* catalog_drivers,Catalog_Rides* catalog_rides,Catalog_Cities* catalog_cities) {
+void queries_handler (char * input, Catalogs* catalogs) {
 
+
+  Catalog_Users* catalog_users =  get_users_catalog (catalogs);
+  Catalog_Drivers* catalog_drivers =  get_drivers_catalog (catalogs);
+  Catalog_Rides* catalog_rides = get_rides_catalog (catalogs);
+  Catalog_Cities* catalog_cities =  get_cities_catalog (catalogs);
 
   // lê o ficheiro de input das queries
   FILE * file;
