@@ -1,10 +1,15 @@
-OBJECT_FILES = src/main.o src/queries_handler.o src/data.o src/drivers.o src/drivers_services.o src/query1.o src/query2.o src/query3.o src/cities.o src/query4.o src/query5.o src/query6.o src/query7.o src/query8.o src/query9.o src/parser.o src/rides.o src/users.o src/users_services.o src/rides_services.o src/dates.o 
+OBJECT_FILES = src/main.o src/queries_handler.o src/data.o src/drivers.o src/drivers_services.o src/cities_services.o src/query1.o src/query2.o src/query3.o src/cities.o src/query4.o src/query5.o src/query6.o src/query7.o src/query8.o src/query9.o src/parser.o src/rides.o src/users.o src/users_services.o src/rides_services.o src/dates.o src/interactmode.o src/interactquery1.o src/interactquery2.o src/interactquery3.o src/interactquery4.o src/interactquery5.o src/interactquery6.o src/interactquery7.o src/interactquery8.o src/interactquery9.o
 OBJECT_FILES2 = tests/main_testes.o tests/compare_outputs.o tests/queries_handler_testes.o src/data.o src/drivers.o src/drivers_services.o src/query1.o src/query2.o src/query3.o src/cities.o src/query4.o src/query5.o src/query6.o src/query7.o src/query8.o src/query9.o src/parser.o src/rides.o src/users.o src/users_services.o src/rides_services.o src/dates.o 
+
+CC = gcc
+CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0)
+LIBS = -lm $(shell pkg-config --libs glib-2.0) -lncurses
 
 
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic-errors -O0 -g $(shell pkg-config --cflags glib-2.0) 
 LIBS = -lm $(shell pkg-config --libs glib-2.0)
+
 TARGET = programa-principal
 TARGET2 = programa-testes
 
