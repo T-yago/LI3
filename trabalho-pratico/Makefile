@@ -33,7 +33,7 @@ tests/%.o: tests/%.c
 # $@ nome correspondente
 
 
-run:
+run: $(TARGET)
 	./programa-principal
 
 run-programa-principal: $(TARGET) 
