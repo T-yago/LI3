@@ -12,6 +12,7 @@ void free_users_catalog (Catalog_Users * catalog_users);
 Catalog_Users * users_catalog(char* pathfiles);
 uint get_hash_size_users (Catalog_Users * catalog_users);
 
+typedef struct user_distance_data User_Distance_Data;
 
 void initHash_users(Catalog_Users * catalog_users);
 void update_aval_medias_users (Catalog_Users* catalog_users);
@@ -31,7 +32,11 @@ short int  getNviagensUser(Catalog_Users * catalog_users, char * id);
 double getTotalGastoUser(Catalog_Users * catalog_users, char * id);
 unsigned short int get_data_creation_days_user (Catalog_Users* catalog_users, char* key);
 
+void top_N_users (Catalog_Users * catalog_users);
+char * get_top_N_users_id (Catalog_Users* catalog_users,int index);
+unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int index);
 
+void free_users_services (Catalog_Users* top_N_users, unsigned int size);
 void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length);
 void* get_top_N_users(Catalog_Users* catalog_users);
 

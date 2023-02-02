@@ -12,6 +12,10 @@
 
 #include "../includes/queries_handler.h"
 
+#include "../includes/interactmode.h"
+
+#include "../includes/catalogs.h"
+
 
 /**
  * @brief Função principal que comanda o programa-principal
@@ -23,7 +27,8 @@
 //1ºarg = Dataset, 2ºarg = input
 int main(int argc, char ** argv) {
   if (argc == 3) {
-    queries_handler(argv[1], argv[2]);
+    create_catalogs (argv[1], argv[2]);
   }
+  if (argc == 1) interactmode();
  return 0;
 }

@@ -10,9 +10,14 @@
 #include "../includes/rides.h"
 #include <glib.h>
 #include <stdbool.h>
+#include <math.h>
+
+
 
 typedef struct driver Driver;
 typedef struct catalog_drivers Catalog_Drivers;
+typedef struct driver_aval_date Driver_Aval_Date;
+
 
 Catalog_Drivers * drivers_catalog(char * pathfiles);
 void init_array_drivers(Catalog_Drivers * catalog_drivers);
@@ -37,7 +42,12 @@ unsigned short int get_data_creation_days_driver (Catalog_Drivers* catalog_drive
 void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers, int array_length);
 void* get_top_N_drivers(Catalog_Drivers* catalog_drivers);
 int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers);
+void top_N_drivers (Catalog_Drivers * catalog_drivers);
+char * get_name_driver_top_N (Catalog_Drivers * catalog_drivers,int n);
+int get_id_driver_top_N (Catalog_Drivers * catalog_drivers, int n);
+double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int n);
 
+void free_top_N_drivers (Catalog_Drivers* catalog_drivers, int size);
 
 void fill_drivers_array (Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides);
 
