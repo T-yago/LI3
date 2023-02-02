@@ -9,7 +9,7 @@ struct catalogs {
     Catalog_Cities* catalog_cities;
 };
 
-Catalogs* create_catalogs (char * pathfiles, char * input) {
+Catalogs* create_catalogs (char * pathfiles) {
 
   Catalogs* catalogs = malloc (sizeof (Catalogs));
   //criação dos catálogos
@@ -33,17 +33,19 @@ Catalogs* create_catalogs (char * pathfiles, char * input) {
   catalogs -> catalog_rides = catalog_rides;
   catalogs -> catalog_cities = catalog_cities;
 
-  queries_handler (input, catalogs);
-
   
-  free_users_catalog (catalog_users);
-  free_drivers_catalog (catalog_drivers);
-  free_rides_catalog (catalog_rides);
-  free_cities_catalog (catalog_cities);
 
   return catalogs;
 }
 
+void free_catalogs (Catalogs* catalogs) {
+
+  free_users_catalog (catalogs->catalog_users);
+  free_drivers_catalog (catalogs->catalog_drivers);
+  free_rides_catalog (catalogs->catalog_rides);
+  free_cities_catalog (catalogs->catalog_cities);
+  free (catalogs);
+}
 
 Catalog_Users* get_users_catalog (Catalogs* catalogs) {
     return catalogs->catalog_users;
