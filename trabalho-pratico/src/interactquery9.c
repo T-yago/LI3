@@ -64,7 +64,7 @@ void q9_output(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, C
                 date_string = convert_to_date(date);
                 mvprintw(a + 11, 33, "%012d", ride_id + 1);
                 mvprintw(a + 11, 63, "%s", date_string);
-                mvprintw(a + 11, 100 , "%d", distance);
+                mvprintw(a + 11, 100, "%d", distance);
                 mvprintw(a + 11, 127, "%s", city);
                 mvprintw(a + 11, 158, "%.3f", tip);
                 free (city);

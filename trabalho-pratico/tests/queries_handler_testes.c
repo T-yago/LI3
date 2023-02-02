@@ -74,7 +74,7 @@ void queries_handler_testes(char * pathfiles, char * input, double* times_query)
   Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   end = clock();
-  printf("\nCatalog_rides: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+  printf("\nCatalog_cities: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
 
   //criação das estruturas auxiliares para as queries
   start = clock();
