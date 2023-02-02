@@ -2,15 +2,13 @@
 
 #include <stdbool.h>
 
-#include <ncurses.h>
-
 #include <stdlib.h>
 
 #include <string.h>
 
 #include "../includes/compare_outputs.h"
 
-#define SIZE_ARRAY 1024 
+#define SIZE_ARRAY 512 
 
 
 /**
@@ -98,6 +96,6 @@
     printf("\n");
     for (uint i = 0; i < 9; i++) {
         double identical_file_percentage = ((double) identical_files_query[i] / total_files_query[i]) * 100;
-        printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.4fs\n", i+1, identical_file_percentage, times_query[i]);
+        printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.6fs\n", i+1, identical_file_percentage, times_query[i]);
     } 
 }

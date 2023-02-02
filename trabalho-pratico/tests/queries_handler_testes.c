@@ -48,23 +48,40 @@
  * @param times_query array que armazena o tempo de execução de cada query
  */
 void queries_handler_testes(char * pathfiles, char * input, double* times_query) {
-  
+
+  clock_t start, end;
+
   //criação dos catálogos
+  start = clock();
   Catalog_Users * catalog_users = users_catalog(pathfiles);
   initHash_users(catalog_users);
-  
+  end = clock();
+  printf("\nCatalog_users: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+
+  start = clock();
   Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
   init_array_drivers(catalog_drivers);
-  
+  end = clock();
+  printf("\nArray_drivers: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+
+  start = clock();
   Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
+  end = clock();
+  printf("\nCatalog_rides: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+
   //init_array_genders (catalog_rides);
-  
+  start = clock();
   Catalog_Cities * catalog_cities = cities_catalog ();
   fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
-  
+  end = clock();
+  printf("\nCatalog_rides: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+
   //criação das estruturas auxiliares para as queries
+  start = clock();
   top_N_drivers (catalog_drivers);  // talvez mudar de sítio
   top_N_users (catalog_users);
+  end = clock();
+  printf("\nTopNdrivers e TopNusers: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
 
   //lê o ficheiro de input das queries
   FILE * file;
@@ -75,8 +92,6 @@ void queries_handler_testes(char * pathfiles, char * input, double* times_query)
   size_t len;
   char * line = NULL;
   file = fopen(input, "r");
-
-  clock_t start, end;
 
   do {
     while (getline( & line, & len, file) != -1) {
