@@ -316,6 +316,7 @@ void update_aval_medias_users (Catalog_Users* catalog_users) {
  * 
  * @param catalog_users Catálogo dos users
  * @param top_N_users Array ordenado dos users
+ * @param array_length Comprimento do array ordenado dos users
  */
 
 void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length) {
