@@ -39,8 +39,9 @@ void q2_output (Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, 
         mvprintw(9, 27,"ID                                                           Nome                                                       Avaliacao Media                         ");
         for (int i = start; i < end; i++) {
             if (a % 31 == 0) a *= 0;
-            mvprintw(a + 11, 22, "%012d", get_id_driver_top_N(catalog_drivers, i));
-            mvprintw(a + 11, 81, "%s", get_name_driver_top_N(catalog_drivers, i));
+            int id = get_id_driver_top_N (catalog_drivers,i);
+            mvprintw(a + 11, 22, "%012d", id);
+            mvprintw(a + 11, 81, "%s", get_driver_name (catalog_drivers, id-1));
             mvprintw(a + 11, 152 , "%.3f", get_aval_med_top_N(catalog_drivers, i));
             mvprintw(a+11, 61, "|");
             mvprintw(a+11, 122, "|");

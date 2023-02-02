@@ -55,7 +55,7 @@ void query1_menu(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers,
         printbox(x);
 
         unsigned short int nviagens = getNviagensUser(catalog_users, id);
-        double avaliacao_media = (float) getAvaliacaoTotalUser(catalog_users, id) / (float) nviagens;
+        double avaliacao_media = (float) get_aval_media_user(catalog_users, id) / (float) nviagens;
         char* genero;
         if (getGenderUser(catalog_users, id) == 'M') genero = "Masculino";
         else genero = "Feminino";

@@ -130,20 +130,21 @@ int interactmode() {
     refresh();    /* Print prompt on screen */
     getnstr(pathfiles, 100); /* Get input from user and store in filepath */
 
+    //criação dos catálogos
     Catalog_Users * catalog_users = users_catalog(pathfiles);
     initHash_users(catalog_users);
-
+    
     Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
     init_array_drivers(catalog_drivers);
-
+    
     Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
-    init_array_genders (catalog_rides);
+    //init_array_genders (catalog_rides);
     
     Catalog_Cities * catalog_cities = cities_catalog ();
     fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
     
-    // criação das estruturas auxiliares para as queries
-    top_N_drivers (catalog_drivers); 
+    //criação das estruturas auxiliares para as queries
+    top_N_drivers (catalog_drivers);  // talvez mudar de sítio
     top_N_users (catalog_users);   
 
     clear();

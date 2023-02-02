@@ -40,7 +40,7 @@ void q3_output (Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers, 
             char* id = get_top_N_users_id(catalog_users, i);
             if (getAccountStatusUser(catalog_users, id)) {
                 mvprintw(a + 11, 22, "%s", id);
-                mvprintw(a + 11, 81, "%s", get_top_N_users_name(catalog_users, i));
+                mvprintw(a + 11, 81, "%s", getNameUser(catalog_users, id));
                 mvprintw(a + 11, 152 , "%d", get_top_N_users_distance(catalog_users, i));
                 mvprintw(a+11, 61, "|");
                 mvprintw(a+11, 122, "|");

@@ -45,7 +45,7 @@ void query4_menu(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers,
     if (!is_in_hash_cities(catalog_cities,s)) mvprintw(40, x/2 - 10, "Cidade não encontrada");
     else {
         total_gasto = get_total_gasto_city (catalog_cities,s);
-        num_rides = get_num_rides_city (catalog_cities,s);
+        num_rides = get_array_ids_city_length(catalog_cities,s);
         preco_medio = total_gasto / num_rides;
         if (preco_medio != 0) mvprintw(40, x/2 - 3, "%.3f", preco_medio);
     } 

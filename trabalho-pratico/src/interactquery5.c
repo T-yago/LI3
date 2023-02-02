@@ -68,12 +68,11 @@ void query5_menu(Catalog_Users *catalog_users, Catalog_Drivers *catalog_drivers,
         if (date >= dateinf && date <= datesup) 
         {
         int driver =  (get_ride_driver (catalog_rides,i));
-        char * car_class =  (get_driver_carclass (catalog_drivers,driver - 1));
+        char car_class =  (get_driver_carclass (catalog_drivers,driver - 1));
         unsigned short int distance = get_ride_distance(catalog_rides,i); // talvz trocar para long?
         total_gasto_sem_tips = calcula_total_gasto (car_class, distance, 0);
         preco_medio += total_gasto_sem_tips;
         num_rides++;
-        free (car_class);
         }
     }
     if (num_rides != 0) preco_medio = preco_medio / num_rides;
