@@ -73,7 +73,7 @@
 
         while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file)) {
             total_lines++;
-            if (strcmp(reference_line, results_line) != 0 && total_lines < array_size) {
+            if (strcmp(reference_line, results_line) != 0 && total_lines > SIZE_ARRAY) {
                 printf("\033[0;31m\nError in Command%d_output.txt, line %d:\n", i, total_lines);
                 printf("\033[0;33m %s\n", results_line);
                 printf("\033[0;32m %s", reference_line);
