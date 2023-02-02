@@ -33,9 +33,11 @@ tests/%.o: tests/%.c
 # $@ nome correspondente
 
 
+run:
+	./programa-principal
+
 run-programa-principal: $(TARGET) 
 	@./programa-principal $(arg1) $(arg2) 
-
 
 run-programa-testes: $(TARGET) $(TARGET2) 
 	@valgrind /usr/bin/time -f "%M" ./programa-testes $(arg1) $(arg2) $(arg3)
