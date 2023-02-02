@@ -47,18 +47,13 @@ Catalogs* create_catalogs (char * pathfiles) {
   Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
   
   Catalog_Cities * catalog_cities = cities_catalog ();
-  fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
   
-  //criação das estruturas auxiliares para as queries
-  top_N_drivers (catalog_drivers);  
-  top_N_users (catalog_users);
+  fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
 
   catalogs -> catalog_users = catalog_users;
   catalogs -> catalog_drivers = catalog_drivers;
   catalogs -> catalog_rides = catalog_rides;
   catalogs -> catalog_cities = catalog_cities;
-
-  
 
   return catalogs;
 }

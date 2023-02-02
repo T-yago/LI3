@@ -1,6 +1,5 @@
 #include "../includes/data.h"
 #include <stdio.h>
-#include <math.h>
 
 /**
  * @brief Chama as funções que preenchem as estruturas auxiliares dos seus respetivos catálogos
@@ -12,7 +11,7 @@
 void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, Catalog_Rides* catalog_rides, Catalog_Cities* catalog_cities) {
 
     fill_cities_catalog (catalog_cities, catalog_rides, catalog_drivers);
-    
+
     fill_drivers_array (catalog_drivers, catalog_rides);
     update_avaliacao_media_driver (catalog_drivers);
     
@@ -25,4 +24,7 @@ void fill_data (Catalog_Users* catalog_users, Catalog_Drivers* catalog_drivers, 
    
     sort_array_genders (catalog_rides);
     sort_arrays_avaliacoes_cities (catalog_cities);
+
+    top_N_drivers (catalog_drivers); 
+    top_N_users (catalog_users);
 }
