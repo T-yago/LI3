@@ -121,14 +121,6 @@ struct driver_aval_date {
   unsigned short int data;
 };
 
-// Função de comparação que ordena o array com os top_N_drivers
-/**
- * @brief Função de comparação usada para os top_N_drivers
- * 
- * @param a posição arbitrária "a" do array a comparar
- * @param b posição arbitrária "b" do array a comparar
- * @return escolha para ordenação
- */
 
 /**
  * @brief Verifica a validade de um driver perante o que foi lido no .csv
@@ -254,6 +246,14 @@ int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
     return catalog_drivers->array_top_N_drivers_length;
 }
 
+// Função de comparação que ordena o array com os top_N_drivers
+/**
+ * @brief Função de comparação usada para os top_N_drivers
+ * 
+ * @param a posição arbitrária "a" do array a comparar
+ * @param b posição arbitrária "b" do array a comparar
+ * @return escolha para ordenação
+ */
 
 int compare(const void * a, const void * b) {
    Driver_Aval_Date *ia = *(Driver_Aval_Date**) a;

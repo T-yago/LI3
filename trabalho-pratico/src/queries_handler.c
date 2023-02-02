@@ -34,9 +34,9 @@
 
 /**
  * @brief Gere os catálogos e envia as suas referências para as queries
- * 
- * @param pathfiles String com o caminho dos ficheiros que são lidos
+ *  * 
  * @param input Ficheiro com input para as queries
+ * @param catalogs Estrutura com todos os catálogos
  */
 void queries_handler (char * input, Catalogs* catalogs) {
 
@@ -96,7 +96,5 @@ void queries_handler (char * input, Catalogs* catalogs) {
   } while (!feof(file));
  
   free (line);
-  fclose(file);
-  // liberta a memória associada aos catálogos
-  
+  fclose(file);  
 }

@@ -1,14 +1,39 @@
 #include "../includes/catalogs.h"
 #include "../includes/queries_handler.h"
 
-
+/**
+ * @brief Struct composta por cada um dos catálogos criados
+ * 
+ */
 struct catalogs {
+    /**
+     * @brief Catálogo dos users
+     * 
+     */
     Catalog_Users* catalog_users;
+    /**
+     * @brief Catálogo dos drivers
+     * 
+     */
     Catalog_Drivers* catalog_drivers;
+    /**
+     * @brief Catálogo das viagens
+     * 
+     */
     Catalog_Rides* catalog_rides;
+    /**
+     * @brief Catálogo das cidades
+     * 
+     */
     Catalog_Cities* catalog_cities;
 };
 
+/**
+ * @brief Cria todos os catálogos e returna a struct composta por cada um deles
+ * 
+ * @param pathfiles Caminho para os ".csv"
+ * @return Struct composta por todos os catálogos
+ */
 Catalogs* create_catalogs (char * pathfiles) {
 
   Catalogs* catalogs = malloc (sizeof (Catalogs));
@@ -38,6 +63,11 @@ Catalogs* create_catalogs (char * pathfiles) {
   return catalogs;
 }
 
+/**
+ * @brief Liberta a memória associada a cada um dos catálogos
+ * 
+ * @param catalogs Struct composta por todos os catálogos
+ */
 void free_catalogs (Catalogs* catalogs) {
 
   free_users_catalog (catalogs->catalog_users);
@@ -47,18 +77,42 @@ void free_catalogs (Catalogs* catalogs) {
   free (catalogs);
 }
 
+/**
+ * @brief Devolve o catálogo dos users
+ * 
+ * @param catalogs Struct composta por todos os catálogos 
+ * @return Catálogo dos users 
+ */
 Catalog_Users* get_users_catalog (Catalogs* catalogs) {
     return catalogs->catalog_users;
 }
 
+/**
+ * @brief Devolve o catálogo dos drivers
+ * 
+ * @param catalogs Struct composta por todos os catálogos
+ * @return Catálogo dos drivers 
+ */
 Catalog_Drivers* get_drivers_catalog (Catalogs* catalogs) {
     return catalogs->catalog_drivers;
 }
 
+/**
+ * @brief Devolve o catálogo das viagens
+ * 
+ * @param catalogs Struct composta por todos os catálogos
+ * @return Catálogo das viagens
+ */
 Catalog_Rides* get_rides_catalog (Catalogs* catalogs) {
     return catalogs->catalog_rides;
 }
 
+/**
+ * @brief Devolve o catálogo das cidades
+ * 
+ * @param catalogs Struct composta por todos os catálogos
+ * @return Catálogo das cidades
+ */
 Catalog_Cities* get_cities_catalog (Catalogs* catalogs) {
     return catalogs->catalog_cities;
 }
