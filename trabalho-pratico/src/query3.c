@@ -13,6 +13,13 @@
 #include "../includes/drivers.h"
 
 
+/**
+ * @brief Lista os N users com maior distância viajada
+ * 
+ * @param catalog_users Catálogo dos users
+ * @param info String com o número de users pedidos
+ * @param n Número do ficheiro de output a gerar
+ */
 void query3(Catalog_Users * catalog_users, char * info, int n) {
   int numb = atoi(info);
   char* id = NULL;
@@ -25,16 +32,14 @@ void query3(Catalog_Users * catalog_users, char * info, int n) {
   FILE * output = fopen(buffer, "w");
   for (int i = 0; i < numb; i++) {
     id = get_top_N_users_id (catalog_users,i);
-    if (getAccountStatusUser(catalog_users, id)) {
-        name = get_top_N_users_name (catalog_users,i);
-        distance = get_top_N_users_distance (catalog_users,i);
-        fprintf(output, "%s;"
-        "%s;"
-        "%d\n", id, name, distance);
-        free (name);
-    } 
-    else numb++;
-    free (id);
+    name = getNameUser (catalog_users,id);
+    distance = get_top_N_users_distance (catalog_users,i);
+        
+      fprintf(output, "%s;"
+      "%s;"
+      "%d\n", id, name, distance);
+      free (name);
+      free (id);
   }
   fclose(output);
 }

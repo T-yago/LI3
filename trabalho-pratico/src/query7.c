@@ -5,15 +5,18 @@
 
 #include "../includes/drivers.h"
 #include "../includes/cities.h"
-#include "../includes/cities_services.h"
 #include "../includes/query7.h"
 
-char* int_to_string(int x) {
-  char* str = malloc(13);
-  snprintf(str, 13, "%012d", x);
-  return str;
-}
 
+/**
+ * @brief Top N condutores numa determinada cidade
+ * 
+ * @param N Número de condutores a apresentar
+ * @param city Cidade em questão
+ * @param catalog_cities Catálogo das cidades
+ * @param catalog_drivers Catálogo dos drivers
+ * @param n Número do ficheiro de output a gerar
+ */
 void query7 (char * N, char * city, Catalog_Cities * catalog_cities, Catalog_Drivers * catalog_drivers, int n){
   int numb = atoi(N);
   
