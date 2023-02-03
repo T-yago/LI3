@@ -33,13 +33,12 @@
 #include "../includes/data.h"
 
 /**
- * @brief Gere os catálogos e envia as suas referências para as queries
+ * @brief Função que lê os comandos de input e executa as respectivas queries
  *   
  * @param input Ficheiro com input para as queries
  * @param catalogs Estrutura com todos os catálogos
  */
 void queries_handler (char * input, Catalogs* catalogs) {
-
 
   Catalog_Users* catalog_users =  get_users_catalog (catalogs);
   Catalog_Drivers* catalog_drivers =  get_drivers_catalog (catalogs);

@@ -43,7 +43,7 @@
 #include "../includes/data.h"
 
 /**
- * @brief Gere os catálogos e envia as suas referências para as queries e para além disso calcula os tempos das queries e armazena no array times_query
+ * @brief Função que lê os comandos de input e cexcuta as respectivas queries, para além disso calcula os tempos das queries e armazena no array times_query
  * 
  * @param input Ficheiro com input para as queries
  * @param catalogs Estrutura com todos os catálogos

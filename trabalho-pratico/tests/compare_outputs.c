@@ -8,7 +8,7 @@
 
 #include "../includes/compare_outputs.h"
 
-#define SIZE_ARRAY 1024 
+#define SIZE_ARRAY 512 
 
 
 /**
@@ -71,7 +71,7 @@
         total_identical_lines = 0;
         
 
-        while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file)) {
+        while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file) && total_lines < SIZE_ARRAY) {
             total_lines++;
             if (strcmp(reference_line, results_line) != 0) {
                 printf("\033[0;31m\nError in Command%d_output.txt, line %d:\n", i, total_lines);
@@ -81,10 +81,7 @@
             else total_identical_lines++;
         }
 
-        if (fgets(reference_line, sizeof(reference_line), reference_file) || fgets(results_line, sizeof(results_line), results_file)) {
-            printf("\033[0;31m%s and %s sizes don`t match.\n", reference_path, results_path);
-        }
-        else if (total_lines == total_identical_lines) identical_files_query[numb_query]++;
+        if (total_lines == total_identical_lines) identical_files_query[numb_query]++;
 
 
         fclose(reference_file);
@@ -96,6 +93,6 @@
     printf("\n");
     for (uint i = 0; i < 9; i++) {
         double identical_file_percentage = ((double) identical_files_query[i] / total_files_query[i]) * 100;
-        printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.6fs\n", i+1, identical_file_percentage, times_query[i]);
+        printf("\033[0;34mQuery%d:\033[0;37m %.2f%%, %.4fs\n", i+1, identical_file_percentage, times_query[i]);
     } 
 }
