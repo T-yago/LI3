@@ -20,7 +20,7 @@ struct catalog_drivers {
    * @brief Array ordenado dos drivers
    * 
    */
-  Driver_Aval_Date * top_N_drivers;
+  Driver_Aval_Date ** top_N_drivers;
   /**
    * @brief Tamanho do array ordenado dos drivers
    * 
@@ -93,32 +93,6 @@ struct driver {
    * 
    */
   double avaliacao_media_driver;
-};
-
-//---------------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
-
-/**
- * @brief Struct usada para ordenar os drivers em função da avaliação média, datas e ids
- * 
- */
-
-struct driver_aval_date {
-  /**
-   * @brief Id do driver
-   * 
-   */
-  int id;
-  /**
-   * @brief Avaliação média do driver
-   * 
-   */
-  double avaliacao_media;
-
-  /**
-   * @brief data da viagem mais recente do driver (convertida)
-   * 
-   */
-  unsigned short int data;
 };
 
 
@@ -212,39 +186,33 @@ Catalog_Drivers * drivers_catalog(char * pathfiles) {
 }
 
 
-//---------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
-/**
- * @brief Coloca o array ordenado dos drivers no catálogo dos drivers
- * 
- * @param catalog_drivers Catálogo dos drivers
- * @param top_N_drivers Array ordenado dos drivers
- * @param array_length Tamanho do array ordenado dos drivers
- */
-
-void set_top_N_drivers(Catalog_Drivers* catalog_drivers, void* top_N_drivers, int array_length) {
-    catalog_drivers->top_N_drivers = (Driver_Aval_Date*) top_N_drivers;
-    catalog_drivers->array_top_N_drivers_length = array_length;
-}
+//---------------------------------------------Estrutura auxiliar dos drivers (query2) ---------------------------------------------//
 
 /**
- * @brief Devolve o array ordenado dos drivers
+ * @brief Struct usada para ordenar os drivers em função da avaliação média, datas e ids
  * 
- * @param catalog_drivers Catálogo dos drivers
- * @return Void pointer para o array ordenado dos drivers
  */
-void* get_top_N_drivers(Catalog_Drivers* catalog_drivers) {
-    return (void*) catalog_drivers->top_N_drivers;
-}
 
-/**
- * @brief Devolve o tamanho do array ordenado dos drivers
- * 
- * @param catalog_drivers Catálogo dos drivers
- * @return Tamanho do array ordenado dos drivers
- */
-int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
-    return catalog_drivers->array_top_N_drivers_length;
-}
+struct driver_aval_date {
+  /**
+   * @brief Id do driver
+   * 
+   */
+  int id;
+  /**
+   * @brief Avaliação média do driver
+   * 
+   */
+  double avaliacao_media;
+
+  /**
+   * @brief data da viagem mais recente do driver (convertida)
+   * 
+   */
+  unsigned short int data;
+};
+
+
 
 // Função de comparação que ordena o array com os top_N_drivers
 /**
@@ -271,9 +239,6 @@ int compare(const void * a, const void * b) {
     }
   }  return 0;
 }
-
-// Função que cria um array com os top "N" users e o coloca no catálogo dos drivers
-
 
 /**
  * @brief Cria um array com ordenado com os top_N_drivers presentes no catálogo e adiciona-o ao catálogo
@@ -302,7 +267,8 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
   }
   qsort((void * ) driver_aval_date, array_length, sizeof(Driver_Aval_Date*), compare);
 
-  set_top_N_drivers (catalog_drivers, driver_aval_date, array_length); 
+  catalog_drivers->top_N_drivers = driver_aval_date;
+  catalog_drivers->array_top_N_drivers_length = array_length;
 }
 
 /**
@@ -314,11 +280,21 @@ void top_N_drivers (Catalog_Drivers * catalog_drivers) {
  */
 
 int get_id_driver_top_N (Catalog_Drivers * catalog_drivers, int index) {
-  Driver_Aval_Date** top_N_drivers = (Driver_Aval_Date**) get_top_N_drivers (catalog_drivers);
+  Driver_Aval_Date** top_N_drivers = catalog_drivers->top_N_drivers;
   Driver_Aval_Date* aux = top_N_drivers [index];  
 return (aux->id);
 }
 
+
+/**
+ * @brief Devolve o tamanho do array ordenado dos drivers
+ * 
+ * @param catalog_drivers Catálogo dos drivers
+ * @return Tamanho do array ordenado dos drivers
+ */
+int get_array_top_N_drivers_length (Catalog_Drivers* catalog_drivers) {
+    return catalog_drivers->array_top_N_drivers_length;
+}
 
 /**
  * @brief Devolve a avaliação média do driver presente no array ordenado dos drivers na posição "index"
@@ -329,7 +305,7 @@ return (aux->id);
  */
 
 double get_aval_med_top_N (Catalog_Drivers * catalog_drivers, int index) {
-  Driver_Aval_Date** top_N_drivers = (Driver_Aval_Date**) get_top_N_drivers (catalog_drivers);
+  Driver_Aval_Date** top_N_drivers = catalog_drivers->top_N_drivers;
   Driver_Aval_Date* aux = top_N_drivers [index]; 
 return aux->avaliacao_media;
 }
@@ -342,7 +318,7 @@ return aux->avaliacao_media;
  */
 
 void free_top_N_drivers (Catalog_Drivers* catalog_drivers, int size) {
-  Driver_Aval_Date** top_N_drivers = (Driver_Aval_Date**) get_top_N_drivers (catalog_drivers);
+  Driver_Aval_Date** top_N_drivers = catalog_drivers->top_N_drivers;
   for (int i = 0; i < size; i++) {
     Driver_Aval_Date* aux = top_N_drivers [i];
   //  free (aux->name);

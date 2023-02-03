@@ -17,8 +17,8 @@ typedef struct user_distance_data User_Distance_Data;
 void initHash_users(Catalog_Users * catalog_users);
 void update_aval_medias_users (Catalog_Users* catalog_users);
 void fill_users_hash (Catalog_Users* catalog_users, Catalog_Rides* catalog_rides, Catalog_Drivers* catalog_drivers);
-//------------------------------------ getters ---------------------------------------------------//
 
+//------------------------------------ getters ---------------------------------------------------//
 gpointer * get_hash_keys_as_array_users (Catalog_Users * catalog_users, uint size);
 char * getUsernameUser(Catalog_Users * catalog_users, char * id);
 int getDistanceUser(Catalog_Users * catalog_users, char * id);
@@ -37,7 +37,5 @@ char * get_top_N_users_id (Catalog_Users* catalog_users,int index);
 unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int index);
 
 void free_users_services (Catalog_Users* top_N_users, unsigned int size);
-void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length);
-void* get_top_N_users(Catalog_Users* catalog_users);
 
 #endif

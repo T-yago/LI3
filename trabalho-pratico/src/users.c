@@ -100,35 +100,6 @@ struct user {
   double avaliacao_media_user;
 };
 
-//--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
-/**
- * @brief Struct usada para ordenar os users por distâncias percorridas, datas da última viagem e ids
- * 
- */
-struct user_distance_data{
-  /**
-   * @brief Id do user
-   * 
-   */
-  char * id;
-  /**
-   * @brief Distância total percorrida pelo user
-   * 
-   */
-  int distance;
-  /**
-   * @brief Data da última viagem percorrida pelo user
-   * 
-   */
-  unsigned short int data;
-};
-/**
- * @brief Verifica se uma linha corresponde a um user válido
- * 
- * @param tokens Linha a avaliar
- * @return -1 se não for válido
- * @return 0 se for válido
- */
 
 
 int is_valid_user (char** tokens) {
@@ -312,30 +283,6 @@ void update_aval_medias_users (Catalog_Users* catalog_users) {
 //--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
 
 /**
- * @brief Coloca o array ordenado dos users no catálogo dos users
- * 
- * @param catalog_users Catálogo dos users
- * @param top_N_users Array ordenado dos users
- * @param array_length Comprimento do array ordenado dos users
- */
-
-void set_top_N_users(Catalog_Users* catalog_users, void* top_N_users, int array_length) {
-    catalog_users->top_N_users = (User_Distance_Data*) top_N_users;
-    catalog_users->top_N_users_length = array_length;
-}
-
-/**
- * @brief Devolve o array ordenado dos users do catálogo dos users
- * 
- * @param catalog_users Catálogo dos users
- * @return Array ordenado dos users
- */
-void* get_top_N_users(Catalog_Users* catalog_users) {
-    return (void*) catalog_users->top_N_users;
-}
-//***************************************************** Funções de encapsulamento de users usadas em riders.c *****************************************
-    
-/**
  * @brief Devolve a data de criação do user 
  * 
  * @param catalog_users Catálogo do users
@@ -512,6 +459,36 @@ bool getAccountStatusUser(Catalog_Users * catalog_users, char* id){
 
 
 
+//--------------------------------Estrutura auxiliar dos users (query3)--------------------------//
+/**
+ * @brief Struct usada para ordenar os users por distâncias percorridas, datas da última viagem e ids
+ * 
+ */
+struct user_distance_data{
+  /**
+   * @brief Id do user
+   * 
+   */
+  char * id;
+  /**
+   * @brief Distância total percorrida pelo user
+   * 
+   */
+  int distance;
+  /**
+   * @brief Data da última viagem percorrida pelo user
+   * 
+   */
+  unsigned short int data;
+};
+/**
+ * @brief Verifica se uma linha corresponde a um user válido
+ * 
+ * @param tokens Linha a avaliar
+ * @return -1 se não for válido
+ * @return 0 se for válido
+ */
+
 
 /**
  * @brief Função de comparação usada para ordenar os users por distâncias percorridas, datas da última viagem e ids
@@ -563,7 +540,9 @@ array_length++;
 user_distance_data = realloc (user_distance_data, sizeof (User_Distance_Data) * array_length);
 free (keys);
 qsort((void *) user_distance_data, array_length, sizeof(User_Distance_Data), compare_users);
-set_top_N_users(catalog_users, user_distance_data, array_length);
+catalog_users->top_N_users = user_distance_data;
+catalog_users->top_N_users_length = array_length;
+//set_top_N_users(catalog_users, user_distance_data, array_length);
 }
 
 
@@ -575,7 +554,7 @@ set_top_N_users(catalog_users, user_distance_data, array_length);
  * @return Id do user
  */
 char * get_top_N_users_id (Catalog_Users* catalog_users,int index) {
-  User_Distance_Data* top_n_users = (User_Distance_Data*) get_top_N_users(catalog_users);
+  User_Distance_Data* top_n_users = catalog_users->top_N_users;
   User_Distance_Data aux = top_n_users[index];  
   return strdup (aux.id);
 }
@@ -589,7 +568,7 @@ char * get_top_N_users_id (Catalog_Users* catalog_users,int index) {
  * @return unsigned short int 
  */
 unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int index) {
-  User_Distance_Data* top_n_users = (User_Distance_Data*) get_top_N_users(catalog_users);
+  User_Distance_Data* top_n_users = catalog_users->top_N_users;
   User_Distance_Data aux = top_n_users[index];  
   return  aux.distance;
 }
@@ -601,7 +580,7 @@ unsigned short int get_top_N_users_distance (Catalog_Users * catalog_users, int 
  * @param size Tamanho do array ordenado dos users
  */
 void free_users_services (Catalog_Users* catalog_users, unsigned int size) {
-  User_Distance_Data* top_N_users = (User_Distance_Data*) get_top_N_users (catalog_users);
+  User_Distance_Data* top_N_users = catalog_users->top_N_users;
   for (uint i = 0; i < size; i++) {
     User_Distance_Data aux = top_N_users[i];
     free (aux.id);
