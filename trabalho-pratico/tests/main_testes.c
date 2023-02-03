@@ -14,6 +14,8 @@
 
 #include "../includes/queries_handler_testes.h"
 
+#include "../includes/catalogs.h"
+
 /**
  * @brief Função principal que comanda o programa-testes e calcula o tempo de execução do programa
  * 
@@ -28,8 +30,8 @@ int main(int argc, char ** argv) {
     double cpu_time_used;
     double times_query[9] = {0};
     start = clock();
-  
-    queries_handler_testes(argv[1], argv[2], times_query);
+    Catalogs* catalogs = create_catalogs (argv[1]);
+    queries_handler_testes(argv[2], catalogs, times_query);
   
     compare_outputs_and_print_times(argv[2], argv[3], "Resultados/", times_query);
   

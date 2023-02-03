@@ -34,7 +34,7 @@
 
 /**
  * @brief Gere os catálogos e envia as suas referências para as queries
- *  * 
+ *   
  * @param input Ficheiro com input para as queries
  * @param catalogs Estrutura com todos os catálogos
  */

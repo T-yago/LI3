@@ -12,6 +12,8 @@
 
 #include "../includes/queries_handler_testes.h"
 
+#include "../includes/catalogs.h"
+
 #include "../includes/users.h"
 
 #include "../includes/drivers.h"
@@ -43,54 +45,19 @@
 /**
  * @brief Gere os catálogos e envia as suas referências para as queries e para além disso calcula os tempos das queries e armazena no array times_query
  * 
- * @param pathfiles String com o caminho dos ficheiros que são lidos
  * @param input Ficheiro com input para as queries
+ * @param catalogs Estrutura com todos os catálogos
  * @param times_query array que armazena o tempo de execução de cada query
  */
-void queries_handler_testes(char * pathfiles, char * input, double* times_query) {
+void queries_handler_testes(char * input, Catalogs * catalogs, double* times_query) {
 
   clock_t start, end;
 
-  //criação dos catálogos
-  start = clock();
-  
-  Catalog_Users * catalog_users = users_catalog(pathfiles);
-  initHash_users(catalog_users);
-  
-  end = clock();
-  printf("\nCatalog_users: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
+  Catalog_Users* catalog_users =  get_users_catalog (catalogs);
+  Catalog_Drivers* catalog_drivers =  get_drivers_catalog (catalogs);
+  Catalog_Rides* catalog_rides = get_rides_catalog (catalogs);
+  Catalog_Cities* catalog_cities =  get_cities_catalog (catalogs);
 
-  start = clock();
-  
-  Catalog_Drivers * catalog_drivers = drivers_catalog(pathfiles);
-  init_array_drivers(catalog_drivers);
-  
-  end = clock();
-  printf("\nArray_drivers: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
-
-  start = clock();
-  
-  Catalog_Rides * catalog_rides = rides_catalog(pathfiles);
-  
-  end = clock();
-  printf("\nCatalog_rides: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
-
-  //init_array_genders (catalog_rides);
-  start = clock();
-  
-  Catalog_Cities * catalog_cities = cities_catalog ();
-  fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
-  end = clock();
-  printf("\nCatalog_cities: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
-
-  //criação das estruturas auxiliares para as queries
-  start = clock();
-  
-  fill_data (catalog_users,catalog_drivers,catalog_rides,catalog_cities);
-  
-  end = clock();
-  printf("\nEstruturas auxiliares: %.6fs\n",  ((double)(end - start)) / CLOCKS_PER_SEC); 
-  
 
   //lê o ficheiro de input das queries
   FILE * file;
@@ -172,8 +139,4 @@ void queries_handler_testes(char * pathfiles, char * input, double* times_query)
   //liberta a memória associada aos catálogos
   free (line);
   fclose (file);
-  free_users_catalog (catalog_users);
-  free_drivers_catalog (catalog_drivers);
-  free_rides_catalog (catalog_rides);
-  free_cities_catalog (catalog_cities);
 }
