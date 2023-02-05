@@ -101,6 +101,13 @@ struct user {
 };
 
 
+/**
+ * @brief Verifica se uma linha corresponde a um user válido
+ * 
+ * @param tokens Linha a avaliar
+ * @return -1 se não for válido
+ * @return 0 se for válido
+ */
 
 int is_valid_user (char** tokens) {
   // se username, name, gender, pay_method forem vazioss
@@ -481,13 +488,6 @@ struct user_distance_data{
    */
   unsigned short int data;
 };
-/**
- * @brief Verifica se uma linha corresponde a um user válido
- * 
- * @param tokens Linha a avaliar
- * @return -1 se não for válido
- * @return 0 se for válido
- */
 
 
 /**
