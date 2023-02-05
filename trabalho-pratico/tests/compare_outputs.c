@@ -71,7 +71,7 @@
         total_identical_lines = 0;
         
 
-        while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file) && total_lines < SIZE_ARRAY) {
+        while (fgets(reference_line, sizeof(reference_line), reference_file) && fgets(results_line, sizeof(results_line), results_file)){
             total_lines++;
             if (strcmp(reference_line, results_line) != 0) {
                 printf("\033[0;31m\nError in Command%d_output.txt, line %d:\n", i, total_lines);
