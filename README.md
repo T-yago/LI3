@@ -13,6 +13,16 @@ Secondly, there are two ways of running the program:
 ## Only inputing the path to the data (.csv) files (interactive mode):
         ./trabalho-principal
 
+**This is how the interactive mode menu looks like:**
+![Interactive](images/interactive.png)
+
+**And this is how queries are answered:
+![Interactive](images/query1.png)
+![Interactive](images/query3.png)
+
+
+
+
 ## Input Files
 
 Users
