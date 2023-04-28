@@ -27,7 +27,6 @@ Secondly, there are two ways of running the program:
 
 
 
-
 ## Input Files
 
 Users
